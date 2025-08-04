@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mapper.TravelCourseMapper">
+
+    <!-- INSERT -->
+    <insert id="insert" parameterType="com.app.entity.TravelCourse">
+        INSERT INTO travel_course (
+            course_id, title, description, area_id, writer_id, reg_date
+        ) VALUES (
+            #{courseId}, #{title}, #{description}, #{areaId}, #{writerId}, SYSDATE
+        )
+    </insert>
+
+    <!-- SELECT 전체 조회 -->
+    <select id="findAll" resultType="com.app.entity.TravelCourse">
+        SELECT * FROM travel_course ORDER BY course_id DESC
+    </select>
+
+    <!-- SELECT 단건 조회 -->
+    <select id="findById" parameterType="long" resultType="com.app.entity.TravelCourse">
+        SELECT * FROM travel_course WHERE course_id = #{id}
+    </select>
+	
+    <!-- 필요시 UPDATE/DELETE 추가 -->
+</mapper>
