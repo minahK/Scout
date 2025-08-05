@@ -12,8 +12,8 @@
 
 	<!-- 내부 바디 내용 -->
 	<%@ include file="body1.jsp"%>
-	<%@ include file="body2.jsp"%>
-	<%@ include file="body3.jsp"%>
+	<%@ include file="body2.jsp"%> <br>
+	<%@ include file="body3.jsp"%> <br>
 	<%@ include file="body4.jsp"%>
 
 	<!-- 푸터 -->

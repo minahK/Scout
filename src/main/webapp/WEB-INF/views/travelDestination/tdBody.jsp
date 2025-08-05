@@ -227,7 +227,9 @@
         <ul class="travel-list">
             <c:forEach var="travel" items="${travelList}">
                 <li class="travel-item">
-                    <img src="${travel.image}" alt="${travel.name}" />
+                	<a href="/travelDestination/${travel.id}">
+                    	<img src="${travel.image}" alt="${travel.name}"/>
+                    </a>
                     <div class="travel-info">
                         <div class="travel-title">${travel.name}</div>
                         <div class="travel-location">${travel.sumup}</div>
@@ -241,6 +243,20 @@
                 </li>
             </c:forEach>
         </ul>
+        <div style="text-align:center; margin:30px 0;">
+            <c:if test="${totalPage > 1}">
+                <c:forEach begin="1" end="${totalPage}" var="pageNum">
+                    <a href="?page=${pageNum}"
+                       style="padding:7px 12px; margin:0 2px; border-radius:6px;
+                              color:${currentPage == pageNum ? '#fff' : '#222'};
+                              background:${currentPage == pageNum ? '#2196f3' : '#f6f6f6'};
+                              font-weight:${currentPage == pageNum ? '700' : '400'};
+                              text-decoration:none;">
+                        ${pageNum}
+                    </a>
+                </c:forEach>
+            </c:if>
+        </div>
     </section>
     <!-- 우측 필터/태그 -->
     <aside class="right-panel">

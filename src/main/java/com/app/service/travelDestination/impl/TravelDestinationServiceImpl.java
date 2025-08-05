@@ -20,4 +20,28 @@ public class TravelDestinationServiceImpl implements TravelDestinationService {
 		List<TravelDestination> travelList = travelDestinationDAO.findTravelList();
 		return travelList;
 	}
+
+	@Override
+	public TravelDestination findTravelById(int travelId) {
+		TravelDestination travelDestination = travelDestinationDAO.findTravelById(travelId);
+		return travelDestination;
+	}
+
+	@Override
+	public List<TravelDestination> findTravelGSList() {
+		List<TravelDestination> travelList = travelDestinationDAO.findTravelGSList();
+		return travelList;
+	}
+
+	@Override
+	public List<TravelDestination> findTravelMJList() {
+		List<TravelDestination> travelList = travelDestinationDAO.findTravelMJList();
+		return travelList;
+	}
+
+	@Override
+	public List<TravelDestination> findTravelHPList() {
+		List<TravelDestination> travelList = travelDestinationDAO.findTravelHPList();
+		return travelList;
+	}
 }

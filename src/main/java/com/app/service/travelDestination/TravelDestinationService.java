@@ -8,5 +8,13 @@ public interface TravelDestinationService {
 
 	List<TravelDestination> findTravelList();
 
+	TravelDestination findTravelById(int travelId);
+
+	List<TravelDestination> findTravelGSList();
+
+	List<TravelDestination> findTravelMJList();
+
+	List<TravelDestination> findTravelHPList();
+
 	
 }

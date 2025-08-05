@@ -8,18 +8,24 @@
 		SELECT * FROM T_TRAVEL_DESTINATION
 	</select>
 	
-	<!-- <select id="findTravelPlaceList" resultType="TravelDestination">
+	<select id="findTravelById" resultType="TravelDestination" parameterType="int">
 		SELECT * FROM T_TRAVEL_DESTINATION
-		WHERE type='여행지'
+		where id = #{travelId}
 	</select>
 	
-	<select id="findTravelList" resultType="TravelDestination">
+	<select id="findTravelHPList" resultType="TravelDestination">
 		SELECT * FROM T_TRAVEL_DESTINATION
-		WHERE type='맛집'
+		where type='여행지'
 	</select>
 	
-	<select id="findTravelList" resultType="TravelDestination">
+	<select id="findTravelMJList" resultType="TravelDestination">
 		SELECT * FROM T_TRAVEL_DESTINATION
-		WHERE type='여행지'
-	</select> -->
+		where type='맛집'
+	</select>
+	
+	<select id="findTravelGSList" resultType="TravelDestination">
+		SELECT * FROM T_TRAVEL_DESTINATION
+		where type='숙소'
+	</select>
+	
 </mapper>

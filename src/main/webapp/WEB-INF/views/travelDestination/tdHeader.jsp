@@ -40,17 +40,12 @@ body {
     align-items: center;
 }
 
-.top-nav .logo .circle {
-    border: 2px solid #222;
-    border-radius: 50%;
-    display: inline-block;
-    font-size: 15px;
-    font-weight: 600;
-    width: 32px;
-    height: 32px;
-    line-height: 28px;
-    text-align: center;
-    margin: 0 5px 0 10px;
+.top-nav .logo img {
+    height: 35px;    
+    width: auto;      
+    max-width: 160px;
+    display: block;
+    
 }
 
 /* 메뉴 */
@@ -150,8 +145,7 @@ body {
 <div class="top-nav">
     <div class="logo">
         <a href="/"> 
-            <span class="circle">로</span>
-            <span class="circle">고</span>
+            <img src="https://i.imgur.com/xpGazxz.png" alt="Logo" />
         </a>
     </div>
     

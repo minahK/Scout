@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -216,7 +217,7 @@ to {
 .card-title {
 	font-size: 16px;
 	font-weight: 800;
-	color: #224291;
+	color: #48B2B7;
 	margin-bottom: 5px;
 }
 
@@ -297,72 +298,19 @@ to {
 					핫플레이스 모음</span>
 			</div>
 			<div class="card-list">
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
-							alt="성산일출봉">
+				<c:forEach var="travel" items="${travelHPList}">
+					<div class="card">
+						<div class="card-img-wrap">
+							<a href="/travelDestination/${travel.id}"> <img
+								class="card-img" src="${travel.image}" alt="travel.name">
+							</a>
+						</div>
+						<div class="card-body">
+							<div class="card-title">${travel.name}</div>
+							<div class="card-desc">${travel.sumup}</div>
+						</div>
 					</div>
-					<div class="card-body">
-						<div class="card-title">성산일출봉</div>
-						<div class="card-desc">제주의 상징, 바다 위 분화구와 아름다운 일출</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1444065381814-865dc9da92c0?auto=format&fit=crop&w=400&q=80"
-							alt="한라산">
-					</div>
-					<div class="card-body">
-						<div class="card-title">한라산</div>
-						<div class="card-desc">대한민국 최고봉, 사계절 색다른 매력의 산</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80"
-							alt="협재해수욕장">
-					</div>
-					<div class="card-body">
-						<div class="card-title">협재해수욕장</div>
-						<div class="card-desc">에메랄드빛 바다와 하얀 백사장, 제주 바다의 대명사</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=400&q=80"
-							alt="만장굴">
-					</div>
-					<div class="card-body">
-						<div class="card-title">만장굴</div>
-						<div class="card-desc">세계에서 가장 긴 용암동굴, 신비로운 지하 세계</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80"
-							alt="새별오름">
-					</div>
-					<div class="card-body">
-						<div class="card-title">새별오름</div>
-						<div class="card-desc">억새와 초원이 펼쳐진 제주의 오름, 트레킹 명소</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=400&q=80"
-							alt="우도">
-					</div>
-					<div class="card-body">
-						<div class="card-title">우도</div>
-						<div class="card-desc">땅콩아이스크림, 해수욕장, 일주도로가 유명한 소섬</div>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 		<!-- 맛집 -->
@@ -371,72 +319,19 @@ to {
 				<span class="dot-icon">⋯</span> <span>여행의 즐거움은 입안에서! 필수 맛집 탐방</span>
 			</div>
 			<div class="card-list">
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1519864342066-d4a1806a146d?auto=format&fit=crop&w=400&q=80"
-							alt="네거리식당">
+				<c:forEach var="travel" items="${travelMJList}">
+					<div class="card">
+						<div class="card-img-wrap">
+							<a href="/travelDestination/${travel.id}"> <img
+								class="card-img" src="${travel.image}" alt="travel.name">
+							</a>
+						</div>
+						<div class="card-body">
+							<div class="card-title">${travel.name}</div>
+							<div class="card-desc">${travel.sumup}</div>
+						</div>
 					</div>
-					<div class="card-body">
-						<div class="card-title">네거리식당</div>
-						<div class="card-desc">제주 흑돼지 근고기구이, 줄 서서 먹는 제주 대표 고기집</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80"
-							alt="삼대국수회관">
-					</div>
-					<div class="card-body">
-						<div class="card-title">삼대국수회관</div>
-						<div class="card-desc">고기국수의 원조, 진한 육수와 부드러운 면발의 명가</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?auto=format&fit=crop&w=400&q=80"
-							alt="동문시장 오메기떡">
-					</div>
-					<div class="card-body">
-						<div class="card-title">동문시장 오메기떡</div>
-						<div class="card-desc">제주 전통 오메기떡, 선물로도 인기 많은 떡집</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=400&q=80"
-							alt="우진해장국">
-					</div>
-					<div class="card-body">
-						<div class="card-title">우진해장국</div>
-						<div class="card-desc">고사리해장국의 명가, 제주도 해장국 맛집 1위</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?auto=format&fit=crop&w=400&q=80"
-							alt="돈사돈">
-					</div>
-					<div class="card-body">
-						<div class="card-title">돈사돈</div>
-						<div class="card-desc">참숯에 구운 제주 흑돼지, 고기맛의 끝판왕</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=400&q=80"
-							alt="미풍해장국">
-					</div>
-					<div class="card-body">
-						<div class="card-title">미풍해장국</div>
-						<div class="card-desc">해물해장국, 현지인과 관광객 모두 사랑하는 해장 맛집</div>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 		<!-- 감성 -->
@@ -445,28 +340,19 @@ to {
 				<span class="dot-icon">⋯</span> <span>조용히 머물고 싶은 감성 충전 공간</span>
 			</div>
 			<div class="card-list">
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=400&q=80"
-							alt="황리단길">
+				<c:forEach var="travel" items="${travelGSList}">
+					<div class="card">
+						<div class="card-img-wrap">
+							<a href="/travelDestination/${travel.id}"> <img
+								class="card-img" src="${travel.image}" alt="travel.name">
+							</a>
+						</div>
+						<div class="card-body">
+							<div class="card-title">${travel.name}</div>
+							<div class="card-desc">${travel.sumup}</div>
+						</div>
 					</div>
-					<div class="card-body">
-						<div class="card-title">경주 황리단길 감성카페</div>
-						<div class="card-desc">고즈넉한 한옥골목에서 만나는 트렌디한 감성카페!</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-img-wrap">
-						<img class="card-img"
-							src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
-							alt="춘천 소양강">
-					</div>
-					<div class="card-body">
-						<div class="card-title">춘천 소양강 스카이워크</div>
-						<div class="card-desc">투명 유리 위에서 즐기는 스릴과 낭만!</div>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 	</div>

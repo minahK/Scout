@@ -215,14 +215,14 @@ const slides = [
 	    img: '/resources/image/Seongsan.jpg',
 	    badge: '걸출한 일출 포인트',
 	    title: '제주의 심장을 품은 산,<br>성산일출봉',
-	    link: '#',
+	    link: '/travelDestination/1',
 	    bg: '#f7d49c'  // 배경색
 	  },
 	  {
 	    img: '/resources/image/Olle.jpg',
 	    badge: '서귀포 최대 전통시장',
 	    title: '제주 감성 듬뿍, 따뜻한 시장골목<br>서귀포매일올레시장',
-	    link: '#',
+	    link: '/travelDestination/5',
 	    bg: '#a4b9f1'
 	  },
 	  {

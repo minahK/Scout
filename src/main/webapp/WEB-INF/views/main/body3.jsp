@@ -5,16 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>날씨+여행소식</title>
-<link
-	href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
 body {
-	background: #fff;
+	background: #fff8f3;
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
 .info-main-row {
 	display: flex;
 	max-width: 880px;
@@ -22,67 +19,80 @@ body {
 	align-items: flex-start;
 	gap: 42px;
 }
-
 .weather-card {
 	width: 350px;
-	height: 200px;
-	background: #141414
-		url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80')
-		center/cover no-repeat;
-	border-radius: 18px;
+	height: 210px;
+	border-radius: 22px;
+	box-shadow: 0 6px 38px rgba(255,120,16,0.12), 0 2px 24px rgba(60, 20, 0, 0.09);
 	color: #fff;
-	box-shadow: 0 2px 24px rgba(20, 30, 40, 0.08);
-	padding: 0;
 	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
-	overflow: hidden;
+	align-items: flex-end;
 	position: relative;
+	overflow: hidden;
+	background:
+		linear-gradient(135deg, #ffe6c780 0%, #a78c5c80 100%),
+		url('https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+	transition: box-shadow .16s;
 }
-
+.weather-card::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(135deg, #ffe6c7ad 0%, #a78c5c88 100%),
+		linear-gradient(0deg, rgba(38,28,20,0.23) 75%, rgba(255,250,228,0.00) 100%);
+	pointer-events: none;
+}
 .weather-content {
-	background: rgba(15, 15, 20, 0.70);
-	padding: 24px 22px 20px 22px;
-	border-radius: 0 0 18px 18px;
+	position: relative;
+	width: 100%;
+	padding: 30px 28px 22px 28px;
+	background: rgba(44,30,0,0.23);
+	backdrop-filter: blur(2.5px) brightness(1.12);
+	border-radius: 0 0 22px 22px;
+	box-shadow: 0 6px 36px 0 rgba(255,110,0,0.10);
+	z-index: 1;
 }
-
 .weather-row {
 	display: flex;
 	align-items: center;
 	gap: 19px;
 }
-
 .weather-icon {
-	font-size: 54px;
-	line-height: 1;
-	margin-right: 4px;
+	font-size: 48px;
+	margin-right: 3px;
+	text-shadow: 0 3px 18px #b7832340;
 }
-
 .weather-info-main {
 	display: flex;
 	flex-direction: column;
 }
-
 .weather-temp {
-	font-size: 38px;
+	font-size: 39px;
 	font-weight: 900;
-	margin-bottom: 1px;
+	margin-bottom: 0;
 	letter-spacing: -2px;
+	line-height: 1.03;
+	text-shadow: 0 2px 10px #62400244;
 }
-
 .weather-city {
-	font-size: 18px;
+	font-size: 19px;
 	font-weight: 700;
+	color: #ffeec2;
+	margin-top: 2px;
+	line-height: 1.07;
+	text-shadow: 0 1px 10px #9e7b2e66;
 }
-
 .weather-desc {
-	margin-top: 9px;
+	margin-top: 14px;
 	font-size: 16px;
-	color: #f8f8f8;
-	opacity: 0.88;
+	color: #ffe6ba;
+	opacity: 1;
 	font-weight: 400;
+	letter-spacing: -0.7px;
+	text-shadow: 0 2px 7px #66522144;
 }
-
+/* 반응형 */
 @media ( max-width : 900px) {
 	.info-main-row {
 		flex-direction: column;
@@ -94,27 +104,23 @@ body {
 		min-width: 0;
 	}
 }
-
 .news-section {
 	flex: 1;
 	min-width: 320px;
 	max-width: 470px;
 }
-
 .news-header-row {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	margin-bottom: 8px;
 }
-
 .news-title {
 	font-size: 23px;
 	font-weight: 900;
 	color: #111;
 	letter-spacing: -1px;
 }
-
 .news-more-btn {
 	font-size: 23px;
 	color: #111;
@@ -126,17 +132,14 @@ body {
 	padding: 0 2px;
 	transition: color 0.13s;
 }
-
 .news-more-btn:hover {
-	color: #4685ef;
+	color: #ee853f;
 }
-
 .news-list {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
-
 .news-item {
 	padding: 0;
 	margin-bottom: 2px;
@@ -146,9 +149,8 @@ body {
 	font-size: 16.5px;
 	min-height: 38px;
 }
-
 .news-badge {
-	background: #313439;
+	background: #ffae3b;
 	color: #fff;
 	font-size: 13px;
 	border-radius: 9px;
@@ -159,35 +161,30 @@ body {
 	display: inline-block;
 	letter-spacing: -1px;
 }
-
 .news-link {
-	color: #3762d7;
+	color: #ff7f25;
 	font-weight: 700;
 	margin-right: 3px;
 	text-decoration: none;
 	margin-top: 7px;
 }
-
+.news-link:hover { text-decoration: underline; }
 .news-body {
 	color: #222;
 	font-weight: 500;
 	margin-right: 4px;
 	margin-top: 7px;
 }
-
 .news-emoji, .news-icon {
 	font-size: 18px;
 	margin-left: 2px;
 	margin-top: 7px;
 }
 </style>
-<!-- 날씨 아이콘: https://fonts.googleapis.com/icon?family=Material+Icons 사용 (또는 SVG, 이모지 대체) -->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
 </head>
 <body>
 	<div class="info-main-row">
-		<!-- 왼쪽: 날씨 카드 (실제 API 연결시 JS만 바꿔주면 됨) -->
+		<!-- 왼쪽: 날씨 카드 (외부 제주풍경 이미지 배경) -->
 		<div class="weather-card">
 			<div class="weather-content">
 				<div class="weather-row">
@@ -221,47 +218,25 @@ body {
 			</ul>
 		</div>
 	</div>
-	<script>
-// ===== 제주도 초단기 실황 API 요청 =====
-var xhr = new XMLHttpRequest();
-var url = 'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst';
-var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + '9%2FrVQNUrrD74vHUHYK%2Bau7E3Bgqd8Nko3F0%2Ft8hCl%2Fj4jB4ldy6f%2F%2FAQAYXXcG7nZGneRTyXFm7Rq02V2MAquQ%3D%3D';
-queryParams += '&' + encodeURIComponent('pageNo') + '=1';
-queryParams += '&' + encodeURIComponent('numOfRows') + '=100';
-queryParams += '&' + encodeURIComponent('dataType') + '=XML'; 
-queryParams += '&' + encodeURIComponent('base_date') + '=20250129'; // 오늘 날짜 (예: 20250129)
-queryParams += '&' + encodeURIComponent('base_time') + '=0600'; // 최신 발표 시간
-queryParams += '&' + encodeURIComponent('nx') + '=53';  // 제주 격자 X
-queryParams += '&' + encodeURIComponent('ny') + '=38';  // 제주 격자 Y
-
-xhr.open('GET', url + queryParams);
-xhr.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-        var xmlDoc = this.responseXML;
-        var items = xmlDoc.getElementsByTagName("item");
-        
-        let temp = null;
-        let sky = null;
-
-        for (let i = 0; i < items.length; i++) {
-            const category = items[i].getElementsByTagName("category")[0].textContent;
-            const value = items[i].getElementsByTagName("obsrValue")[0].textContent;
-            if (category === "T1H") temp = value; // 기온
-            if (category === "SKY") sky = value;  // 하늘 상태
-        }
-
-        // SKY 코드 → 아이콘/설명 변환
-        let icon = "wb_sunny";
-        let desc = "맑음";
-        if (sky == 3) { icon = "cloud"; desc = "구름 많음"; }
-        if (sky == 4) { icon = "filter_drama"; desc = "흐림"; }
-
-        document.getElementById("w-temp").innerText = temp + "°C";
-        document.getElementById("w-desc").innerText = desc;
-        document.getElementById("w-icon").innerText = icon;
-    }
-};
-xhr.send();
+<script>
+fetch('https://api.openweathermap.org/data/2.5/weather?lat=33.4996&lon=126.5312&units=metric&lang=kr&appid=da625f35d4b2d9ac5cc2fbb003b22b43')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("w-temp").innerText = Math.round(data.main.temp) + "°C";
+    document.getElementById("w-city").innerText = data.name;
+    document.getElementById("w-desc").innerText = data.weather[0].description;
+    // 날씨에 따라 아이콘 변경
+    let main = data.weather[0].main;
+    let icon = "wb_sunny";
+    if(main.includes("Cloud")) icon = "cloud";
+    else if(main.includes("Rain")) icon = "grain";
+    else if(main.includes("Clear")) icon = "wb_sunny";
+    else icon = "filter_drama";
+    document.getElementById("w-icon").innerText = icon;
+  })
+  .catch(() => {
+    document.getElementById("w-desc").innerText = "날씨 정보를 불러올 수 없습니다.";
+  });
 </script>
 </body>
 </html>

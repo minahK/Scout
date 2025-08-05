@@ -1,18 +1,13 @@
 package com.app.controller;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
 
 import com.app.dto.travelDestination.TravelDestination;
 import com.app.service.travelDestination.TravelDestinationService;
@@ -22,8 +17,17 @@ public class MainController {
 	@Autowired
 	TravelDestinationService travelDestinationService;
 	
+	//메인 페이지
 	@GetMapping("/")
-	public String scoutMainPage() {
+	public String scoutMainPage(Model model) {
+		
+		List<TravelDestination> travelHPList = travelDestinationService.findTravelHPList();
+		List<TravelDestination> travelMJList = travelDestinationService.findTravelMJList();
+		List<TravelDestination> travelGSList = travelDestinationService.findTravelGSList();
+		
+		model.addAttribute("travelHPList", travelHPList);
+		model.addAttribute("travelMJList", travelMJList);
+		model.addAttribute("travelGSList", travelGSList);
 		return "main/main";
 	}
 	
@@ -35,6 +39,7 @@ public class MainController {
         return "";
     }
 	
+	//여행지 페이지
 	@GetMapping("/travelDestination")
 	public String travelDestination(Model model) {
 		
@@ -42,11 +47,17 @@ public class MainController {
 		
 		model.addAttribute("travelList", travelList);
 		
+		
 		return "travelDestination/travelDestination";
 	}
 	
-	@GetMapping("/travelDestination/detail")
-	public String travelDestinationDetail() {
+	//상세 페이지
+	@GetMapping("/travelDestination/{travelId}")
+	public String travelDestinationDetail(@PathVariable int travelId,Model model) {
+		
+		TravelDestination travelDestination = travelDestinationService.findTravelById(travelId);
+		
+		model.addAttribute("travel", travelDestination);
 		
 		return "travelDestination/detail";
 	}
