@@ -95,6 +95,23 @@ form {
 	pointer-events: none;
 }
 
+.options {
+	margin-top: 15px;
+	text-align: center;
+	font-size: 14px;
+}
+
+.options a {
+	color: #eb5e00;
+	text-decoration: none;
+	margin: 0 10px;
+	font-weight: 800;
+}
+
+.options a:hover {
+	text-decoration: underline;
+}
+
 button {
 	margin-top: 20px;
 	padding: 10px;
@@ -160,6 +177,11 @@ button:hover {
 			</div>
 
 			<button type="submit">가입하기</button>
+
+			<div class="options">
+			<p>아이디가 이미 있으신가요?</p>
+				<a href="/customer/signin">로그인</a>
+			</div>
 		</form>
 	</div>
 
