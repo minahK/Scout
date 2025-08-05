@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC
+		   "-//mybatis.org//DTD Mapper 3.0//EN" 
+		   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		   
+<mapper namespace="travelDestination_mapper">
+	<select id="findTravelList" resultType="TravelDestination">
+		SELECT * FROM T_TRAVEL_DESTINATION
+	</select>
+	
+	<!-- <select id="findTravelPlaceList" resultType="TravelDestination">
+		SELECT * FROM T_TRAVEL_DESTINATION
+		WHERE type='여행지'
+	</select>
+	
+	<select id="findTravelList" resultType="TravelDestination">
+		SELECT * FROM T_TRAVEL_DESTINATION
+		WHERE type='맛집'
+	</select>
+	
+	<select id="findTravelList" resultType="TravelDestination">
+		SELECT * FROM T_TRAVEL_DESTINATION
+		WHERE type='여행지'
+	</select> -->
+</mapper>
