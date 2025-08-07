@@ -15,9 +15,10 @@
 	
 	<!-- 바디 -->
 	<%@ include file="detailBody.jsp"%>
+	<%@ include file="detailBody2.jsp"%>
 
 	<!-- 푸터 -->
-	<%@ include file="../main/footer.jsp" %>
+	<%@ include file="detailFooter.jsp" %>
     
     
 	

@@ -21,4 +21,5 @@ public class TravelDestination {
 	private String type;
 	private String image;
 	private Date createDate;
+	private int viewCount;
 }

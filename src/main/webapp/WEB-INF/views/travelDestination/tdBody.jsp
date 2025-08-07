@@ -165,7 +165,7 @@
         .right-panel {
             width: 280px;
             height: 250px;
-            border: 1px solid #f7d49c;
+            border: 2px solid #f7d49c;
             border-radius: 8px;
             padding: 16px 20px;
             font-size: 14px;
@@ -210,7 +210,17 @@
                 <span class="header-title">여행지</span>
             </div>
             <div class="page-title">
-                #제주
+                <span>#</span>
+                <span>
+                <c:choose>
+				    <c:when test="${empty tag}">
+				        전체
+				    </c:when>
+				    <c:otherwise>
+				        ${tag}
+				    </c:otherwise>
+				</c:choose>
+                </span>
             </div>
             <hr>
             <div class="header-bottom">
@@ -218,9 +228,8 @@
                     총 <span class="total-number"><c:out value="${fn:length(travelList)}" /></span>건
                 </span>
                 <div class="sort-options">
-                    <span class="active">최신순</span>
-                    <span>거리순</span>
-                    <span>인기순</span>
+                    <span onClick="location.href='/travelDestination?sort=recent'">최신순</span>
+                    <span onClick="location.href='/travelDestination?sort=popularity'">인기순</span>
                 </div>
             </div>
         </div>
@@ -234,11 +243,6 @@
                         <div class="travel-title">${travel.name}</div>
                         <div class="travel-location">${travel.sumup}</div>
                         <div class="travel-desc">${travel.descride}</div>
-                        <%-- <div class="hashtags">
-                            <c:forEach var="tag" items="${travel.hashtags}">
-                                <span>#<c:out value="${tag}" /></span>
-                            </c:forEach>
-                        </div> --%>
                     </div>
                 </li>
             </c:forEach>
@@ -263,37 +267,38 @@
         <div class="tag-group">
             <h4>테마별</h4>
             <div class="tags">
-                <span>#제주시</span>
-                <span>#서귀포시</span>
-                <span>#핫플</span>
-                <span>#맛집</span>
-                <span>#숙소</span>
-                <span>#호텔</span>
-                <span>#카페</span>
-                <span>#실내여행지</span>
-                <span>#이색체험</span>
-                <span>#음식</span>
-                <span>#쇼핑</span>
-                <span>#트레킹</span>
-                <span>#드라이브코스</span>
-                <span>#봄꽃여행</span>
-                <span>#봄나들이</span>
+            	<span onClick="location.href='/travelDestination?sort=recent'">#전체</span>
+                <span onClick="location.href='/travelDestination?tag=제주시'">#제주시</span>
+                <span onClick="location.href='/travelDestination?tag=서귀포시'">#서귀포시</span>
+                <span onClick="location.href='/travelDestination?tag=핫플'">#핫플</span>
+                <span onClick="location.href='/travelDestination?tag=맛집'">#맛집</span>
+                <span onClick="location.href='/travelDestination?tag=숙소'">#숙소</span>
+                <span onClick="location.href='/travelDestination?tag=호텔'">#호텔</span>
+                <span onClick="location.href='/travelDestination?tag=가볼만한곳'">#가볼만한곳</span>
+                <span onClick="location.href='/travelDestination?tag=실내여행지'">#실내여행지</span>
+                <span onClick="location.href='/travelDestination?tag=이색체험'">#이색체험</span>
+                <span onClick="location.href='/travelDestination?tag=음식'">#음식</span>
+                <span onClick="location.href='/travelDestination?tag=쇼핑'">#쇼핑</span>
+                <span onClick="location.href='/travelDestination?tag=트레킹'">#트레킹</span>
+                <span onClick="location.href='/travelDestination?tag=드라이브코스'">#드라이브코스</span>
+                <span onClick="location.href='/travelDestination?tag=제주여행'">#제주여행</span>
             </div>
         </div>
     </aside>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  // .sort-options 아래의 모든 span을 선택
-  const sortButtons = document.querySelectorAll('.sort-options span');
-  sortButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
-      // 먼저 모든 span의 active 제거
-      sortButtons.forEach(b => b.classList.remove('active'));
-      // 클릭한 span에 active 추가
-      this.classList.add('active');
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedTag = urlParams.get('tag');
+    const tags = document.querySelectorAll('.tags span');
+    tags.forEach(tagEl => {
+        // #전체는 tag 파라미터 없을 때 active
+        if (!selectedTag && tagEl.textContent === '#전체') {
+            tagEl.classList.add('active');
+        } else if (selectedTag && tagEl.textContent === '#' + selectedTag) {
+            tagEl.classList.add('active');
+        }
     });
-  });
 });
 </script>
 </body>

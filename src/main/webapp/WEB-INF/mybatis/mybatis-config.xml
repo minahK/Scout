@@ -12,6 +12,8 @@
 	<typeAliases>
 		<!-- <typeAlias type="com.app.dto.room.Room" alias="Room" />  -->
 		<typeAlias type="com.app.dto.travelDestination.TravelDestination" alias="TravelDestination" />
+		<typeAlias type="com.app.dto.travelDestination.HashTags" alias="HashTags" />
+		<typeAlias type="com.app.dto.travelDestination.TravelInfo" alias="TravelInfo" />
 	</typeAliases>
 
 </configuration>

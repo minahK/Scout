@@ -19,5 +19,7 @@
 	<!-- 푸터 -->
 	<%@ include file="../main/footer.jsp" %>
 	
+	
+	
 </body>
 </html>

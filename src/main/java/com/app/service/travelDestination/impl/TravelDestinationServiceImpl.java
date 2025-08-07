@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dao.travelDestination.TravelDestinationDAO;
+import com.app.dto.travelDestination.HashTags;
 import com.app.dto.travelDestination.TravelDestination;
+import com.app.dto.travelDestination.TravelInfo;
 import com.app.service.travelDestination.TravelDestinationService;
 
 @Service
@@ -16,8 +18,8 @@ public class TravelDestinationServiceImpl implements TravelDestinationService {
 	TravelDestinationDAO travelDestinationDAO;
 
 	@Override
-	public List<TravelDestination> findTravelList() {
-		List<TravelDestination> travelList = travelDestinationDAO.findTravelList();
+	public List<TravelDestination> findTravelList(String sort) {
+		List<TravelDestination> travelList = travelDestinationDAO.findTravelList(sort);
 		return travelList;
 	}
 
@@ -43,5 +45,34 @@ public class TravelDestinationServiceImpl implements TravelDestinationService {
 	public List<TravelDestination> findTravelHPList() {
 		List<TravelDestination> travelList = travelDestinationDAO.findTravelHPList();
 		return travelList;
+	}
+
+	@Override
+	public List<HashTags> findHashTags(int travelId) {
+		List<HashTags> hashtag = travelDestinationDAO.findHashTags(travelId);
+		return hashtag;
+	}
+
+	@Override
+	public void increaseView(int travelId) {
+		int result = travelDestinationDAO.increaseView(travelId);
+	}
+
+	@Override
+	public List<TravelDestination> findTravelTagList(String tag) {
+		List<TravelDestination> result = travelDestinationDAO.findTravelTagList(tag);
+		return result;
+	}
+
+	@Override
+	public List<TravelDestination> findTravelTagAndSortList(String tag, String sort) {
+		List<TravelDestination> result = travelDestinationDAO.findTravelTagAndSortList(tag, sort);
+		return result;
+	}
+
+	@Override
+	public TravelInfo findTravelInfo(int travelId) {
+		TravelInfo result = travelDestinationDAO.findTravelInfo(travelId);
+		return result;
 	}
 }

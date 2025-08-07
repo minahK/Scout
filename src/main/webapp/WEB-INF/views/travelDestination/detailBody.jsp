@@ -30,7 +30,7 @@ html {
 .travel-region {
 	color: #767676;
 	font-size: 1.08rem;
-	margin-bottom: 19px;
+	margin-bottom: 15px;
 }
 
 .travel-sumup {
@@ -38,7 +38,7 @@ html {
 	font-weight: 600;
 	color: #232323;
 	display: inline-block;
-	background: linear-gradient(transparent 60%, #ffe1e1 60%);
+	background: linear-gradient(transparent 60%, #f7d49c 60%);
 	padding: 3px 0 1px 0;
 	margin-bottom: 16px;
 	letter-spacing: -0.3px;
@@ -186,15 +186,9 @@ html {
 	line-height: 1.55;
 }
 
-.info-table td:first-child {
-	color: #555;
-	font-weight: 400;
-	width: 110px;
-}
-
 .info-table .col-title {
 	font-weight: 600;
-	color: #4b6cc0;
+	color: #eb5e00;
 	width: 92px;
 }
 
@@ -211,7 +205,11 @@ html {
 
 		<!-- 여행지명 -->
 		<div class="travel-title">${travel.name}</div>
-		<div class="travel-region">제주시</div>
+		<div class="travel-region" style="margin-top:10px;">
+			<c:forEach var="tag" items="${hashtag}">
+				#<span>${tag.tag}</span>
+			</c:forEach>
+		</div>
 		<div class="travel-sumup">${travel.sumup}</div>
 
 		<!-- 아이콘/정보 row -->
@@ -221,7 +219,7 @@ html {
 					<i class="fa-regular fa-heart"></i><span>0</span>
 				</div>
 				<div class="icon-item">
-					<i class="fa-regular fa-eye"></i><span>949</span>
+					<i class="fa-regular fa-eye"></i><span>${travel.viewCount}</span>
 				</div>
 			</div>
 			<div class="icon-row">
@@ -261,7 +259,7 @@ html {
 		<div class="section-title-row">
 			<div class="section-title">상세정보</div>
 		</div>
-		<hr class="section-underline" />
+		<hr class="section-underline" style="margin-top: 10px;"/>
 		<div>${travel.descride}</div>
 		<br>
 		<!-- 지도 + 여행지 정보 테이블 : 여기서부터! -->
@@ -279,43 +277,29 @@ html {
 		<table class="info-table">
 			<tr>
 				<td class="col-title">문의 및 안내</td>
-				<td>064-782-5671</td>
+				<td>${travelInfo.contact}</td>
 				<td class="col-title">홈페이지</td>
-				<td><a href="https://www.visitjeju.net/kr" target="_blank">https://www.visitjeju.net/kr</a></td>
+				<td><a href="${travelInfo.homepage}" target="_blank">${travelInfo.homepage}</a></td>
 			</tr>
 			<tr>
 				<td class="col-title">주소</td>
-				<td>제주특별자치도 제주시 성산읍 성산리 1</td>
+				<td>${travelInfo.address}</td>
 				<td class="col-title">이용시간</td>
-				<td>상시 개방</td>
+				<td>${travelInfo.openTime}</td>
 			</tr>
 			<tr>
 				<td class="col-title">휴일</td>
-				<td>연중무휴</td>
+				<td>${travelInfo.holiday}</td>
 				<td class="col-title">주차</td>
-				<td>가능</td>
+				<td>${travelInfo.parking}</td>
 			</tr>
 			<tr>
 				<td class="col-title">입장료</td>
-				<td>무료</td>
+				<td>${travelInfo.admission}</td>
 				<td></td>
 				<td></td>
 			</tr>
 		</table>
-
-		<!-- 댓글 섹션 -->
-		<div id="comment-section"></div>
-		<div
-			style="height: 380px; margin: 30px 0; background: #f9f9f9; border-radius: 9px; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 1.13rem;">
-			댓글 영역 예시</div>
-
-		<!-- 추천여행 섹션 -->
-		<div id="recommend-section"></div>
-		<div
-			style="height: 200px; margin: 40px 0 30px 0; background: #e7f3ff; border-radius: 9px; display: flex; align-items: center; justify-content: center; color: #4984ce; font-size: 1.1rem;">
-			추천여행 영역 예시</div>
-	</div>
-
 	<script>
     // 탭 클릭 시 해당 섹션으로 스크롤
     document.querySelectorAll('.tab-menu .tab').forEach(tab => {

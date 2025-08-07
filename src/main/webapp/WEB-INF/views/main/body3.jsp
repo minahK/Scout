@@ -200,10 +200,14 @@ body {
 		<!-- 오른쪽: 여행 소식 -->
 		<div class="news-section">
 			<div class="news-header-row">
-				<span class="news-title">오늘의 여행 소식</span>
-				<button class="news-more-btn">+</button>
+				<span class="news-title">오늘의 행사 소식</span>
+				<button class="news-more-btn" onClick="location.href='/scout/festival/list'">+</button>
 			</div>
 			<ul class="news-list">
+				<%-- <c:forEach var="festival" items="${festivalList}">
+					<li class="news-item"><a class="news-body">${festival.title}</a></li>
+				</c:forEach> --%>
+			
 				<li class="news-item"><span class="news-badge">행정안전부</span> <span
 					class="news-body">호우 국민행동요령 - 호우·태풍 이렇게 행동하세요</span></li>
 				<li class="news-item"><a href="#" class="news-link">한국관광공사</a>

@@ -103,11 +103,11 @@ body {
     top: 100%;
     transform: translateX(-50%);
     background: #f6f6f6;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
+    box-shadow: 0  24px rgba(0, 0, 0, .06);
     padding: 20px 40px;
     border-bottom: 1px solid #eee;
-    border-radius: 0 0 18px 18px;
-    min-width: 170px;
+    border-radius: 18px 18px 18px 18px;
+    min-width: 70px;
     width: max-content;
     z-index: 999;
     white-space: nowrap;
@@ -134,7 +134,7 @@ body {
 }
 
 .dropdown-list a:hover {
-    color: #2251b5;
+    color: #eb5e00;
     font-weight: 600;
 }
 
@@ -170,7 +170,7 @@ body {
             <a href="javascript:void(0)">여행정보</a>
             <div class="dropdown">
                 <div class="dropdown-list">
-                    <a href="/travelDestination">여행지</a> 
+                    <a href="/travelDestination?sort=recent">여행지</a> 
                     <a href="#">여행기사</a> 
                     <a href="#">여행행사</a>
                 </div>

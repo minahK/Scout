@@ -6,7 +6,37 @@
 <mapper namespace="travelDestination_mapper">
 	<select id="findTravelList" resultType="TravelDestination">
 		SELECT * FROM T_TRAVEL_DESTINATION
+		<if test="sort == 'recent'">order by create_date desc</if>
+		<if test="sort == 'popularity'">order by view_count desc</if>
 	</select>
+	
+	<select id="findTravelTagList" resultType="TravelDestination" parameterType="String">
+		select td.id, td.name, td.sumup, td.descride, td.image
+		FROM T_TRAVEL_DESTINATION TD,TRAVEL_HASHTAG TH
+		WHERE td.id=th.id
+		<if test="tag != null and tag != ''">
+      		AND TH.TAG = #{tag, jdbcType=VARCHAR}
+    	</if>
+	</select>
+	
+	<select id="findTravelTagAndSortList" resultType="TravelDestination">
+    SELECT td.id, td.create_date, td.name,td.latitude,td.longitude,td.view_count, td.sumup, td.descride, td.image
+    FROM T_TRAVEL_DESTINATION td
+    JOIN TRAVEL_HASHTAG th ON td.id = th.id
+    <where>
+        <if test="tag != null and tag != ''">
+            AND th.tag = #{tag}
+        </if>
+    </where>
+    <choose>
+        <when test="sort == 'popularity'">
+            ORDER BY td.popularity DESC
+        </when>
+        <otherwise>
+            ORDER BY td.create_date DESC
+        </otherwise>
+    </choose>
+</select>
 	
 	<select id="findTravelById" resultType="TravelDestination" parameterType="int">
 		SELECT * FROM T_TRAVEL_DESTINATION
@@ -26,6 +56,22 @@
 	<select id="findTravelGSList" resultType="TravelDestination">
 		SELECT * FROM T_TRAVEL_DESTINATION
 		where type='숙소'
+	</select>
+	
+	<select id="findHashTags" resultType="HashTags">
+		SELECT * FROM TRAVEL_HASHTAG
+		where id= #{travelId}
+	</select>
+	
+	<update id="increaseView">
+    	UPDATE T_TRAVEL_DESTINATION
+    	SET view_count = view_count + 1
+    	WHERE id = #{id}
+	</update>
+	
+	<select id="findTravelInfo" parameterType="int" resultType="TravelInfo">
+		SELECT * FROM TRAVEL_INFO
+		WHERE id = #{travelId}
 	</select>
 	
 </mapper>
