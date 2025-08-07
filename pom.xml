@@ -1,66 +1,107 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-<modelVersion>4.0.0</modelVersion>
-<groupId>Scout</groupId>
-<artifactId>Scout</artifactId>
-<version>0.0.1-SNAPSHOT</version>
-<packaging>war</packaging>
-<build>
-<plugins>
-<plugin>
-<artifactId>maven-compiler-plugin</artifactId>
-<version>3.8.1</version>
-<configuration>
-<source>11</source>
-<target>11</target>
-<release>11</release>
-</configuration>
-</plugin>
-<plugin>
-<artifactId>maven-war-plugin</artifactId>
-<version>3.2.3</version>
-</plugin>
-</plugins>
-</build>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>Scout</groupId>
+	<artifactId>Scout</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>11</source>
+					<target>11</target>
+					<release>11</release>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.2.3</version>
+			</plugin>
+		</plugins>
+	</build>
 
-<dependencies>
-<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-<dependency>
-<groupId>javax.servlet</groupId>
-<artifactId>javax.servlet-api</artifactId>
-<version>4.0.1</version>
-<scope>provided</scope>
-</dependency>
+	<dependencies>
+		<!-- Servlet API -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
+		</dependency>
 
+		<!-- JSP API -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.3.3</version>
+			<scope>provided</scope>
+		</dependency>
 
-<!--
-https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
-<dependency>
-<groupId>javax.servlet.jsp</groupId>
-<artifactId>javax.servlet.jsp-api</artifactId>
-<version>2.3.3</version>
-<scope>provided</scope>
-</dependency>
+		<!-- JSTL -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
 
+		<!-- Spring Web MVC -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>5.3.30</version>
+		</dependency>
 
-<!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
-<dependency>
-<groupId>javax.servlet</groupId>
-<artifactId>jstl</artifactId>
-<version>1.2</version>
-</dependency>
+		<!-- Spring JDBC -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>5.3.30</version>
+		</dependency>
 
+		<!-- MyBatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.5.13</version>
+		</dependency>
 
-<!--
-https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
-<dependency>
-<groupId>org.springframework</groupId>
-<artifactId>spring-webmvc</artifactId>
-<version>5.3.27</version>
-</dependency>
+		<!-- MyBatis Spring -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>2.0.7</version>
+		</dependency>
 
+		<!-- Oracle JDBC -->
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<version>19.8.0.0</version>
+		</dependency>
 
-</dependencies>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>5.3.30</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.30</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+	</dependencies>
 </project>
