@@ -43,10 +43,10 @@ public class TravelCourseController {
     }
 
     // 여행 코스 상세 페이지
-    @GetMapping("/detail/")
+    @GetMapping("/detail/{id}")
     public String getCourseDetail(@PathVariable("id") Long id, Model model) {
         TravelCourseDTO course = travelCourseService.getCourseDetail(id);
-        model.addAttribute("course", course);
+        model.addAttribute("course", course);  // <-- 반드시 이 코드 있어야 JSP에서 ${course.xxx} 사용 가능!
         return "travelCourseDetail"; // /WEB-INF/views/travelCourseDetail.jsp
     }
     
