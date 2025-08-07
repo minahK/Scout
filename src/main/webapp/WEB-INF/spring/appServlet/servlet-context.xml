@@ -11,24 +11,22 @@ http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-	<annotation-driven />
+	   <!-- Annotation 기반 컨트롤러 지원 -->
+    <annotation-driven/>
+       <!-- 2) default servlet handler: DispatcherServlet 이 처리 못하는 건 톰캣 기본 서블릿으로 -->
+    <default-servlet-handler/>
 
+    <!-- 정적 리소스 매핑: /resources/** → webapp/resources/ -->
+  <!--   <resources mapping="/resources/**" location="/resources/"/> -->
+    <resources mapping="/resources/**" location="/WEB-INF/resources/"/>
 
-	<context:component-scan base-package="com.app"></context:component-scan>
+    <!-- 컴포넌트 스캔 -->
+    <context:component-scan base-package="com.app"/>
 
-
-	<beans:bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/"></beans:property>
-		<beans:property name="suffix" value=".jsp"></beans:property>
-	</beans:bean>
-	<resources location="/resources/" mapping="/**"></resources>
-
-	<beans:bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
-	
+    <!-- JSP 뷰 리졸버 -->
+    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <beans:property name="prefix" value="/WEB-INF/views/"/>
+        <beans:property name="suffix" value=".jsp"/>
+    </beans:bean>
 
 </beans:beans>

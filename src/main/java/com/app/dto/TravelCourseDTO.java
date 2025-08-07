@@ -1,42 +1,56 @@
 package com.app.dto;
 
+import java.util.Date;
+
 public class TravelCourseDTO {
-	private int id;
-	private String title;
-	private String description;
-	// ... 필요한 필드
+    private Long courseId;       // COURSE_ID
+    private String title;        // TITLE
+    private String description;  // DESCRIPTION
+    private Long regionId;       // REGION_ID
+    private Long userId;         // USER_ID
+    private Date createdAt;      // CREATED_AT
 
-	// getter, setter
-	public int getId() {
-		return id;
-	}
+    // --- Getter / Setter ---
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public Long getCourseId() {
+        return courseId;
+    }
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public Long getRegionId() {
+        return regionId;
+    }
+    public void setRegionId(Long regionId) {
+        this.regionId = regionId;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public Long getUserId() {
+        return userId;
+    }
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	@Override
-	public String toString() {
-		return "TravelCourseDTO [id=" + id + ", title=" + title + ", description=" + description + "]";
-	}
-
-	// toString(), 생성자 등 필요에 따라 추가
-	
-	
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }

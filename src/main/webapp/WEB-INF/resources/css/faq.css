@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+
+:root {
+  --faq-bg: #fdd1b4;       /* 전체 배경 연한 핑크베이지 */
+  --faq-light: #ff9752;    /* 라이트 오렌지 */
+  --faq-base: #ee853f;     /* 기본 오렌지 */
+  --faq-dark: #eb5e00;     /* 진한 오렌지 */
+  --faq-text: #333;        /* 텍스트 기본 색 */
+  --faq-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.faq-container {
+  background: var(--faq-bg);
+  padding: 40px;
+  min-height: 100vh;
+}
+
+.faq-card {
+  background: #fff;
+  border-left: 6px solid var(--faq-base);
+  border-radius: 8px;
+  box-shadow: var(--faq-shadow);
+  margin-bottom: 24px;
+  padding: 24px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.faq-card:hover {
+  border-left-color: var(--faq-dark);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.faq-category {
+  display: inline-block;
+  background: var(--faq-light);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  padding: 2px 8px;
+  margin-bottom: 8px;
+}
+
+.faq-question {
+  color: var(--faq-dark);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 8px 0;
+}
+
+.faq-answer {
+  color: var(--faq-text);
+  font-size: 1rem;
+  line-height: 1.6;
+}

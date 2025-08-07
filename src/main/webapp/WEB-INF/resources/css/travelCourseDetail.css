@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+
+/* travelCourseList.css */
+
+.travel-list {
+  background: #0000; /* 메인 */
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(238, 133, 63, 0.10);
+  padding: 32px 24px;
+  max-width: 680px;
+  margin: 32px auto;
+}
+
+.travel-list-title {
+  color: #eb5e00; /* 진한색 */
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.travel-list-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.travel-list-item {
+  background: #fff;
+  border-left: 8px solid #ff9752; /* 옅은색 */
+  margin-bottom: 20px;
+  border-radius: 12px;
+  padding: 18px 20px 18px 24px;
+  box-shadow: 0 2px 8px rgba(255, 151, 82, 0.09);
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.travel-list-item:hover {
+  border-left: 8px solid #ee853f; /* 기본색 */
+  background: #fff6ef;
+}
+
+.travel-list-item-title {
+  font-size: 1.2rem;
+  color: #eb5e00; /* 진한색 */
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.travel-list-item-desc {
+  color: #ee853f; /* 기본색 */
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.travel-list-item-meta {
+  color: #9c5c24;
+  font-size: 0.92rem;
+  margin-top: 2px;
+}

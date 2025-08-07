@@ -2,27 +2,36 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans.xsd">
+http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- ★ DataSource, MyBatis 설정 (여기서부터 복붙) -->
-    <!-- 예시 DataSource: (자신의 DB 정보로 수정 필요) -->
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-        <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-        <property name="username" value="YOUR_DB_ID"/>
-        <property name="password" value="YOUR_DB_PW"/>
-    </bean>
+	<!-- DataSource 설정 -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.OracleDriver" />
+		<!-- localhost, 1521 포트, 서비스 이름 orcl -->
+		<property name="url"
+			value="jdbc:oracle:thin:@//192.168.0.122:1521/orcl" />
+		<property name="username" value="scott" />
+		<property name="password" value="tiger" />
+	</bean>
 
-    <!-- MyBatis SqlSessionFactory 설정 -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath:/mapper/*.xml"/>
-        <property name="configLocation" value="classpath:mybatis-config.xml"/>
-    </bean>
+	<!-- SqlSessionFactory 설정 -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+	<property name="mapperLocations" value="classpath:mapper/*.xml" />
+	</bean>
 
-    <!-- MyBatis Mapper 인터페이스 자동 스캔 -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.app.mapper"/>
-    </bean>
+	<!-- SqlSessionTemplate 등록 -->
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- Mapper Scanner -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.app.mapper" />
+	</bean>
 
 </beans>
