@@ -20,4 +20,7 @@ public interface UserDAO {
 	public int modifyUser(User user);
 	
 	public List<User> findUserListBySearchCondition(UserSearchCondition userSearchCondition);
+
+	  // 이메일과 새 비밀번호로 업데이트
+    int updatePasswordByEmail(String email, String newPassword) throws Exception;
 }

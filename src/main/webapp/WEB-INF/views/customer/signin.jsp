@@ -5,12 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인 페이지</title>
-<!-- Font Awesome 아이콘 사용 -->
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-/* 기존 스타일 유지 + 추가 스타일 */
 body {
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	background-color: #f2f2f2;
@@ -279,20 +278,20 @@ button:hover {
 	</div>
 
 	<script>
-        function togglePassword() {
-            const pwField = document.getElementById("pw");
-            const toggleIcon = document.querySelector(".password-toggle");
-            if (pwField.type === "password") {
-                pwField.type = "text";
-                toggleIcon.classList.add("fa-eye");
-                toggleIcon.classList.remove("fa-eye-slash");
-            } else {
-                pwField.type = "password";
-                toggleIcon.classList.add("fa-eye-slash");
-                toggleIcon.classList.remove("fa-eye");
-            }
-        }
-    </script>
+		function togglePassword() {
+			const pwField = document.getElementById("pw");
+			const toggleIcon = document.querySelector(".password-toggle");
+			if (pwField.type === "password") {
+				pwField.type = "text";
+				toggleIcon.classList.add("fa-eye");
+				toggleIcon.classList.remove("fa-eye-slash");
+			} else {
+				pwField.type = "password";
+				toggleIcon.classList.add("fa-eye-slash");
+				toggleIcon.classList.remove("fa-eye");
+			}
+		}
+	</script>
 
 </body>
 </html>

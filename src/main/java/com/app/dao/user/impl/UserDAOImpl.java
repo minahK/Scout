@@ -1,7 +1,10 @@
 package com.app.dao.user.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,6 +19,19 @@ public class UserDAOImpl implements UserDAO {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 
+	@Override
+    public int updatePasswordByEmail(String email, String newPassword) throws Exception {
+        try (SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession(true)) {
+            Map<String, String> params = new HashMap<>();
+            params.put("email", email);
+            params.put("password", newPassword);
+            return session.update(
+                "user.user_mapper.updatePasswordByEmail",
+                params
+            );
+        }
+    }
+	
 	@Override
 	public int saveUser(User user) {
 		
@@ -73,6 +89,7 @@ public class UserDAOImpl implements UserDAO {
 		
 		return userList;
 	}
+
 	
 	
 }

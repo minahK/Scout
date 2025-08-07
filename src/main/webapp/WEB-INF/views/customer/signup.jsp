@@ -170,7 +170,14 @@ button:hover {
 			</div>
 			<p id="pwMatchMsg"></p>
 
-			<label for="name">이름</label>
+			<label for="email">이메일</label>
+			<div class="input-group">
+				<i class="fas fa-envelope input-icon"></i> <input type="email"
+					name="email" id="email" placeholder="example@domain.com" required>
+			</div>
+			<p id="emailFormatMsg"></p>
+
+			<label for="name">닉네임</label>
 			<div class="input-group">
 				<i class="fas fa-user-tag input-icon"></i> <input type="text"
 					name="name" id="name" required>
@@ -179,7 +186,7 @@ button:hover {
 			<button type="submit">가입하기</button>
 
 			<div class="options">
-			<p>아이디가 이미 있으신가요?</p>
+				<p>아이디가 이미 있으신가요?</p>
 				<a href="/customer/signin">로그인</a>
 			</div>
 		</form>
@@ -256,6 +263,30 @@ button:hover {
       pwMatchMsg.style.color = 'red';
     }
   });
+  
+  //이메일 확인
+  const emailInput = $('#email');
+const emailMsg = $('#emailFormatMsg');
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+emailInput.on('input', () => {
+  if (!emailPattern.test(emailInput.val())) {
+    emailMsg.text('올바른 이메일 형식이 아닙니다').css('color', 'red');
+  } else {
+    emailMsg.text('');
+  }
+});
+
+$('#btn_checkEmail').on('click', () => {
+  $.post('/customer/checkEmailJson',
+    JSON.stringify({ email: emailInput.val() }),
+    (res) => {
+      if (res.body === 'Y') emailMsg.text('이미 사용 중인 이메일입니다').css('color', 'red');
+      else emailMsg.text('사용 가능한 이메일입니다').css('color', 'green');
+    }, 'json');
+});
+
+
 </script>
 </body>
 </html>

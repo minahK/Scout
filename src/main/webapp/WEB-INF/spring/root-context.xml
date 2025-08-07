@@ -32,15 +32,27 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 	<!-- <property name="roomDAO" ref="roomDAO"></property> -->
 	<!-- </bean> -->
 
-	<bean class="org.apache.commons.dbcp2.BasicDataSource"
-		id="data_source">
+	<!-- <bean id="data_source" -->
+	<!-- class="org.apache.commons.dbcp2.BasicDataSource"> -->
+	<!-- <property name="driverClassName" -->
+	<!-- value="oracle.jdbc.OracleDriver" /> -->
+	<!-- <property name="url" -->
+	<!-- value="jdbc:oracle:thin:@192.168.0.122:1521:ORCL" /> -->
+	<!-- <property name="username" value="scott" /> -->
+	<!-- <property name="password" value="tiger" /> -->
+	<!-- </bean> -->
+
+	<bean id="data_source"
+		class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName"
 			value="oracle.jdbc.OracleDriver" />
+		<!-- 서비스명(Service Name)인 ORCL을 쓴다면 slash 표기 -->
 		<property name="url"
-			value="jdbc:oracle:thin:@localhost:1521:orcl" />
+			value="jdbc:oracle:thin:@//192.168.0.122:1521/ORCL" />
 		<property name="username" value="scott" />
 		<property name="password" value="tiger" />
 	</bean>
+
 
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean"
 		id="sqlSessionFactory">
@@ -58,18 +70,43 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 			ref="sqlSessionFactory" />
 	</bean>
 
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.example.com" />
+		<property name="port" value="587" />
+		<property name="username" value="your_email@example.com" />
+		<property name="password" value="your_password" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">false</prop>
+			</props>
+		</property>
+	</bean>
 
-	<context:component-scan
-		base-package="com.app.service"></context:component-scan>
-	<context:component-scan
-		base-package="com.app.dao"></context:component-scan>
 
-<!-- 	<bean id="sampleScheduler" -->
-<!-- 		class="com.app.scheduler.DailySalesScheduler" /> -->
-<!-- 	<task:scheduler id="mainScheduler" pool-size="10" /> -->
-<!-- 	<task:executor id="mainTaskExecutor" pool-size="10" /> -->
-<!-- 	<task:annotation-driven -->
-<!-- 		executor="mainTaskExecutor" scheduler="mainScheduler" /> -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName"
+			value="sqlSessionFactory" />
+		<!-- 매퍼 인터페이스가 위치한 패키지 -->
+		<property name="basePackage" value="com.app.mapper" />
+	</bean>
+
+	<!-- <context:component-scan -->
+	<!-- base-package="com.app.service"></context:component-scan> -->
+	<!-- <context:component-scan -->
+	<!-- base-package="com.app.dao"></context:component-scan> -->
+
+	<context:component-scan base-package="com.app" />
+
+	<!-- <bean id="sampleScheduler" -->
+	<!-- class="com.app.scheduler.DailySalesScheduler" /> -->
+	<!-- <task:scheduler id="mainScheduler" pool-size="10" /> -->
+	<!-- <task:executor id="mainTaskExecutor" pool-size="10" /> -->
+	<!-- <task:annotation-driven -->
+	<!-- executor="mainTaskExecutor" scheduler="mainScheduler" /> -->
 
 
 </beans>
