@@ -35,23 +35,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int saveAdminUser(User user) {
-		// 관리자 계정 추가 할때 필요한 체크 로직....
-
-		// user.setUserType("ADM");
-		user.setUserType(CommonCode.USER_USERTYPE_ADMIN);
-		int result = userDAO.saveUser(user);
-		log.info("saveAdminUser 관리자 계정 추가 : {}", user);
-
-		return result;
-	}
-
-	@Override
 	public int saveCustomerUser(User user) {
-		// 사용자 계정 추가 할때 필요한 체크 로직....
 
-		// user.setUserType("CUS");
-//		user.setUserType(CommonCode.USER_USERTYPE_CUSTOMER);
+		
 		int result = userDAO.saveUser(user);
 
 		return result;
@@ -152,4 +138,11 @@ public class UserServiceImpl implements UserService {
 	public String findPasswordByEmail(String email) {
 		return userMapper.findPasswordByEmail(email);
 	}
+
+	@Override
+	public int modifyPasswordByEmail(String email, String newPassword) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

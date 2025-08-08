@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class User {
 
+//	Long id;
 	String id;
 	String pw;
 	String name;
@@ -12,4 +13,5 @@ public class User {
 	String email;// CUS / ADM
 					 // 사용자 계정 구분
 					 // Customer / Admin
+
 }

@@ -35,4 +35,8 @@ public interface UserMapper {
 	// 6) 비밀번호 재설정
 	@Update("UPDATE T_USER SET pw = #{newPw} WHERE email = #{email}")
 	int updatePwByEmail(@Param("email") String email, @Param("newPw") String newPw);
+
+	User selectByEmail(@Param("email") String email);
+
+	int updatePasswordByEmail(@Param("email") String email, @Param("newPw") String newPw);
 }

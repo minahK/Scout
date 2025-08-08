@@ -9,8 +9,6 @@ public interface UserService {
 
 	public int saveUser(User user);
 
-	public int saveAdminUser(User user);
-
 	public int saveCustomerUser(User user);
 
 	public List<User> findUserList();
@@ -24,6 +22,8 @@ public interface UserService {
 	public int modifyUser(User user);
 
 	public List<User> findUserListBySearchCondition(UserSearchCondition userSearchCondition);
+	
+	int modifyPasswordByEmail(String email, String newPassword);
 
 	public boolean isDuplicatedId(String id);
 

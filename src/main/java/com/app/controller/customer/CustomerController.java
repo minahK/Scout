@@ -44,15 +44,16 @@ public class CustomerController {
 		// 디버그용: 넘어온 값 확인
 		System.out.println("가입 정보 → id: " + user.getId() + ", pw: " + user.getPw() + ", name: " + user.getName()
 				+ ", email: " + user.getEmail());
+		
 
 		int result = userService.saveCustomerUser(user);
 		if (result > 0) {
 			redirectAttributes.addFlashAttribute("msg", "회원가입이 완료되었습니다.");
-			return "redirect:/customer/signin";
+			return "redirect:/Scout/signin";
 		}
 
 		redirectAttributes.addFlashAttribute("error", "회원가입에 실패했습니다. 다시 시도하세요.");
-		return "redirect:/customer/signup";
+		return "redirect:/Scout/signup";
 	}
 
 	// 아이디 중복확인 (plain text)
@@ -96,14 +97,14 @@ public class CustomerController {
 		}
 
 		LoginManager.setSessionLoginUserId(session, loginUser.getId());
-		return "redirect:/customer/mypage";
+		return "redirect:/Scout/mypage";
 	}
 
 	// 마이페이지
 	@GetMapping("/mypage")
 	public String mypage(Model model, HttpSession session) {
 		if (!LoginManager.isLogin(session)) {
-			return "redirect:/customer/signin";
+			return "redirect:/Scout/signin";
 		}
 
 		String loginUserId = LoginManager.getLoginUserId(session);
@@ -131,7 +132,7 @@ public class CustomerController {
 		user.setId(LoginManager.getLoginUserId(session));
 		int result = userService.modifyUserPw(user);
 		if (result > 0) {
-			return "redirect:/customer/mypage";
+			return "redirect:/Scout/mypage";
 		}
 		return "customer/modifyPw";
 	}
@@ -150,7 +151,7 @@ public class CustomerController {
 		// 1) 이메일 존재 여부 확인
 		if (!userService.existsByEmail(email)) {
 			redirectAttrs.addFlashAttribute("error", "등록된 이메일이 없습니다.");
-			return "redirect:/customer/findPw";
+			return "redirect:/Scout/findPw";
 		}
 
 		try {
@@ -165,6 +166,6 @@ public class CustomerController {
 			redirectAttrs.addFlashAttribute("error", "메일 전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
 		}
 
-		return "redirect:/customer/findPw";
+		return "redirect:/Scout/findPw";
 	}
 }
