@@ -26,7 +26,7 @@
     .main-container {
         display: flex;
         width: 100%;
-        background-image: url('/image/mj.jpg');
+        background-image: url('/resources/image/mj.jpg');
         background-repeat: no-repeat;
         background-size: cover;
     }
@@ -50,6 +50,9 @@
         text-align: left;
         width: 100%;
         color: var(--white);
+    }
+    .logo-area:hover {
+    	cursor:pointer;
     }
 
     .logo-mark {
@@ -347,7 +350,7 @@
 <body>
 <div class="main-container">
     <div class="left-panel">
-        <div class="logo-area">
+        <div class="logo-area" onClick="location.href='/'">
             <img src="https://i.imgur.com/xpGazxz.png" alt="Logo" class="logo-mark">
         </div>
     </div>
@@ -367,7 +370,7 @@
             </div>
 
             <div class="title-section">
-                <img src="/image/gyool.png" alt="캐릭터">
+                <img src="/resources/image/gyool.png" alt="캐릭터">
                 <h2>소리로 듣는 여행, 제주도에서 즐겨보세요!</h2>
             </div>
 
@@ -394,21 +397,21 @@
             <div id="places-grid" class="image-grid">
                 <div class="image-card">
                     <a href="/audioMain/tour" class="card-content">
-                        <img src="/image/jejuuu.jpg" alt="물영아리오름">
+                        <img src="/resources/image/jejuuu.jpg" alt="물영아리오름">
                         <div class="card-title">물영아리오름</div>
                         <div class="card-info">1이야기</div>
                     </a>
                 </div>
                 <div class="image-card">
                     <a href="/audioMain/tour2" class="card-content">
-                        <img src="/image/yong.jpg" alt="용연과 용두암">
+                        <img src="/resources/image/yong.jpg" alt="용연과 용두암">
                         <div class="card-title">용연과 용두암</div>
                         <div class="card-info">1이야기</div>
                     </a>
                 </div>
                 <div class="image-card">
                     <a href="/audioMain/tour3" class="card-content">
-                        <img src="/image/dong3.jpg" alt="동문시장">
+                        <img src="/resources/image/dong3.jpg" alt="동문시장">
                         <div class="card-title">동문시장</div>
                         <div class="card-info">2이야기</div>
                     </a>
@@ -418,21 +421,21 @@
             <div id="new-grid" class="image-grid hidden">
                 <div class="image-card">
                     <a href="/audioMain/tour4" class="card-content">
-                        <img src="/image/ini.jpg" alt="이니스프리 제주하우스">
+                        <img src="/resources/image/ini.jpg" alt="이니스프리 제주하우스">
                         <div class="card-title">이니스프리 제주하우스</div>
                         <div class="card-info">1이야기</div>
                     </a>
                 </div>
                 <div class="image-card">
                     <a href="/audioMain/tour5" class="card-content">
-                        <img src="/image/bear.jpg" alt="테디베어 박물관">
+                        <img src="/resources/image/bear.jpg" alt="테디베어 박물관">
                         <div class="card-title">테디베어 박물관</div>
                         <div class="card-info">1이야기</div>
                     </a>
                 </div>
                 <div class="image-card">
                     <a href="/audioMain/tour6" class="card-content">
-                        <img src="/image/choo2.jpg" alt="추사관">
+                        <img src="/resources/image/choo2.jpg" alt="추사관">
                         <div class="card-title">추사관</div>
                         <div class="card-info">2이야기</div>
                     </a>
@@ -444,9 +447,9 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const slideContents = [
-            { src: '/image/ilch.jpg', alt: '성산일출봉', title: '성산일출봉', info: '#제주여행 #제주동부 #일출명소' },
-            { src: '/image/hae.jpg', alt: '협재해수욕장', title: '협재해수욕장', info: '#제주서부 #에메랄드빛바다 #협재' },
-            { src: '/image/back.jpg', alt: '한라산 백록담', title: '한라산 백록담', info: '#제주중심 #등산 #백록담' }
+            { src: '/resources/image/ilch.jpg', alt: '성산일출봉', title: '성산일출봉', info: '#제주여행 #제주동부 #일출명소' },
+            { src: '/resources/image/hae.jpg', alt: '협재해수욕장', title: '협재해수욕장', info: '#제주서부 #에메랄드빛바다 #협재' },
+            { src: '/resources/image/back.jpg', alt: '한라산 백록담', title: '한라산 백록담', info: '#제주중심 #등산 #백록담' }
         ];
 
         const slider = document.getElementById('slider');

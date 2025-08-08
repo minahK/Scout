@@ -215,7 +215,7 @@
         
         <div class="chat-window" id="chatWindow">
             <div class="message-row other">
-                <img src="/image/gam.png" alt="전문가 프로필" class="profile-img" />
+                <img src="/resources/image/gam.png" alt="전문가 프로필" class="profile-img" />
                 <div class="message-info">
                     <div class="message-content">
                         <div class="bubble">
@@ -227,7 +227,7 @@
             </div>
 
             <div class="message-row other">
-                <img src="/image/gam.png" alt="전문가 프로필" class="profile-img" />
+                <img src="/resources/image/gam.png" alt="전문가 프로필" class="profile-img" />
                 <div class="message-info">
                     <div class="message-content">
                         <div class="bubble">

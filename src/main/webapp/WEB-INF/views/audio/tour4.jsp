@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>추사관</title>
+<title>이니스프리 제주하우스</title>
 <style>
     :root {
         --light-orange: #ff9752;
@@ -26,7 +26,7 @@
     .main-container {
         display: flex;
         width: 100%;
-        background-image: url('/image/mj.jpg');
+        background-image: url('/resources/image/mj.jpg');
         background-repeat: no-repeat;
         background-size: cover;
     }
@@ -93,7 +93,7 @@
         align-items: center;
         gap: 15px;
     }
-    
+
     .header-left a {
         font-size: 1.5em;
         text-decoration: none;
@@ -104,25 +104,25 @@
         font-size: 1.2em;
         font-weight: bold;
     }
-    
+
     .header-right a {
         font-size: 1.2em;
         text-decoration: none;
         color: var(--text-color);
         margin-left: 20px;
     }
-
+    
     .main-image-card {
         width: 100%;
         height: 300px;
-        background-image: url('/image/dong3.jpg');
+        background-image: url('/resources/image/orym_detail.jpg');
         background-size: cover;
         background-position: center;
         border-radius: 10px;
         margin-bottom: 30px;
         position: relative;
     }
-
+    
     .audio-controls {
         position: absolute;
         top: 20px;
@@ -130,7 +130,7 @@
         display: flex;
         gap: 10px;
     }
-
+    
     .audio-controls button {
         padding: 8px 15px;
         border-radius: 20px;
@@ -151,78 +151,21 @@
         margin: 0;
     }
 
-    .story-section {
-        margin-top: 20px;
-    }
-
-    .story-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .story-header .story-count {
-        font-size: 1.2em;
-        font-weight: bold;
-    }
-
-    .story-header .story-buttons button {
-        padding: 5px 15px;
-        border-radius: 20px;
-        border: 1px solid #ccc;
-        background-color: var(--white);
-        cursor: pointer;
-        margin-left: 10px;
-    }
-
-    .story-list {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .story-item {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        padding: 15px;
-        border-radius: 10px;
-        border: 1px solid #eee;
-        transition: background-color 0.2s;
-    }
-
-    .story-item:hover {
-        background-color: #f9f9f9;
-    }
-
-    .story-thumbnail {
-        width: 80px;
-        height: 80px;
-        border-radius: 8px;
-        object-fit: cover;
-    }
-
-    .story-info {
-        flex-grow: 1;
-    }
-
-    .story-info .story-title {
-        font-weight: bold;
-        margin: 0;
-    }
-
-    .story-info .story-description {
+    .content-header .content-tags {
+        color: var(--gray-text);
         font-size: 0.9em;
-        color: var(--gray-text);
-        margin: 5px 0;
+        margin: 5px 0 0;
     }
 
-    .story-info .story-playtime {
-        font-size: 0.8em;
-        color: var(--gray-text);
+    .content-body {
+        margin-top: 20px;
+        line-height: 1.6;
     }
-    
+
+    .content-body p {
+        margin-bottom: 15px;
+    }
+
     @media (max-width: 1200px) {
         .main-container {
             flex-direction: column;
@@ -253,59 +196,37 @@
                <img src="https://i.imgur.com/xpGazxz.png" alt="Logo" class="logo-mark">
             </div>
         </div>
-        
+
         <div class="right-background">
             <div class="right-panel">
                 <div class="header">
                     <div class="header-left">
                         <a href="javascript:history.back();"><span>&lt;</span></a>
-                        <span class="header-title">추사관</span>
+                        <span class="header-title">이니스프리 제주하우스</span>
                     </div>
                     <div class="header-right">
                         <a href="#">☰</a>
                     </div>
                 </div>
                 
-                <div class="main-image-card" style="background-image: url('/image/choo2.jpg');">
+                <div class="main-image-card" style="background-image: url('/resources/image/ini.jpg');">
+                    <div class="audio-controls">
+                        <button class="play-button">재생</button>
+
+                    </div>
                 </div>
                 
-                <div class="story-section">
-                    <div class="story-header">
-                        <div class="story-count">이야기 (2)</div>
-                        <div class="story-buttons">
-                            <button>전체듣기</button>
-                            
-                        </div>
-                    </div>
+                <div class="content-header">
+                    <h3 class="content-title">이니스프리 제주하우스</h3>
+                </div>
+                
+                <div class="content-body">
+                    <p>이니스프리 제주하우스는 나란히 자리잡은 3개의 건물 중 가장 개방감이 느껴집니다. 티스톤을 설계한 조민석의 작품인데요, 티스톤을 진한 톤으로 완성했다면 이니스프리 제주하우스는 자연스럽고 밝은 느낌입니다. 너와 지붕을 얹되 제주의 아름다운 햇살이 투영되도록 하였고, 입구의 돌담은 누가 봐도 제주돌집의 담장이 떠오릅니다. 큰 창을 통해 내부와 바깥이 자연스럽게 이어지도록 한 것 역시 건축가의 자연친화적인 성향이 잘 나타나 있습니다.
+</p>
+                    <p>설계자는 이미 아름다운 서광다원과 곶자왈에 매료되었고, 이를 거스르지 않는 편안하고 조화로운 건물을 만들고자 했습니다. 그리하여 건물이 주인공이 아닌 자연이 주인공이 되도록 완성하였습니다.</p>
+                    <p>건축과 설계에서 친환경 공사와 재활용을 기본 원칙으로 삼아 태양광 발전 설비를 하여 태양 에너지원을 사용한 것도 의미가 있습니다.
+이곳에서는 제주 식재료로 만든 음료와 음식을 맛보고, 자연 원료의 시향을 통해 이니스프리를 간접 체험하거나 책상에 앉아 직접 비누를 만들어 볼 수도 있습니다. 별 일 없이 잔디마당을 걷기만 해도 행복한 여행이 될 것입니다.</p>
                     
-                    <div class="story-list">
-                       
-                        <a href="/audioMain/tour6-1" style="text-decoration: none; color: inherit;">
-                            <div class="story-item">
-                                <img src="/image/choooo.jpg" class="story-thumbnail">
-                                <div class="story-info">
-                                    <div class="story-title">제주추사관</div>
-                                    <div class="story-description">
-                                       추사의 예술혼을 만나다, 제주추사관
-                                    </div>
-                                    <div class="story-playtime">재생시간 03:17</div>
-                                </div>
-                            </div>
-                        </a>
-
-                       <a href="/audioMain/tour6-2" style="text-decoration: none; color: inherit;">
-                        <div class="story-item">
-                            <img src="/image/chooo.jpg"  class="story-thumbnail">
-                            <div class="story-info">
-                                <div class="story-title">추사관</div>
-                                <div class="story-description">
-                                    추사관을 보고 계십니다. 어떤 느낌이 드세요?
-                                </div>
-                                <div class="story-playtime">재생시간 01:50</div>
-                            </div>
-                        </div>
-                       </a>
-                    </div>
                 </div>
             </div>
         </div>

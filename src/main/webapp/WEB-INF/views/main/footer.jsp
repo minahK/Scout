@@ -3,17 +3,17 @@
 <footer class="footer-section">
 	<div class="footer-top-row">
 		<!-- 1번째 카드: 오디(Odii) -->
-		<div class="footer-link-card purple">
+		<div class="footer-link-card purple" onClick="location.href='audioMain'">
 			<!-- 실제 이미지로 바꾸려면 아래 한 줄로 교체 -->
 			<!-- <span class="footer-link-emoji"><img src="${pageContext.request.contextPath}/img/odii.png" alt="오디" style="height:32px;width:32px;"></span> -->
 			<span class="footer-link-emoji">🎧</span>
 			<div>
-				<div class="footer-link-title">오디 (Odii)</div>
-				<div class="footer-link-desc">대한민국 관광지 오디오 해설</div>
+				<div class="footer-link-title">스카우트 (Scout)</div>
+				<div class="footer-link-desc">제주도 관광지 오디오 해설</div>
 			</div>
 		</div>
 		<!-- 2번째 카드: 관광정보 -->
-		<div class="footer-link-card yellow">
+		<div class="footer-link-card blue" onClick="location.href='reportMain'">
 			<span class="footer-link-emoji">💻</span>
 			<div>
 				<div class="footer-link-title">관광정보</div>
@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<!-- 3번째 카드: 관광안내 -->
-		<div class="footer-link-card yellow2">
+		<div class="footer-link-card yellow" onClick="location.href='chatMain'">
 			<span class="footer-link-emoji">☎️</span>
 			<div>
 				<div class="footer-link-title">
@@ -103,9 +103,17 @@
 	border: 1.5px solid #c3a3e2;
 }
 
+.footer-link-card.purple:hover {
+	cursor: pointer;
+}
+
 .footer-link-card.yellow {
 	background: #fff2d9;
 	border: 1.5px solid #e1c98a;
+}
+
+.footer-link-card.yellow:hover {
+	cursor: pointer;
 }
 
 .footer-link-card.blue {
@@ -113,14 +121,8 @@
 	border: 1.5px solid #8bb2e9;
 }
 
-.footer-link-card.green {
-	background: #e8faed;
-	border: 1.5px solid #b0dab6;
-}
-
-.footer-link-card.yellow2 {
-	background: #fff7d8;
-	border: 1.5px solid #e6d493;
+.footer-link-card.blue:hover {
+	cursor: pointer;
 }
 
 .footer-middle-row {

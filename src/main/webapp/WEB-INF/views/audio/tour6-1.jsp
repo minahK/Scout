@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>추사관</title>
+<title>제주추사관</title>
 <style>
 :root {
 	--light-orange: #ff9752;
@@ -28,7 +28,7 @@ body {
 .main-container {
 	display: flex;
 	width: 100%;
-	background-image: url('/image/mj.jpg');
+	background-image: url('/resources/image/mj.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -117,7 +117,7 @@ body {
 .main-image-card {
 	width: 100%;
 	height: 300px;
-	background-image: url('/image/orym_detail.jpg');
+	background-image: url('/resources/image/orym_detail.jpg');
 	background-size: cover;
 	background-position: center;
 	border-radius: 10px;
@@ -202,7 +202,7 @@ body {
 				<div class="header">
 					<div class="header-left">
 						<a href="javascript:history.back();"><span>&lt;</span></a> <span
-							class="header-title">추사관</span>
+							class="header-title">제주추사관</span>
 					</div>
 					<div class="header-right">
 						<a href="#">☰</a>
@@ -210,30 +210,34 @@ body {
 				</div>
 
 				<div class="main-image-card"
-					style="background-image: url('/image/chooo.jpg');">
+					style="background-image: url('/resources/image/choooo.jpg');">
 					<div class="audio-controls">
 						<button class="map-button">재생</button>
 					</div>
 				</div>
 
 				<div class="content-header">
-					<h3 class="content-title">추사관</h3>
+					<h3 class="content-title">제주추사관</h3>
 				</div>
 
 				<div class="content-body">
-					<p>추사관을 보고 계십니다. 어떤 느낌이 드세요? 단순한 삼각형 모양의 지붕에 동그란 창문 하나가 너무
-						밋밋한가요? 심플하고 현대적인가요? 이것은 건축가 승효상이 김정희 선생의 세한도(歲寒圖)를 바탕으로 완성하였는데요,
-						2010년 완공 당시에는 투박한 외관 때문에 마을 주민들이 ‘감자창고’라 불렀다고도 합니다. 그런데 시간이 갈수록
-						오히려 세련된 느낌이 드는 것은 생각할 거리를 남기는 단순함과 여백 때문이지 않을까 싶습니다.</p>
-					<p>역시 설계가 훌륭합니다. 이 건물의 모티브가 된 것은 추사 김정희 선생의 대표작인 세한도(歲寒圖)입니다.
-						세한도(歲寒圖)는 추사 선생이 책을 보내준 이상적에게 그려준 것으로 이상적은 이를 중국으로 가지고 갔고, 그림에 대한
-						찬사의 글이 덧붙여져서 돌아올 정도로 당대에 인정받은 역작입니다.</p>
-					<p>추사관은 전시실이 지하 1,2층에 있고, 추념의 공간인 추사홀이 지상과 지하를 이어주도록 되어 있습니다.
-						이곳에는 임옥상이 조각한 추사 선생의 흉상을 모시고 나머지 공간은 비워 두었습니다.</p>
-					<p>바깥으로 나오면 추사 김선생 적려유허비(秋史 金先生 謫廬遺墟碑) 가 있는데요, 이것은 추사관을 짓기 전부터
-						이 자리를 지키고 있던 것입니다. 뒷편에는 추사 선생이 지내셨던 강도순의 집이 있습니다. 4.3사건 때 화재로 소실된
-						옛 집을 증손자의 도움을 얻어 복원했다고 합니다.</p>
-
+					<p>추사의 예술혼을 만나다, 제주추사관</p>
+					<p>아름다운 절경을 품은 관광도시 제주. 그러나 제주는 조선시대 가장 혹독한 유배의 땅이었습니다. 이 가혹한
+						땅에서 추사체를 완성시켰던 추사 김정희. 조선시대 대표학자이자 예술가였던 그의 예술혼의 세계로 안내합니다.</p>
+					<p>세도정치에 휘말려 제주로 유배를 왔던 추사 김정희. 그는 이곳에서 학문과 예술에 대한 집념과 끈기로 추사체를
+						완성하고, 필생의 역작인 세한도를 남겼습니다. 유배생활동안 마을 청년과 지방 유생들에게 학문과 서예를 가르치고, 다도의
+						대가인 초의선사와 평생 우정을 나누었고, 제주에 차 문화를 도입한 선구자였습니다. 추사유배지가 국가사적으로 승격되면서
+						2010년 건축가 승효상의 설계로 개관한 제주추사관. 지하1층, 지상1층 규모의 추사관은 지상에 드러나는 건물을
+						최소화하고 현무암과 목재를 사용해 제주의 지역성을 담아내고 있습니다</p>
+					<p>전시관에서는 제주에서의 유배시절 모습을 그린 해천일립상을 시작으로 서예와 현판, 탁본, 편지글 등 많은
+						작품들을 만날 수 있습니다. 추사의 걸작 세한도. 추사에게 귀한 책을 구해다 준 역관 이상적의 인품을 소나무와 잣나무의
+						지조에 비유해 그린 일화가 유명합니다.</p>
+					<p>추사가 대정향교에 써 준 ‘의문당’ 현판. 전남 강진 다산초당에 걸려 있는 현판 ‘보정산방’ 을 비롯해,
+						추사가 제주로 유배오던 중 들렀던 해남 대둔사에 써준 예서체 현판. 유배지에 핀 수선화의 아름다움을 예찬한 시,
+						그리움을 담아 부인 예안 이씨에게 쓴 편지글들. 추사가 세상을 떠나기 3일전에 쓴 마지막 작품인 봉은사 판전 현판까지
+						주옥같은 작품들이 전시되어 있습니다.추모공간인 추사홀의 여백의 공간은 추사작품의 절제미를 더욱 돋보이게 합니다.</p>
+					<p>힘들고 외로웠던 유배지에서의 삶. 그 속에서 추사체를 완성하고, 세한도를 비롯한 수많은 작품들을 남긴 추사
+						김정희. 추운 겨울날에도 늘 푸른 소나무처럼 고귀한 절개를 지켜갔던 그의 삶과 정신은 앞으로도 영원히 이어질 것입니다.</p>
 
 				</div>
 			</div>

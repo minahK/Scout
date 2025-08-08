@@ -8,16 +8,16 @@ public class ReportController {
 
 	@GetMapping("/reportMain")
 	public String main() {
-		return "/reportMain";
+		return "/report/reportMain";
 	}
 	
 	@GetMapping("/reportMain/report1")
 	public String main1() {
-		return "/report1";
+		return "/report/report1";
 	}
 	
 	@GetMapping("/reportMain/report2")
 	public String main2() {
-		return "/report2";
+		return "/report/report2";
 	}
 }

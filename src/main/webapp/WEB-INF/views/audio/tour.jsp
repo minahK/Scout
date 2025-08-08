@@ -26,7 +26,7 @@
     .main-container {
         display: flex;
         width: 100%;
-        background-image: url('/image/mj.jpg');
+        background-image: url('/resources/image/mj.jpg');
         background-repeat: no-repeat;
         background-size: cover;
     }
@@ -115,7 +115,7 @@
     .main-image-card {
         width: 100%;
         height: 300px;
-        background-image: url('/image/orym_detail.jpg');
+        background-image: url('/resources/image/orym_detail.jpg');
         background-size: cover;
         background-position: center;
         border-radius: 10px;
@@ -209,7 +209,7 @@
                     </div>
                 </div>
                 
-                <div class="main-image-card" style="background-image: url('/image/jejuuu.jpg');">
+                <div class="main-image-card" style="background-image: url('/resources/image/jejuuu.jpg');">
                     <div class="audio-controls">
                         <button class="play-button">재생</button>
 

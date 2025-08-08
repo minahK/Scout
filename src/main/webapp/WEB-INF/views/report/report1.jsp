@@ -29,44 +29,6 @@
             margin: 0 auto;
             padding: 20px;
         }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .header .logo img {
-            height: 60px; /* 로고 크기 수정 */
-        }
-
-        .header .nav-menu {
-            display: flex;
-            gap: 25px;
-        }
-
-        .header .nav-menu li a {
-            font-weight: 400;
-            font-size: 15px;
-            color: #555;
-            transition: color 0.2s;
-        }
-
-        .header .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .header .user-menu .icon {
-            width: 24px;
-            height: 24px;
-            background-color: #eee;
-            border-radius: 50%;
-            border: 1px solid #ddd;
-        }
 
         .page-title {
             font-size: 24px;
@@ -222,27 +184,8 @@
     </style>
 </head>
 <body>
-
-    <div class="header">
-        <div class="logo">
-            <img src="https://i.imgur.com/xpGazxz.png" alt="TRACE 로고" />
-        </div>
-        <ul class="nav-menu">
-            <li><a href="#">홈</a></li>
-            <li><a href="#">테마</a></li>
-            <li><a href="#">지역</a></li>
-            <li><a href="#">여행코스</a></li>
-            <li><a href="#">여행정보</a></li>
-            <li><a href="#">여행혜택</a></li>
-        </ul>
-        <div class="user-menu">
-            <div class="icon"></div>
-            <div class="icon"></div>
-            <div class="icon"></div>
-            <div class="icon"></div>
-        </div>
-    </div>
-
+	<%@ include file="../travelDestination/tdHeader.jsp"%>
+	
     <div class="container">
         <h1 class="page-title">자주 묻는 질문</h1>
 

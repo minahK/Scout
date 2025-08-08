@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>용연과 용두암</title>
+<title>동문시장 입구</title>
 <style>
     :root {
         --light-orange: #ff9752;
@@ -26,7 +26,7 @@
     .main-container {
         display: flex;
         width: 100%;
-        background-image: url('/image/mj.jpg');
+        background-image: url('/resources/image/mj.jpg');
         background-repeat: no-repeat;
         background-size: cover;
     }
@@ -115,7 +115,7 @@
     .main-image-card {
         width: 100%;
         height: 300px;
-        background-image: url('/image/orym_detail.jpg');
+        background-image: url('/resources/image/orym_detail.jpg');
         background-size: cover;
         background-position: center;
         border-radius: 10px;
@@ -202,30 +202,30 @@
                 <div class="header">
                     <div class="header-left">
                         <a href="javascript:history.back();"><span>&lt;</span></a>
-                        <span class="header-title">용연과 용두암</span>
+                        <span class="header-title">동문시장 입구</span>
                     </div>
                     <div class="header-right">
                         <a href="#">☰</a>
                     </div>
                 </div>
                 
-                <div class="main-image-card" style="background-image: url('/image/yong.jpg');">
+                <div class="main-image-card" style="background-image: url('/resources/image/dong6.jpg');">
                     <div class="audio-controls">
                         <button class="map-button">재생</button>
                     </div>
                 </div>
                 
                 <div class="content-header">
-                    <h3 class="content-title">용연과 용두암</h3>
+                    <h3 class="content-title">동문시장 입구</h3>
                 </div>
                 
                 <div class="content-body">
-                    <p>용의 전설을 품다, 용연과 용두암</p>
-                    <p>신비로운 용이숨어 있다는 전설을 간직한 용연, 용이 머리를 쳐들고 하늘로 솟아오르는 형상인 용두암, 용연과 용두암... 용의 전설을 간직한 제주 최고의 경승지가 아닐 수 없습니다~!</p>
-                    <p>여름철 달밤, 용연에서의 뱃놀이 모습이 아름다워, 용연야범이라 불리며, 영주십이경 중 하나로 꼽혔던 용연, 용담동 해안에 위치한 하류계곡에 있는 연못으로, 지하수가 풍부하게 솟는 곳인데요. 계곡을 이루는 물줄기는 바다로 이어지고 있습니다.약 8m 높이로 드러나 있는 암벽은 가뭄이 들면, 기우제를 지냈던 곳이며, 취병담, 또는 선유담이라고 하여 시인과 선비들이 기암병풍 사이의 맑은 물에 비친달밤에배를 띄워 풍류를 즐겼었는데요. 제주목사가 교체될 때마다 잔치를 베풀었던 장소이기도 합니다. 용의 놀이터였다는 용연에서는, 요즘도 해마다 여름이 되면, 용연의 아름다움을 노래하는 용연야범 축제가 마련되고 있습니다!</p>
-                    <p>맑은 날에는 목동의 노래처럼 청명하고, 비나 안개가 낀 날에는 신비롭고 몽환적인 분위기를 자아내는 물영아리오름은 늑대소년 '철수'와 조금 닮아 있습니다. 겉모습은 평범하지만, 어딘가 낯설고 특별한 기운을 지닌 '철수'. 순수하면서도 거칠고, 이질적이지만 아름다운 늑대소년의 이야기에 이보다 더 잘 어울리는 무대는 없었을 것입니다.</p>
-                    <p>용두암이 있는 해안도로 주변에는 횟집과 카페들이 즐비해 있는데요. 젊은이들의 데이트 장소로 사랑받고 있습니다. 특히 밤바다를 밝히는 어선들의 불빛이 환상적인데요. 애월읍까지 이어지는 해안도로는 드라이브 코스로도 더할 나위 없습니다.</p>
-               		<p>용의 전설을 간직한 아름다운 경승지 용연과 용두암, 제주를 거쳐가는 이들이라면, 꼭 한 번 가봐야 할 관광지입니다</p> 
+                    <p>청정자연 유네스코 3관왕! 제주도의 대표시장</p>
+                    <p>제주도에서 제일 오래된 시장인 동문시장은 제주국제공항과 제주국제여객터미널의 중간에 위치해 있습니다. 제주 시내에 있기 때문에, 제주도민들과 관광객 모두에게 인기 있는 시장입니다.</p>
+                    <p>이 곳에서는 4계절 내내 제주도 특산물인 귤과 한라봉을 종류별로 살 수 있는데요. 출하시기와 재배지역에 따라 이름도 다르고 가격도 달라서 천천히 둘러보고 고르는 것이 좋습니다. 또, 제주 향토 음식인 오메기떡과 자연몸국, 빙떡도 팔고 있어서 제주도 특유의 음식을 모두 먹을 수 있는 곳입니다.</p>
+                    <p>제주동문시장이 있는 제주도는 유네스코 세계 자연유산으로 등록된 천혜의 관광지여서 볼거리도 풍부합니다. 시장 주변에는 제주 향교, 용두암이 있어서 사람들의 발길이 끊이지 않습니다. 시장에서 조금 먼 곳으로 차를 타고 가면 테디베어 박물관, 녹차밭, 아쿠아플라넷, 성산일출봉 등을 관광할 수 있습니다.</p>
+                    
+               		
                 </div>
             </div>
         </div>

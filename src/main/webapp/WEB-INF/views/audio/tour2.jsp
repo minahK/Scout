@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>동문시장의 맛있는 이야기</title>
+<title>용연과 용두암</title>
 <style>
     :root {
         --light-orange: #ff9752;
@@ -26,7 +26,7 @@
     .main-container {
         display: flex;
         width: 100%;
-        background-image: url('/image/mj.jpg');
+        background-image: url('/resources/image/mj.jpg');
         background-repeat: no-repeat;
         background-size: cover;
     }
@@ -115,7 +115,7 @@
     .main-image-card {
         width: 100%;
         height: 300px;
-        background-image: url('/image/orym_detail.jpg');
+        background-image: url('/resources/image/orym_detail.jpg');
         background-size: cover;
         background-position: center;
         border-radius: 10px;
@@ -202,30 +202,30 @@
                 <div class="header">
                     <div class="header-left">
                         <a href="javascript:history.back();"><span>&lt;</span></a>
-                        <span class="header-title">동문시장의 맛있는 이야기</span>
+                        <span class="header-title">용연과 용두암</span>
                     </div>
                     <div class="header-right">
                         <a href="#">☰</a>
                     </div>
                 </div>
                 
-                <div class="main-image-card" style="background-image: url('/image/dong5.jpg');">
+                <div class="main-image-card" style="background-image: url('/resources/image/yong.jpg');">
                     <div class="audio-controls">
                         <button class="map-button">재생</button>
                     </div>
                 </div>
                 
                 <div class="content-header">
-                    <h3 class="content-title">동문시장의 맛있는 이야기</h3>
+                    <h3 class="content-title">용연과 용두암</h3>
                 </div>
                 
                 <div class="content-body">
-                    <p>제주 향토음식 야무지게 먹기</p>
-                    <p>동문시장에서는 제주도의 특산물들을 한꺼번에 만날 수 있는데 특히, 사시사철 시장의 기운을 밝게 만드는 귤과 한라봉이 대표적인 과일입니다. 제주도는 날씨가 따뜻한 편이어서 열대과일의 재배가 가능한데요, 귤에서 품종을 개량한 천혜향이나 황금향, 동남아나 중국에서 볼 수 있는 애플망고, 용과도 재배가 가능해서 시장에서 쉽게 볼 수 있습니다.</p>
-                    <p>제주도는 섬이기 때문에 해산물도 유명한데요. 싱싱한 갈치와 옥돔 등 다양한 해산물 구입이 가능합니다. 회 센터에서는 즉석으로 회를 떠주기도 하고 남은 고기로 탕을 끓여주기 때문에 해산물을 좋아한다면 반드시 들러보세요!</p>
-                   
-                    
-               		
+                    <p>용의 전설을 품다, 용연과 용두암</p>
+                    <p>신비로운 용이숨어 있다는 전설을 간직한 용연, 용이 머리를 쳐들고 하늘로 솟아오르는 형상인 용두암, 용연과 용두암... 용의 전설을 간직한 제주 최고의 경승지가 아닐 수 없습니다~!</p>
+                    <p>여름철 달밤, 용연에서의 뱃놀이 모습이 아름다워, 용연야범이라 불리며, 영주십이경 중 하나로 꼽혔던 용연, 용담동 해안에 위치한 하류계곡에 있는 연못으로, 지하수가 풍부하게 솟는 곳인데요. 계곡을 이루는 물줄기는 바다로 이어지고 있습니다.약 8m 높이로 드러나 있는 암벽은 가뭄이 들면, 기우제를 지냈던 곳이며, 취병담, 또는 선유담이라고 하여 시인과 선비들이 기암병풍 사이의 맑은 물에 비친달밤에배를 띄워 풍류를 즐겼었는데요. 제주목사가 교체될 때마다 잔치를 베풀었던 장소이기도 합니다. 용의 놀이터였다는 용연에서는, 요즘도 해마다 여름이 되면, 용연의 아름다움을 노래하는 용연야범 축제가 마련되고 있습니다!</p>
+                    <p>맑은 날에는 목동의 노래처럼 청명하고, 비나 안개가 낀 날에는 신비롭고 몽환적인 분위기를 자아내는 물영아리오름은 늑대소년 '철수'와 조금 닮아 있습니다. 겉모습은 평범하지만, 어딘가 낯설고 특별한 기운을 지닌 '철수'. 순수하면서도 거칠고, 이질적이지만 아름다운 늑대소년의 이야기에 이보다 더 잘 어울리는 무대는 없었을 것입니다.</p>
+                    <p>용두암이 있는 해안도로 주변에는 횟집과 카페들이 즐비해 있는데요. 젊은이들의 데이트 장소로 사랑받고 있습니다. 특히 밤바다를 밝히는 어선들의 불빛이 환상적인데요. 애월읍까지 이어지는 해안도로는 드라이브 코스로도 더할 나위 없습니다.</p>
+               		<p>용의 전설을 간직한 아름다운 경승지 용연과 용두암, 제주를 거쳐가는 이들이라면, 꼭 한 번 가봐야 할 관광지입니다</p> 
                 </div>
             </div>
         </div>

@@ -29,68 +29,6 @@
             padding: 20px 0;
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .header .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .header .logo img {
-            height: 60px;
-            width: auto;
-            display: block;
-        }
-        /* TRACE 텍스트 스타일 추가 */
-        .header .logo .logo-text {
-            font-size: 24px;
-            font-weight: 700;
-            margin-left: 10px;
-            color: #333;
-        }
-
-        .header .nav-menu {
-            display: flex;
-            gap: 25px;
-        }
-
-        .header .nav-menu li a {
-            font-weight: 400;
-            font-size: 15px;
-            color: #555;
-            transition: color 0.2s;
-        }
-
-        .header .nav-menu li a:hover {
-            color: #000;
-        }
-
-        .header .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .header .user-menu .icon {
-            width: 24px;
-            height: 24px;
-            background-color: #eee;
-            border-radius: 50%;
-            border: 1px solid #ddd;
-        }
-        .header .user-menu .icon:first-child {
-            background-color: #ccc;
-        }
-        .header .user-menu .icon:last-child {
-            background-color: #888;
-        }
-
         .content {
             padding: 40px 0;
         }
@@ -127,7 +65,7 @@
         /* 수정된 부분: banner-top에 배경 이미지 추가 */
         .banner-top {
             background-color: #ee853f; /* 이미지가 로드되지 않을 경우 표시될 배경색 */
-            background-image: url('/image/gam.png'); /* 여기에 'gam.jpg' 파일의 경로를 넣어주세요. */
+            background-image: url('/resources/image/gam.png'); /* 여기에 'gam.jpg' 파일의 경로를 넣어주세요. */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -353,25 +291,7 @@
 </head>
 <body>
 
-    <div class="header">
-        <div class="logo">
-            <img src="https://i.imgur.com/xpGazxz.png" alt="TRACE 로고" />
-        </div>
-        <ul class="nav-menu">
-            <li><a href="#">홈</a></li>
-            <li><a href="#">테마</a></li>
-            <li><a href="#">지역</a></li>
-            <li><a href="#">여행코스</a></li>
-            <li><a href="#">여행정보</a></li>
-            <li><a href="#">여행혜택</a></li>
-        </ul>
-        <div class="user-menu">
-            <div class="icon"></div>
-            <div class="icon"></div>
-            <div class="icon"></div>
-            <div class="icon"></div>
-        </div>
-    </div>
+    <%@ include file="../travelDestination/tdHeader.jsp"%>
     
     <div class="container">
         <div class="content">

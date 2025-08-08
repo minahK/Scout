@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>동문시장</title>
+<title>동문시장의 맛있는 이야기</title>
 <style>
     :root {
         --light-orange: #ff9752;
@@ -26,7 +26,7 @@
     .main-container {
         display: flex;
         width: 100%;
-        background-image: url('/image/mj.jpg');
+        background-image: url('/resources/image/mj.jpg');
         background-repeat: no-repeat;
         background-size: cover;
     }
@@ -93,7 +93,7 @@
         align-items: center;
         gap: 15px;
     }
-    
+
     .header-left a {
         font-size: 1.5em;
         text-decoration: none;
@@ -104,25 +104,25 @@
         font-size: 1.2em;
         font-weight: bold;
     }
-    
+
     .header-right a {
         font-size: 1.2em;
         text-decoration: none;
         color: var(--text-color);
         margin-left: 20px;
     }
-
+    
     .main-image-card {
         width: 100%;
         height: 300px;
-        background-image: url('/image/dong3.jpg');
+        background-image: url('/resources/image/orym_detail.jpg');
         background-size: cover;
         background-position: center;
         border-radius: 10px;
         margin-bottom: 30px;
         position: relative;
     }
-
+    
     .audio-controls {
         position: absolute;
         top: 20px;
@@ -130,7 +130,7 @@
         display: flex;
         gap: 10px;
     }
-
+    
     .audio-controls button {
         padding: 8px 15px;
         border-radius: 20px;
@@ -151,78 +151,21 @@
         margin: 0;
     }
 
-    .story-section {
-        margin-top: 20px;
-    }
-
-    .story-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .story-header .story-count {
-        font-size: 1.2em;
-        font-weight: bold;
-    }
-
-    .story-header .story-buttons button {
-        padding: 5px 15px;
-        border-radius: 20px;
-        border: 1px solid #ccc;
-        background-color: var(--white);
-        cursor: pointer;
-        margin-left: 10px;
-    }
-
-    .story-list {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .story-item {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        padding: 15px;
-        border-radius: 10px;
-        border: 1px solid #eee;
-        transition: background-color 0.2s;
-    }
-
-    .story-item:hover {
-        background-color: #f9f9f9;
-    }
-
-    .story-thumbnail {
-        width: 80px;
-        height: 80px;
-        border-radius: 8px;
-        object-fit: cover;
-    }
-
-    .story-info {
-        flex-grow: 1;
-    }
-
-    .story-info .story-title {
-        font-weight: bold;
-        margin: 0;
-    }
-
-    .story-info .story-description {
-        font-size: 0.9em;
+    .content-header .content-tags {
         color: var(--gray-text);
-        margin: 5px 0;
+        font-size: 0.9em;
+        margin: 5px 0 0;
     }
 
-    .story-info .story-playtime {
-        font-size: 0.8em;
-        color: var(--black-text);
+    .content-body {
+        margin-top: 20px;
+        line-height: 1.6;
     }
-    
+
+    .content-body p {
+        margin-bottom: 15px;
+    }
+
     @media (max-width: 1200px) {
         .main-container {
             flex-direction: column;
@@ -253,59 +196,36 @@
                <img src="https://i.imgur.com/xpGazxz.png" alt="Logo" class="logo-mark">
             </div>
         </div>
-        
+
         <div class="right-background">
             <div class="right-panel">
                 <div class="header">
                     <div class="header-left">
                         <a href="javascript:history.back();"><span>&lt;</span></a>
-                        <span class="header-title">동문 시장</span>
+                        <span class="header-title">동문시장의 맛있는 이야기</span>
                     </div>
                     <div class="header-right">
                         <a href="#">☰</a>
                     </div>
                 </div>
                 
-                <div class="main-image-card" style="background-image: url('/image/dong3.jpg');">
+                <div class="main-image-card" style="background-image: url('/resources/image/dong5.jpg');">
+                    <div class="audio-controls">
+                        <button class="map-button">재생</button>
+                    </div>
                 </div>
                 
-                <div class="story-section">
-                    <div class="story-header">
-                        <div class="story-count">이야기 (2)</div>
-                        <div class="story-buttons">
-                            <button>전체듣기</button>
-                            
-                        </div>
-                    </div>
+                <div class="content-header">
+                    <h3 class="content-title">동문시장의 맛있는 이야기</h3>
+                </div>
+                
+                <div class="content-body">
+                    <p>제주 향토음식 야무지게 먹기</p>
+                    <p>동문시장에서는 제주도의 특산물들을 한꺼번에 만날 수 있는데 특히, 사시사철 시장의 기운을 밝게 만드는 귤과 한라봉이 대표적인 과일입니다. 제주도는 날씨가 따뜻한 편이어서 열대과일의 재배가 가능한데요, 귤에서 품종을 개량한 천혜향이나 황금향, 동남아나 중국에서 볼 수 있는 애플망고, 용과도 재배가 가능해서 시장에서 쉽게 볼 수 있습니다.</p>
+                    <p>제주도는 섬이기 때문에 해산물도 유명한데요. 싱싱한 갈치와 옥돔 등 다양한 해산물 구입이 가능합니다. 회 센터에서는 즉석으로 회를 떠주기도 하고 남은 고기로 탕을 끓여주기 때문에 해산물을 좋아한다면 반드시 들러보세요!</p>
+                   
                     
-                    <div class="story-list">
-                       
-                        <a href="/audioMain/tour3-1" style="text-decoration: none; color: inherit;">
-                            <div class="story-item">
-                                <img src="/image/dong6.jpg" class="story-thumbnail">
-                                <div class="story-info">
-                                    <div class="story-title">동문시장 입구</div>
-                                    <div class="story-description">
-                                       청정자연 유네스코 3관왕! 제주도의 대표시장
-                                    </div>
-                                    <div class="story-playtime">재생시간 01:28</div>
-                                </div>
-                            </div>
-                        </a>
-
-                       <a href="/audioMain/tour3-2" style="text-decoration: none; color: inherit;">
-                        <div class="story-item">
-                            <img src="/image/dong5.jpg"  class="story-thumbnail">
-                            <div class="story-info">
-                                <div class="story-title">동문시장의 맛있는 이야기</div>
-                                <div class="story-description">
-                                    제주 향토음식 야무지게 먹기
-                                </div>
-                                <div class="story-playtime">재생시간 01:30</div>
-                            </div>
-                        </div>
-                       </a>
-                    </div>
+               		
                 </div>
             </div>
         </div>
