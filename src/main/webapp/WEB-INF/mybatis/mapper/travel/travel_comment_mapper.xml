@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mapper.travel.TravelCommentMapper">
+
+    <!-- 댓글 목록 -->
+    <select id="findCommentsByArticleId" parameterType="int" resultType="CommentDTO">
+        SELECT 
+            id,
+            article_id AS articleId,
+            author,
+            content,
+            reg_date AS regDate
+        FROM travel_comment
+        WHERE article_id = #{articleId}
+        ORDER BY reg_date DESC
+    </select>
+
+    <!-- 댓글 추가 -->
+    <insert id="insertComment" parameterType="CommentDTO">
+        INSERT INTO travel_comment (id, article_id, author, content, reg_date)
+        VALUES (seq_travel_comment.NEXTVAL, #{articleId}, #{author}, #{content}, SYSDATE)
+    </insert>
+    
+    <!-- 댓글 수정 -->
+    <update id="updateComment" parameterType="CommentDTO">
+        UPDATE travel_comment
+        SET content = #{content}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 댓글 삭제 -->
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM travel_comment
+        WHERE id = #{id}
+    </delete>
+    
+</mapper>

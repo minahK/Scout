@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mapper.travel.TravelArticleMapper">
+
+    <select id="findTravelList" parameterType="map" resultType="com.app.dto.travel.TravelArticleDTO">
+        SELECT 
+            id,
+            title,
+            location,
+            short_description AS shortDescription,
+            view_count AS viewCount,
+            image_name AS imageName,
+            reg_date AS regDate
+        FROM travel_article
+        WHERE 1=1
+        <if test="keyword != null and keyword != ''">
+            AND (title LIKE '%' || #{keyword} || '%' 
+            OR location LIKE '%' || #{keyword} || '%')
+        </if>
+        <choose>
+            <when test="sort == 'popular'">
+                ORDER BY view_count DESC
+            </when>
+            <otherwise>
+                ORDER BY id DESC
+            </otherwise>
+        </choose>
+    </select>
+    
+    <select id="getTravelCount" parameterType="map" resultType="int">
+    	SELECT COUNT(*)
+    	FROM travel_article
+    	WHERE 1=1
+    	<if test="keyword != null and keyword != ''">
+    		AND (title LIKE '%' || #{keyword} || '%'
+    		OR location LIKE '%' || #{keyword} || '%')
+    	</if>
+    </select>
+
+    <select id="findTravelById" parameterType="int" resultType="com.app.dto.travel.TravelArticleDTO">
+        SELECT 
+            id,
+            title,
+            location,
+            short_description AS shortDescription,
+            view_count AS viewCount,
+            likes,
+            shares,
+            content,
+            image_name AS imageName,
+            hours,
+            price,
+            parking,
+            phone,
+            reg_date AS regDate
+        FROM travel_article 
+        WHERE id = #{id}
+    </select>
+
+    <select id="findRecommendedTravels" parameterType="int" resultType="com.app.dto.travel.TravelArticleDTO">
+        <![CDATA[
+            SELECT *
+            FROM (
+                SELECT
+                    id,
+                    title,
+                    location,
+                    short_description AS shortDescription,
+                    view_count AS viewCount,
+                    image_name AS imageName
+                FROM travel_article
+                WHERE location = (SELECT location FROM travel_article WHERE id = #{id})
+                  AND id != #{id}
+                ORDER BY DBMS_RANDOM.VALUE
+            )
+            WHERE ROWNUM <= 3
+        ]]>
+    </select>
+
+    <update id="updateViewCount" parameterType="int">
+        UPDATE travel_article
+        SET view_count = view_count + 1
+        WHERE id = #{id}
+    </update>
+
+</mapper>

@@ -7,6 +7,7 @@
 
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
+        <setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 
 	<typeAliases>
@@ -14,6 +15,9 @@
 		<typeAlias type="com.app.dto.travelDestination.TravelDestination" alias="TravelDestination" />
 		<typeAlias type="com.app.dto.travelDestination.HashTags" alias="HashTags" />
 		<typeAlias type="com.app.dto.travelDestination.TravelInfo" alias="TravelInfo" />
+        <typeAlias alias="TravelArticle" type="com.app.dto.travel.TravelArticleDTO"/>
+        <typeAlias alias="CommentDTO" type="com.app.dto.travel.CommentDTO"/>
+        <typeAlias alias="FestivalDTO" type="com.app.dto.festival.FestivalDTO"/>
 	</typeAliases>
 
 </configuration>
