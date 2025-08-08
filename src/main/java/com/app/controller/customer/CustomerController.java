@@ -95,9 +95,9 @@ public class CustomerController {
 		if (loginUser == null) {
 			return "customer/signin";
 		}
-
+		session.setAttribute("loginUser", loginUser);
 		LoginManager.setSessionLoginUserId(session, loginUser.getId());
-		return "redirect:/Scout/mypage";
+		return "redirect:/";
 	}
 
 	// 마이페이지

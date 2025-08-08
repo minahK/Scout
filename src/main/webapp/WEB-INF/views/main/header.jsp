@@ -188,7 +188,7 @@ body {
 		<!-- 로그인 여부에 따라 출력 변경 -->
 		<c:choose>
 			<c:when test="${not empty sessionScope.loginUser}">
-				<span>${sessionScope.loginUser.id} 님</span>
+				<span>${sessionScope.loginUser.name} 님</span>
 			</c:when>
 			<c:otherwise>
 				<i class="fa-solid fa-circle-user"
