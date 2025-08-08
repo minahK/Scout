@@ -23,7 +23,6 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 		<property name="password" value="tiger" />
 	</bean>
 
-</bean>
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean"
 		id="sqlSessionFactory">
 		<property name="dataSource" ref="data_source"></property>
