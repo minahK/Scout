@@ -13,6 +13,7 @@
             end_date AS endDate,
             image_name AS imageName,
             content,
+            short_description AS shortDescription,
             view_count AS viewCount
         FROM travel_festival
         WHERE 1=1

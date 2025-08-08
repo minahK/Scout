@@ -12,6 +12,7 @@ public class FestivalDTO {
 	private String imageName;
 	private String content;
 	private int viewCount;
+	private String shortDescription;
 	
 	public int getId() {
 		return id;
@@ -60,6 +61,12 @@ public class FestivalDTO {
 	}
 	public void setViewCount(int viewCount) {
 		this.viewCount = viewCount;
+	}
+	public String getShortDescription() {
+		return shortDescription;
+	}
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
 	}
 	
 	

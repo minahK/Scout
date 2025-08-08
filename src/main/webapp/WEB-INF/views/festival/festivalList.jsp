@@ -56,15 +56,8 @@
                             <span><i class="fa-solid fa-eye"></i> ${festival.viewCount}</span>
                         </div>
                         <p class="festival-card-desc">
-                            <c:choose>
-                                <c:when test="${fn:length(festival.content) > 100}">
-                                    ${fn:substring(festival.content, 0, 100)}...
-                                </c:when>
-                                <c:otherwise>
-                                    ${festival.content}
-                                </c:otherwise>
-                            </c:choose>
-                        </p>
+    						${festival.shortDescription}
+						</p>
                         <div class="festival-card-footer">
                             <fmt:formatDate value="${festival.startDate}" pattern="yyyy.MM.dd"/>
                             ~
