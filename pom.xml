@@ -2,7 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>web_study</groupId>
+	<groupId>Scout</groupId>
 	<artifactId>web_study</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
@@ -34,9 +34,15 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>5.3.27</version>
+		</dependency>
+
 
 		<!--
-https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
+		https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>javax.servlet.jsp-api</artifactId>
@@ -52,9 +58,8 @@ https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
 			<version>1.2</version>
 		</dependency>
 
-
 		<!--
-https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+		https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -62,18 +67,20 @@ https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
 		</dependency>
 
 		<!--
-https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.38</version>
 		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
 		<dependency>
@@ -118,6 +125,7 @@ https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
 			<version>2.19.2</version>
 		</dependency>
 
+
 		<!--
 		https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
 		<dependency>
@@ -125,7 +133,6 @@ https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
 			<artifactId>log4j-core</artifactId>
 			<version>2.22.1</version>
 		</dependency>
-
 		<!--
 		https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
 		<dependency>
@@ -133,13 +140,66 @@ https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
 			<artifactId>log4j-api</artifactId>
 			<version>2.22.1</version>
 		</dependency>
-
 		<!--
 		https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j2-impl</artifactId>
 			<version>2.22.1</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>5.3.27</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>5.3.27</version>
+		</dependency>
+
+
+		<!--
+		https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.1.2.Final</version>
+		</dependency>
+
+
+		<!--		<dependency>-->
+		<!--			<groupId>com.sun.mail</groupId>-->
+		<!--			<artifactId>javax.mail</artifactId>-->
+		<!--			<version>1.6.2</version>-->
+		<!--		</dependency>-->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.activation</groupId>
+			<artifactId>jakarta.activation-api</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>5.3.27</version>
 		</dependency>
 
 	</dependencies>
