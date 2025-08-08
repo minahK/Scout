@@ -2,35 +2,18 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.app.mapper.TravelCourseMapper">
+<mapper namespace="travel_course_mapper">
 
 	<select id="getCourseList"
-		resultType="com.app.dto.TravelCourseDTO">
-		SELECT
-		COURSE_ID as courseId,
-		TITLE as title,
-		DESCRIPTION as description,
-		REGION_ID as regionId,
-		USER_ID as userId,
-		CREATED_AT as createdAt
-		FROM
-		TRAVEL_COURSE
-		<where>
-			<if test="keyword != null and keyword != ''">
-				AND (TITLE LIKE '%' || #{keyword} || '%' OR DESCRIPTION
-				LIKE '%' ||
-				#{keyword} || '%')
-			</if>
-		</where>
-		ORDER BY
-		<choose>
-			<when test="sort == 'asc'">COURSE_ID ASC</when>
-			<otherwise>COURSE_ID DESC</otherwise>
-		</choose>
+		resultType="com.app.dto.travel.TravelCourseDTO">
+		SELECT COURSE_ID as courseId, TITLE as title, DESCRIPTION as description,
+		REGION_ID as regionId, USER_ID as userId, CREATED_AT as createdAt
+		FROM TRAVEL_COURSE
+		ORDER BY COURSE_ID DESC
 	</select>
 
 	<select id="getCourseDetail" parameterType="long"
-		resultType="com.app.dto.TravelCourseDTO">
+		resultType="com.app.dto.travel.TravelCourseDTO">
 		SELECT
 		COURSE_ID as courseId,
 		TITLE as title,
@@ -44,7 +27,7 @@
 		WHERE COURSE_ID = #{id}
 	</select>
 	<select id="getCourseListByTag" parameterType="string"
-		resultType="com.app.dto.TravelCourseDTO">
+		resultType="com.app.dto.travel.TravelCourseDTO">
 		SELECT COURSE_ID, TITLE, DESCRIPTION, REGION_ID, USER_ID,
 		CREATED_AT
 		FROM TRAVEL_COURSE
@@ -55,7 +38,7 @@
 	</select>
 
 	<update id="updateCourse"
-		parameterType="com.app.dto.TravelCourseDTO">
+		parameterType="com.app.dto.travel.TravelCourseDTO">
 		UPDATE TRAVEL_COURSE
 		SET TITLE = #{title}, DESCRIPTION =
 		#{description}
@@ -70,7 +53,7 @@
 	</delete>
 
 	<insert id="insertCourse"
-		parameterType="com.app.dto.TravelCourseDTO">
+		parameterType="com.app.dto.travel.TravelCourseDTO">
 		INSERT INTO TRAVEL_COURSE (
 		COURSE_ID,
 		TITLE,
@@ -87,4 +70,25 @@
 		SYSDATE
 		)
 	</insert>
+
+	<select id="selectCourseList"
+		resultType="com.app.dto.travel.TravelCourseDTO">
+		SELECT * FROM TRAVEL_COURSE
+		<where>
+			<if test="keyword != null and keyword != ''">
+				AND TITLE LIKE '%' || #{keyword} || '%'
+			</if>
+		</where>
+		<choose>
+			<when test="sort == 'latest' or sort == null">
+				ORDER BY CREATED_AT DESC
+			</when>
+			<when test="sort == 'popular'">
+				ORDER BY VIEWS DESC
+			</when>
+			<when test="sort == 'distance'">
+				ORDER BY DISTANCE ASC <!-- 실제 distance 필드명에 맞게 수정 -->
+			</when>
+		</choose>
+	</select>
 </mapper>

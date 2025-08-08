@@ -1,4 +1,4 @@
-package com.app.dto;
+package com.app.dto.travel;
 
 import java.util.Date;
 

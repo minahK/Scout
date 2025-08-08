@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tourist_destination_mapper">
+
+<!-- 	<resultMap id="destinationMap" -->
+<!-- 		type="com.app.dto.TouristDestinationDTO"> -->
+<!-- 		<id property="id" column="ID" /> -->
+<!-- 		<result property="name" column="NAME" /> -->
+<!-- 		<result property="sumup" column="SUMUP" /> -->
+<!-- 		<result property="descride" column="DESCRIDE" /> -->
+<!-- 		<result property="regionid" column="REGIONID" /> -->
+<!-- 		<result property="latitude" column="LATITUDE" /> -->
+<!-- 		<result property="longitude" column="LONGITUDE" /> -->
+<!-- 		<result property="type" column="TYPE" /> -->
+<!-- 		<result property="image" column="IMAGE" /> -->
+<!-- 		<result property="createDate" column="CREATE_DATE" /> -->
+<!-- 		<result property="viewCount" column="VIEW_COUNT" /> -->
+<!-- 	</resultMap> -->
+
+<!-- 	<select id="selectAllDestinations" -->
+<!-- 		resultType="com.app.dto.TouristDestinationDTO"> -->
+<!-- 		SELECT * FROM T_TRAVEL_DESTINATION -->
+<!-- 	</select> -->
+
+<!-- 	<select id="selectDestinationById" parameterType="long" -->
+<!-- 		resultMap="destinationMap"> -->
+<!-- 		SELECT * FROM T_TRAVEL_DESTINATION WHERE ID = #{id} -->
+<!-- 	</select> -->
+
+<!-- 	<insert id="insertDestination" -->
+<!-- 		parameterType="com.app.dto.TouristDestinationDTO"> -->
+<!-- 		INSERT INTO T_TRAVEL_DESTINATION -->
+<!-- 		(ID, NAME, SUMUP, -->
+<!-- 		DESCRIDE, REGIONID, LATITUDE, LONGITUDE, TYPE, IMAGE, -->
+<!-- 		CREATE_DATE, -->
+<!-- 		VIEW_COUNT) -->
+<!-- 		VALUES -->
+<!-- 		(#{id}, #{name}, #{sumup}, #{descride}, #{regionid}, -->
+<!-- 		#{latitude}, -->
+<!-- 		#{longitude}, -->
+<!-- 		#{type}, #{image}, #{createDate}, -->
+<!-- 		#{viewCount}) -->
+<!-- 	</insert> -->
+
+<!-- 	<update id="updateDestination" -->
+<!-- 		parameterType="com.app.dto.TouristDestinationDTO"> -->
+<!-- 		UPDATE T_TRAVEL_DESTINATION -->
+<!-- 		SET NAME=#{name}, -->
+<!-- 		SUMUP=#{sumup}, DESCRIDE=#{descride}, -->
+<!-- 		REGIONID=#{regionid}, -->
+<!-- 		LATITUDE=#{latitude}, LONGITUDE=#{longitude}, TYPE=#{type}, -->
+<!-- 		IMAGE=#{image}, -->
+<!-- 		CREATE_DATE=#{createDate}, VIEW_COUNT=#{viewCount} -->
+<!-- 		WHERE ID=#{id} -->
+<!-- 	</update> -->
+
+<!-- 	<delete id="deleteDestination" parameterType="long"> -->
+<!-- 		DELETE FROM -->
+<!-- 		T_TRAVEL_DESTINATION WHERE ID = #{id} -->
+<!-- 	</delete> -->
+<!-- 	<insert id="insertCourseDetail" -->
+<!-- 		parameterType="com.app.dto.TravelCourseDetailDTO"> -->
+<!-- 		INSERT INTO TRAVEL_COURSE_DETAIL -->
+<!-- 		(COURSE_ID, SEQ_NO, -->
+<!-- 		DEST_ID, MEMO) -->
+<!-- 		VALUES -->
+<!-- 		(#{courseId}, #{seqNo}, #{destId}, #{memo}) -->
+<!-- 	</insert> -->
+
+</mapper>

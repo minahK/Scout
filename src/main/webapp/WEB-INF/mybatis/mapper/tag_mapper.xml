@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tag_mapper">
+    <select id="getAllTags" resultType="com.app.dto.TagDTO">
+        SELECT TAG_ID as tagId, TAG_NAME as tagName FROM TAG
+    </select>
+    <insert id="insertTag" parameterType="string">
+        INSERT INTO TAG (TAG_NAME) VALUES (#{tagName})
+    </insert>
+    <select id="findByTagName" parameterType="string" resultType="com.app.dto.TagDTO">
+        SELECT TAG_ID as tagId, TAG_NAME as tagName FROM TAG WHERE TAG_NAME = #{tagName}
+    </select>
+</mapper>

@@ -6,7 +6,6 @@ import com.app.dto.TagDTO;
 
 public interface TagService {
 
-	void addTag(String tagName);
-
-	List<TagDTO> getAllTags();
+	 void addTag(String tagName);
+	    List<TagDTO> getAllTags();
 }

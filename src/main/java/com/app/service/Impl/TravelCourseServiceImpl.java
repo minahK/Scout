@@ -1,38 +1,57 @@
 package com.app.service.Impl;
 
-
-import com.app.dto.TravelCourseDTO;
-import com.app.mapper.TravelCourseMapper;
-import com.app.service.TravelCourseService;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
+import com.app.dto.tour.TouristDestinationDTO;
+import com.app.dto.travel.TravelCourseDTO;
+import com.app.dto.travel.TravelCourseSimpleDTO;
+import com.app.mapper.TravelCourseDetailMapper;
+import com.app.service.TravelCourseService;
 
 @Service
 public class TravelCourseServiceImpl implements TravelCourseService {
-
+	
 	@Autowired
-	private TravelCourseMapper travelCourseMapper;
+	private TravelCourseDetailMapper travelCourseDetailMapper;
 
 	@Override
 	public List<TravelCourseDTO> getCourseList(String keyword, String sort) {
-		return travelCourseMapper.getCourseList(keyword, sort);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public TravelCourseDTO getCourseDetail(Long id) {
-		return travelCourseMapper.getCourseDetail(id);
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 	@Override
 	public List<TravelCourseDTO> getCourseListByTag(String tag) {
-	    return travelCourseMapper.getCourseListByTag(tag);
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
+
 	@Override
 	public int insertCourse(TravelCourseDTO course) {
-	    return travelCourseMapper.insertCourse(course);
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<TravelCourseSimpleDTO> getSimpleCourseList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TouristDestinationDTO> getDestinationListByCourseId(Long courseId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
-	
+  
 }

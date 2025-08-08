@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<select id="selectAllUsers" resultType="com.app.dto.UserDTO">
-    SELECT USER_ID as userId, USERNAME as username FROM USERS
-</select>
