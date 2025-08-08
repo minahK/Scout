@@ -19,7 +19,7 @@
 	
 	<script>
 		document.getElementById('btn_modifyPw').addEventListener('click',()=>{
-			location.href = '/customer/modifyPw';
+			location.href = '/Scout/modifyPw';
 		})
 	</script>
 </body>

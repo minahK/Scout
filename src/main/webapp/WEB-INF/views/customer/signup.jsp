@@ -144,7 +144,7 @@ button:hover {
 
 		<h1>회원가입</h1>
 
-		<form action="/customer/signup" method="post">
+		<form action="/Scout/signup" method="post">
 			<label for="inputId">아이디</label>
 			<div class="input-group">
 				<i class="fas fa-user input-icon"></i> <input type="text" name="id"
@@ -187,7 +187,7 @@ button:hover {
 
 			<div class="options">
 				<p>아이디가 이미 있으신가요?</p>
-				<a href="/customer/signin">로그인</a>
+				<a href="/Scout/signin">로그인</a>
 			</div>
 		</form>
 	</div>
@@ -227,7 +227,7 @@ button:hover {
 
     $.ajax({
       type: "POST",
-      url: "http://localhost:8080/customer/checkDupIdJson",
+      url: "http://localhost:8080/Scout/checkDupIdJson",
       headers: {
         "Content-type": "application/json"
       },
@@ -278,7 +278,7 @@ emailInput.on('input', () => {
 });
 
 $('#btn_checkEmail').on('click', () => {
-  $.post('/customer/checkEmailJson',
+  $.post('/Scout/checkEmailJson',
     JSON.stringify({ email: emailInput.val() }),
     (res) => {
       if (res.body === 'Y') emailMsg.text('이미 사용 중인 이메일입니다').css('color', 'red');

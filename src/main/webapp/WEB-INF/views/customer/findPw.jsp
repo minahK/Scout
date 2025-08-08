@@ -74,7 +74,7 @@ button:hover {
 	<div class="container">
 		<h1>비밀번호 찾기</h1>
 
-		<form action="<c:url value='/customer/sendResetLink'/>" method="post">
+		<form action="<c:url value='/Scout/sendResetLink'/>" method="post">
 			<label for="email">가입한 이메일 주소</label> <input type="email"
 				name="email" id="email" required />
 			<button type="submit">재설정 링크 보내기</button>

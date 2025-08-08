@@ -226,7 +226,7 @@ button:hover {
 			<p class="error-message">${error}</p>
 		</c:if>
 
-		<form action="/customer/signin" method="post">
+		<form action="/Scout/signin" method="post">
 			<label for="id">아이디</label>
 			<div class="input-group">
 				<i class="fas fa-user input-icon"></i> <input type="text" name="id"
@@ -272,7 +272,7 @@ button:hover {
 
 
 		<div class="options">
-			<a href="/customer/signup">회원가입</a> <a href="/customer/findPw">비밀번호
+			<a href="/Scout/signup">회원가입</a> <a href="/Scout/findPw">비밀번호
 				찾기</a>
 		</div>
 	</div>

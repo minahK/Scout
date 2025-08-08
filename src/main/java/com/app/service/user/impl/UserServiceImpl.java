@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.common.CommonCode;
+//import com.app.common.CommonCode;
 import com.app.dao.user.UserDAO;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 		// 사용자 계정 추가 할때 필요한 체크 로직....
 
 		// user.setUserType("CUS");
-		user.setUserType(CommonCode.USER_USERTYPE_CUSTOMER);
+//		user.setUserType(CommonCode.USER_USERTYPE_CUSTOMER);
 		int result = userDAO.saveUser(user);
 
 		return result;

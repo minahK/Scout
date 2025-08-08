@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.app.common.CommonCode;
+//import com.app.common.CommonCode;
 import com.app.dto.api.ApiResponse;
 import com.app.dto.api.ApiResponseHeader;
 import com.app.dto.user.User;
@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/Scout")
 @RequiredArgsConstructor
 public class CustomerController {
 
@@ -88,7 +88,7 @@ public class CustomerController {
 	// 로그인 처리
 	@PostMapping("/signin")
 	public String signinAction(User user, HttpSession session) {
-		user.setUserType(CommonCode.USER_USERTYPE_CUSTOMER);
+//		user.setUserType(CommonCode.USER_USERTYPE_CUSTOMER);
 		User loginUser = userService.checkUserLogin(user);
 
 		if (loginUser == null) {

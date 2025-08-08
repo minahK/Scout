@@ -69,11 +69,11 @@
 <!-- 			<beans:bean class="com.app.interceptor.LoginInterceptor"></beans:bean> -->
 		</interceptor>
 		
-		<interceptor>
-			<mapping path="/admin/**"/>
-			<exclude-mapping path="/admin/signin"/>
-			<beans:bean class="com.app.interceptor.AdminInterceptor"></beans:bean>
-		</interceptor>
+<!-- 		<interceptor> -->
+<!-- 			<mapping path="/admin/**"/> -->
+<!-- 			<exclude-mapping path="/admin/signin"/> -->
+<!-- 			<beans:bean class="com.app.interceptor.AdminInterceptor"></beans:bean> -->
+<!-- 		</interceptor> -->
 		
 	</interceptors>
 
