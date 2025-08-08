@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -174,6 +175,13 @@ body {
 	font-weight: 500;
 	margin-right: 4px;
 	margin-top: 7px;
+	text-decoration: none;
+}
+
+.news-body:hover {
+	color: #ee853f;
+	font-weight: 700;
+	cursor:pointer;
 }
 .news-emoji, .news-icon {
 	font-size: 18px;
@@ -200,15 +208,15 @@ body {
 		<!-- 오른쪽: 여행 소식 -->
 		<div class="news-section">
 			<div class="news-header-row">
-				<span class="news-title">오늘의 행사 소식</span>
-				<button class="news-more-btn" onClick="location.href='/scout/festival/list'">+</button>
+				<span class="news-title">📆 오늘의 행사 소식</span>
+				<button class="news-more-btn" onClick="location.href='/festival/list'">+</button>
 			</div>
 			<ul class="news-list">
-				<%-- <c:forEach var="festival" items="${festivalList}">
-					<li class="news-item"><a class="news-body">${festival.title}</a></li>
-				</c:forEach> --%>
+				<c:forEach var="festival" items="${festivalList}">
+					<li class="news-item">🎈&nbsp;&nbsp;<a href="festival/detail?id=${festival.id}" class="news-body">${festival.title}</a></li>
+				</c:forEach>
 			
-				<li class="news-item"><span class="news-badge">행정안전부</span> <span
+				<!-- <li class="news-item"><span class="news-badge">행정안전부</span> <span
 					class="news-body">호우 국민행동요령 - 호우·태풍 이렇게 행동하세요</span></li>
 				<li class="news-item"><a href="#" class="news-link">한국관광공사</a>
 					<span class="news-body">'2025 대한민국 밤밤 페스타' 전국 개막</span> <span
@@ -218,7 +226,7 @@ body {
 					class="news-icon">🚴‍♂️</span></li>
 				<li class="news-item"><a href="#" class="news-link">해양수산부</a> <span
 					class="news-body">제11회 섬 여행 영상 공모전</span> <span class="news-icon">🎥</span>
-				</li>
+				</li> -->
 			</ul>
 		</div>
 	</div>

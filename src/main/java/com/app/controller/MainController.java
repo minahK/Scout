@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.app.dto.festival.FestivalDTO;
 import com.app.dto.travelDestination.HashTags;
 import com.app.dto.travelDestination.TravelDestination;
 import com.app.dto.travelDestination.TravelInfo;
@@ -30,8 +31,8 @@ public class MainController {
 		List<TravelDestination> travelMJList = travelDestinationService.findTravelMJList();
 		List<TravelDestination> travelGSList = travelDestinationService.findTravelGSList();
 		
-		
-		
+		List<FestivalDTO> festivalList = travelDestinationService.findFestivalList();
+		model.addAttribute("festivalList",festivalList);
 		model.addAttribute("travelHPList", travelHPList);
 		model.addAttribute("travelMJList", travelMJList);
 		model.addAttribute("travelGSList", travelGSList);
@@ -83,8 +84,6 @@ public class MainController {
 		model.addAttribute("travel", travelDestination);
 		model.addAttribute("hashtag", hashtag);
 		model.addAttribute("travelInfo", travelInfo);
-		System.out.println(travelInfo);
-		System.out.println(travelId);
 		return "travelDestination/detail";
 	}
 }

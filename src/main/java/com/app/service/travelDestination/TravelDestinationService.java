@@ -2,6 +2,7 @@ package com.app.service.travelDestination;
 
 import java.util.List;
 
+import com.app.dto.festival.FestivalDTO;
 import com.app.dto.travelDestination.HashTags;
 import com.app.dto.travelDestination.TravelDestination;
 import com.app.dto.travelDestination.TravelInfo;
@@ -27,6 +28,8 @@ public interface TravelDestinationService {
 	List<TravelDestination> findTravelTagAndSortList(String tag, String sort);
 
 	TravelInfo findTravelInfo(int travelId);
+
+	List<FestivalDTO> findFestivalList();
 
 	
 }

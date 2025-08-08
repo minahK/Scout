@@ -217,7 +217,7 @@ to {
 .card-title {
 	font-size: 16px;
 	font-weight: 800;
-	color: #48B2B7;
+	color: #ee853f;
 	margin-bottom: 5px;
 }
 

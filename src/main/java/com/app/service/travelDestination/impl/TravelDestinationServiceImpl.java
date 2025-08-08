@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dao.travelDestination.TravelDestinationDAO;
+import com.app.dto.festival.FestivalDTO;
 import com.app.dto.travelDestination.HashTags;
 import com.app.dto.travelDestination.TravelDestination;
 import com.app.dto.travelDestination.TravelInfo;
@@ -73,6 +74,12 @@ public class TravelDestinationServiceImpl implements TravelDestinationService {
 	@Override
 	public TravelInfo findTravelInfo(int travelId) {
 		TravelInfo result = travelDestinationDAO.findTravelInfo(travelId);
+		return result;
+	}
+
+	@Override
+	public List<FestivalDTO> findFestivalList() {
+		List<FestivalDTO> result = travelDestinationDAO.findFestivalList();
 		return result;
 	}
 }

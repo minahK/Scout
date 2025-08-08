@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.app.dao.travelDestination.TravelDestinationDAO;
+import com.app.dto.festival.FestivalDTO;
 import com.app.dto.travelDestination.HashTags;
 import com.app.dto.travelDestination.TravelDestination;
 import com.app.dto.travelDestination.TravelInfo;
@@ -80,6 +81,12 @@ public class TravelDestinationDAOImpl implements TravelDestinationDAO{
 	@Override
 	public TravelInfo findTravelInfo(int travelId) {
 		TravelInfo result = sqlSessionTemplate.selectOne("travelDestination_mapper.findTravelInfo",travelId);
+		return result;
+	}
+
+	@Override
+	public List<FestivalDTO> findFestivalList() {
+		List<FestivalDTO> result = sqlSessionTemplate.selectList("travelDestination_mapper.findFestivalList");
 		return result;
 	}
 }

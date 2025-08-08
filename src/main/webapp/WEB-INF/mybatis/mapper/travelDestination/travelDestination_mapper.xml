@@ -74,4 +74,9 @@
 		WHERE id = #{travelId}
 	</select>
 	
+	<select id="findFestivalList" resultType="FestivalDTO">
+		select * from TRAVEL_festival
+		where rownum &lt;=4
+	</select>
+	
 </mapper>
