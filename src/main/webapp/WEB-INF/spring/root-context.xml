@@ -70,22 +70,6 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 			ref="sqlSessionFactory" />
 	</bean>
 
-	<bean id="mailSender"
-		class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.example.com" />
-		<property name="port" value="587" />
-		<property name="username" value="your_email@example.com" />
-		<property name="password" value="your_password" />
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.transport.protocol">smtp</prop>
-				<prop key="mail.smtp.auth">true</prop>
-				<prop key="mail.smtp.starttls.enable">true</prop>
-				<prop key="mail.debug">false</prop>
-			</props>
-		</property>
-	</bean>
-
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="sqlSessionFactoryBeanName"
@@ -108,6 +92,23 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 	<!-- <task:annotation-driven -->
 	<!-- executor="mainTaskExecutor" scheduler="mainScheduler" /> -->
 
+	<!-- gmail설정 -->
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="자신의 이메일 아이디" /> <!-- 자신의 이메일 아이디 -->
+		<property name="password" value="자신의 비밀번호" /> <!-- 자신의 비밀번호 -->
+		<!-- 보안연결 TLS과 관련된 설정 -->
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
 
 </beans>
 
