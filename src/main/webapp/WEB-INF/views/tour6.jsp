@@ -220,7 +220,7 @@
 
     .story-info .story-playtime {
         font-size: 0.8em;
-        color: var(--gray-text);
+        color: var(--text-color); /* 이 부분을 수정했습니다. */
     }
     
     @media (max-width: 1200px) {

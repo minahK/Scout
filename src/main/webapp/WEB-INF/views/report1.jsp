@@ -39,7 +39,7 @@
         }
 
         .header .logo img {
-            height: 60px; /* 로고 크기 수정 */
+            height: 60px;
         }
 
         .header .nav-menu {
@@ -75,6 +75,19 @@
             text-align: center;
         }
         
+        /* 이미지와 제목을 함께 배치하기 위한 스타일 */
+        .title-area {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .title-area img {
+            width: 100px; /* 이미지 크기 조정 */
+            height: auto;
+            display: block;
+            margin: 0 auto 10px;
+        }
+
         .tab-menu {
             display: flex;
             justify-content: center;
@@ -245,6 +258,10 @@
 
     <div class="container">
         <h1 class="page-title">자주 묻는 질문</h1>
+        
+        <div class="title-area">
+            <img src="/image/gkk.png" alt="추가 이미지">
+        </div>
 
         <div class="tab-menu">
             <button class="tab-btn" data-tab="user">일반 사용자</button>
@@ -255,7 +272,7 @@
             <div class="search-container">
                 <div class="search-box">
                     <input type="text" placeholder="궁금한 내용을 검색해 보세요.">
-                    <button><img src="https://i.imgur.com/gK9u3jO.png" alt="검색 아이콘"></button>
+                    <button><img src="/image/bobo.png" alt="검색 아이콘"></button>
                 </div>
             </div>
 
@@ -330,9 +347,8 @@
             <div class="search-container">
                 <div class="search-box">
                     <input type="text" placeholder="궁금한 내용을 검색해 보세요.">
-                    <button><img src="https://i.imgur.com/gK9u3jO.png" alt="검색 아이콘"></button>
+                    <button><img src="/image/bobo.png" alt="검색 아이콘"></button>
                 </div>
-              
             </div>
 
             <div class="faq-list">
