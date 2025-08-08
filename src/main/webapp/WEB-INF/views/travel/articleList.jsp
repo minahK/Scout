@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+	<%@ include file="../travelDestination/tdHeader.jsp"%>
+	
     <div class="container">
         <div class="travel-list-header">
             <h1>여행 기사</h1>
@@ -54,5 +56,7 @@
             </c:forEach>
         </div>
     </div>
+    
+    <%@ include file="../main/footer.jsp"%>
 </body>
 </html>

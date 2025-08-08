@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+	<%@ include file="../travelDestination/tdHeader.jsp"%>
     <div class="article-container">
         <!-- 제목 영역 -->
         <div class="article-header">
@@ -125,6 +126,8 @@
             </a>
         </div>
     </div>
+    
+    <%@ include file="../main/footer.jsp"%>
     
     <script>
         // 좋아요 버튼 기능
