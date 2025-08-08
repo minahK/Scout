@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>						
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"						
-					"http://mybatis.org/dtd/mybatis-3-config.dtd">
+					"http://mybatis.org/dtd/mybatis-3-config.dtd">	
 
 
 <configuration>
@@ -18,6 +18,8 @@
         <typeAlias alias="TravelArticle" type="com.app.dto.travel.TravelArticleDTO"/>
         <typeAlias alias="CommentDTO" type="com.app.dto.travel.CommentDTO"/>
         <typeAlias alias="FestivalDTO" type="com.app.dto.festival.FestivalDTO"/>
+		<typeAlias type="com.app.dto.user.User" alias="User"/>
+		<typeAlias type="com.app.dto.user.UserSearchCondition" alias="UserSearchCondition"/>
 	</typeAliases>
 
 </configuration>
