@@ -9,164 +9,205 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.app.dao.community.CommunityDAO;
-import com.app.dto.community.*;
+import com.app.dto.community.ChatMessageDTO;
+import com.app.dto.community.ChatRoomDTO;
+import com.app.dto.community.CommentDTO;
+import com.app.dto.community.CommunityDTO;
+import com.app.dto.community.CommunityPostDTO;
+import com.app.dto.community.MentionDTO;
+import com.app.dto.community.NotificationDTO;
+import com.app.dto.community.TrendDTO;
+import com.app.dto.community.UserDTO;
+import com.app.dto.user.User;
 
 @Repository
 public class CommunityDAOImpl implements CommunityDAO {
 
+    private static final String NS = "CommunityPost_mapper.";
+
     @Autowired
-    SqlSessionTemplate sqlSessionTemplate;
+    SqlSessionTemplate sql;
 
-    private static final String NAMESPACE = "CommunityPost_mapper.";
-
+    // ===== Posts =====
     @Override
     public List<CommunityPostDTO> findAllPosts() {
-        return sqlSessionTemplate.selectList(NAMESPACE + "findAllPosts");
+        return sql.selectList(NS + "findAllPosts");
     }
 
     @Override
     public int insertPost(CommunityPostDTO dto) {
-        return sqlSessionTemplate.insert(NAMESPACE + "insertPost", dto);
-    }
-
-    @Override
-    public List<MentionDTO> findMentionsByPostId(int postId) {
-        return sqlSessionTemplate.selectList(NAMESPACE + "findMentionsByPostId", postId);
-    }
-
-    @Override
-    public int insertComment(CommentDTO dto) {
-        return sqlSessionTemplate.insert(NAMESPACE + "insertComment", dto);
-    }
-
-    @Override
-    public int insertMention(MentionDTO dto) {
-        return sqlSessionTemplate.insert(NAMESPACE + "insertMention", dto);
-    }
-
-    @Override
-    public int getLastCommentId() {
-        return sqlSessionTemplate.selectOne(NAMESPACE + "getLastCommentId");
+        return sql.insert(NS + "insertPost", dto);
     }
 
     @Override
     public List<CommunityPostDTO> findPostsByKeyword(String keyword) {
-        return sqlSessionTemplate.selectList(NAMESPACE + "findPostsByKeyword", keyword);
-    }
-
-    @Override
-    public List<ChatRoomDTO> findChatRoomsByUserId(int userId) {
-        return sqlSessionTemplate.selectList(NAMESPACE + "findChatRoomsByUserId", userId);
-    }
-
-    @Override
-    public ChatRoomDTO findChatRoomById(int chatRoomId) {
-        return sqlSessionTemplate.selectOne(NAMESPACE + "findChatRoomById", chatRoomId);
-    }
-
-    @Override
-    public int insertChatRoom(ChatRoomDTO dto) {
-        return sqlSessionTemplate.insert(NAMESPACE + "insertChatRoom", dto);
-    }
-
-    @Override
-    public List<ChatMessageDTO> findMessagesByRoomId(int chatRoomId) {
-        return sqlSessionTemplate.selectList(NAMESPACE + "findMessagesByRoomId", chatRoomId);
-    }
-
-    @Override
-    public int insertChatMessage(ChatMessageDTO dto) {
-        return sqlSessionTemplate.insert(NAMESPACE + "insertChatMessage", dto);
-    }
-
-    @Override
-    public List<Integer> findParticipantsByRoomId(int chatRoomId) {
-        return sqlSessionTemplate.selectList(NAMESPACE + "findParticipantsByRoomId", chatRoomId);
-    }
-
-    @Override
-    public void insertChatParticipant(ChatParticipantDTO dto) {
-        sqlSessionTemplate.insert(NAMESPACE + "insertChatParticipant", dto);
+        return sql.selectList(NS + "findPostsByKeyword", keyword);
     }
 
     @Override
     public List<CommunityPostDTO> findPostsByCategory(String category) {
-        return sqlSessionTemplate.selectList(NAMESPACE + "findPostsByCategory", category);
+        return sql.selectList(NS + "findPostsByCategory", category);
     }
-    
+
+    @Override
+    public List<CommunityPostDTO> findPostsByAuthor(int userId, int offset, int limit) {
+        Map<String, Object> p = new HashMap<>();
+        p.put("userId", userId);
+        p.put("offset", offset);
+        p.put("limit", limit);
+        return sql.selectList(NS + "findPostsByAuthor", p);
+    }
+
+    // ===== Comments & Mentions =====
+    @Override
+    public int insertComment(CommentDTO commentDTO) {
+        return sql.insert(NS + "insertComment", commentDTO);
+    }
+
+    @Override
+    public int getLastCommentId() {
+        Integer id = sql.selectOne(NS + "getLastCommentId");
+        return id == null ? 0 : id;
+    }
+
+    @Override
+    public int insertMention(MentionDTO mentionDTO) {
+        return sql.insert(NS + "insertMention", mentionDTO);
+    }
+
+    @Override
+    public List<MentionDTO> findMentionsByPostId(int postId) {
+        return sql.selectList(NS + "findMentionsByPostId", postId);
+    }
+
+    // ===== Trends & Recommend =====
     @Override
     public List<TrendDTO> findLatestTrends() {
-        return sqlSessionTemplate.selectList(NAMESPACE + "findLatestTrends");
+        return sql.selectList(NS + "findLatestTrends");
     }
 
     @Override
     public List<UserDTO> findRecommendedUsers(int userId) {
-        return sqlSessionTemplate.selectList(NAMESPACE + "findRecommendedUsers", userId);
+        return sql.selectList(NS + "findRecommendedUsers", userId);
     }
-    
+
+    // ===== Chat =====
+    @Override
+    public List<ChatRoomDTO> findChatRoomsByUserId(int userId) {
+        return sql.selectList(NS + "findChatRoomsByUserId", userId);
+    }
+
+    @Override
+    public List<ChatMessageDTO> findMessagesByRoomId(int roomId) {
+        return sql.selectList(NS + "findMessagesByRoomId", roomId);
+    }
+
+    @Override
+    public int insertChatMessage(ChatMessageDTO dto) {
+        return sql.insert(NS + "insertChatMessage", dto);
+    }
+
+    // ===== Communities =====
     @Override
     public List<CommunityDTO> findAllCommunities() {
-        return sqlSessionTemplate.selectList(NAMESPACE + "findAllCommunities");
+        return sql.selectList(NS + "findAllCommunities");
     }
 
     @Override
     public int insertCommunity(CommunityDTO dto) {
-        return sqlSessionTemplate.insert(NAMESPACE + "insertCommunity", dto);
+        return sql.insert(NS + "insertCommunity", dto);
     }
 
+    // ===== Notifications =====
     @Override
-    public List<NotificationDTO> findNotificationsByUserId(long userId, int offset, int limit) {
-        java.util.Map<String, Object> p = new java.util.HashMap<>();
+    public List<NotificationDTO> findNotificationsByUserId(int userId, int offset, int limit) {
+        Map<String, Object> p = new HashMap<>();
         p.put("userId", userId);
         p.put("offset", offset);
         p.put("limit", limit);
-        return sqlSessionTemplate.selectList(NAMESPACE + "findByUserId", p);
+        return sql.selectList(NS + "findNotificationsByUserId", p);
     }
 
     @Override
-    public int countNotificationsUnread(long userId) {
-        return sqlSessionTemplate.selectOne(NAMESPACE + "countUnread", userId);
+    public int countUnread(int userId) {
+        Integer n = sql.selectOne(NS + "countUnread", userId);
+        return n == null ? 0 : n;
     }
 
     @Override
-    public int markNotificationAsRead(long notificationId) {
-        return sqlSessionTemplate.update(NAMESPACE + "markAsRead", notificationId);
+    public int markAsRead(int notificationId) {
+        return sql.update(NS + "markAsRead", notificationId);
     }
 
     @Override
-    public int markAllNotificationsAsRead(long userId) {
-        return sqlSessionTemplate.update(NAMESPACE + "markAllAsRead", userId);
+    public int markAllAsRead(int userId) {
+        return sql.update(NS + "markAllAsRead", userId);
     }
 
     @Override
     public int insertNotification(NotificationDTO dto) {
-        return sqlSessionTemplate.insert(NAMESPACE + "insert", dto);
-    }
-    
-    @Override public UserDTO findUserById(int userId) {
-        return sqlSessionTemplate.selectOne(NAMESPACE + "findUserById", userId);
-    }
-    @Override public UserDTO findUserByHandle(String handle) {
-        return sqlSessionTemplate.selectOne(NAMESPACE + "findUserByHandle", handle);
-    }
-    @Override public int updateUserProfile(UserDTO user) {
-        return sqlSessionTemplate.update(NAMESPACE + "updateUserProfile", user);
-    }
-    @Override public int updateUserPassword(int userId, String password) {
-        Map<String,Object> p = new HashMap<>();
-        p.put("userId", userId); p.put("password", password);
-        return sqlSessionTemplate.update(NAMESPACE + "updateUserPassword", p);
-    }
-    @Override public int countFollowers(int userId) {
-        return sqlSessionTemplate.selectOne(NAMESPACE + "countFollowers", userId);
-    }
-    @Override public int countFollowing(int userId) {
-        return sqlSessionTemplate.selectOne(NAMESPACE + "countFollowing", userId);
-    }
-    @Override public List<CommunityPostDTO> findPostsByAuthor(int userId, int offset, int limit) {
-        Map<String,Object> p = new HashMap<>();
-        p.put("userId", userId); p.put("offset", offset); p.put("limit", limit);
-        return sqlSessionTemplate.selectList(NAMESPACE + "findPostsByAuthor", p);
+        // mapper id는 'insert' (네임스페이스로 구분되니 충돌 없음)
+        return sql.insert(NS + "insert", dto);
     }
 
+    // ===== Users/Profile =====
+    @Override
+    public UserDTO findUserById(int userId) {
+        return sql.selectOne(NS + "findUserById", userId);
+    }
+
+    @Override
+    public UserDTO findUserByHandle(String handle) {
+        return sql.selectOne(NS + "findUserByHandle", handle);
+    }
+
+    @Override
+    public int updateAccountCore(UserDTO dto) {
+        return sql.update(NS + "updateAccountCore", dto);
+    }
+
+    @Override
+    public int updateUserProfile(int userId, String nickname) {
+        Map<String, Object> p = new HashMap<>();
+        p.put("userId", userId);
+        p.put("nickname", nickname);
+        return sql.update(NS + "updateUserProfile", p);
+    }
+
+    @Override
+    public int updateUserPassword(int userId, String password) {
+        Map<String, Object> p = new HashMap<>();
+        p.put("userId", userId);
+        p.put("password", password);
+        return sql.update(NS + "updateUserPassword", p);
+    }
+
+    // ===== Follow counts =====
+    @Override
+    public int countFollowers(int userId) {
+        Integer n = sql.selectOne(NS + "countFollowers", userId);
+        return n == null ? 0 : n;
+    }
+
+    @Override
+    public int countFollowing(int userId) {
+        Integer n = sql.selectOne(NS + "countFollowing", userId);
+        return n == null ? 0 : n;
+    }
+    
+    @Override
+    public int selectUserPkByLoginId(String id) {
+        Integer pk = sql.selectOne(NS + "selectUserPkByLoginId", id);
+        return pk == null ? 0 : pk;
+    }
+    
+    @Override
+    public User selectUserById(Integer userId) {
+        return sql.selectOne(NS + "selectUserById", userId);
+    }
+
+    @Override
+    public void updateUserAccount(User user) {
+    	sql.update(NS + "updateUserAccount", user);
+    }
 }

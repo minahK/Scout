@@ -49,11 +49,12 @@ SET ProfileImage = 'woman.jpg'
 WHERE UserID = 26;
 
 
+select * from T_user;
 
 
 CREATE TABLE T_TRACE_POSTS (
   PostID NUMBER PRIMARY KEY,
-  AuthorID NUMBER REFERENCES T_TRACE_USERS(UserID),
+  AuthorID NUMBER REFERENCES T_USER(ID),
   Content CLOB,
   ImageURL VARCHAR2(255),
   CreatedAt DATE,

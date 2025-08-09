@@ -10,7 +10,4 @@ public class UserDTO {
     String email;
     String password;
     String nickname;
-    String profileImage;
-    String userType;
-    String joinDate;
 }

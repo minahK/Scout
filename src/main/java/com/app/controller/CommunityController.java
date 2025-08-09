@@ -3,13 +3,12 @@ package com.app.controller;
 import com.app.dao.community.CommunityDAO;
 import com.app.dto.community.*;
 import com.app.service.community.CommunityService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.app.dto.user.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,53 +24,100 @@ public class CommunityController {
     CommunityService communityService;
 
     @GetMapping("/community/main")
-    public String showCommunityMain(Model model, HttpSession session) {
-        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-        model.addAttribute("loginUser", loginUser);
+    public String showCommunityMain(Model model, HttpSession session, HttpServletRequest request) {
+    	Integer userId = getLoginUserId(session);
+        if (userId == null) {
+            return "redirect:/Scout/signin";
+        }
 
-        Integer currentUserId = (loginUser != null) ? loginUser.getUserId() : 1;
+        UserDTO loginUser = communityService.getProfile(userId);
+        if (loginUser == null) {
+            session.removeAttribute("loginUserId");
+            session.removeAttribute("loginUser");
+            return "redirect:/Scout/signin";
+        }
+        model.addAttribute("loginUser", loginUser);
 
         List<CommunityPostDTO> postList = communityDAO.findAllPosts();
         model.addAttribute("posts", postList);
 
         Map<Integer, Map<String, Integer>> reactionMap = new HashMap<>();
-        for (CommunityPostDTO post : postList) {
-            Map<String, Integer> reaction = Map.of(
-                "likes", post.getLikesCount(),
-                "retweets", post.getRepostsCount()
-            );
-            reactionMap.put(post.getPostId(), reaction);
-        }
-        model.addAttribute("reactionMap", reactionMap);
-
         Map<Integer, List<MentionDTO>> commentsMap = new HashMap<>();
         for (CommunityPostDTO post : postList) {
+            Map<String, Integer> r = new HashMap<>();
+            r.put("likes", post.getLikesCount());
+            r.put("retweets", post.getRepostsCount());
+            reactionMap.put(post.getPostId(), r);
+
             commentsMap.put(post.getPostId(), communityDAO.findMentionsByPostId(post.getPostId()));
         }
+        model.addAttribute("reactionMap", reactionMap);
         model.addAttribute("commentsMap", commentsMap);
-
         model.addAttribute("trends", communityService.findLatestTrends());
-        model.addAttribute("recommendedUsers", communityService.findRecommendedUsers(currentUserId));
+        model.addAttribute("recommendedUsers", communityService.findRecommendedUsers(userId));
 
         return "community/communityMain";
     }
 
-    @GetMapping("/community/mentions/{postId}")
-    public String getMentions(@PathVariable int postId, Model model) {
-        List<MentionDTO> mentions = communityDAO.findMentionsByPostId(postId);
-        model.addAttribute("mentions", mentions);
-        return "community/mentions";
+    private Integer getLoginUserId(HttpSession session) {
+        if (session == null) return null;
+
+        Object v = session.getAttribute("loginUserId");
+
+        Integer pk = safeInt(v);
+        if (pk != null) return pk;
+
+        String loginId = toStr(session.getAttribute("id"));
+        if (isEmpty(loginId)) loginId = toStr(session.getAttribute("loginId"));
+        if (isEmpty(loginId)) loginId = toStr(v);
+
+        if (!isEmpty(loginId)) {
+            try {
+                UserDTO profile = communityService.getProfileByHandle(loginId); 
+                if (profile != null) {
+                    session.setAttribute("loginUserId", profile.getUserId());
+                    session.setAttribute("loginUser",   profile);
+                    return profile.getUserId();
+                }
+            } catch (Exception ignore) {}
+        }
+        return null;
+    }
+
+    private Integer safeInt(Object v) {
+        if (v == null) return null;
+        if (v instanceof Number) return ((Number) v).intValue();
+        try { return Integer.parseInt(String.valueOf(v).trim()); } catch (Exception e) { return null; }
+    }
+    private String toStr(Object v) { return v == null ? null : String.valueOf(v).trim(); }
+    private boolean isEmpty(String s){ return s==null || s.isEmpty(); }
+
+
+    @PostMapping("/community/post")
+    public String createPost(@RequestParam("content") String content,
+                             HttpSession session,
+                             RedirectAttributes ra) {
+        Integer userId = getLoginUserId(session);
+        if (userId == null) return "redirect:/signin";
+
+        CommunityPostDTO dto = new CommunityPostDTO();
+        dto.setAuthorId(userId);
+        dto.setContent(content);
+
+        int r = communityDAO.insertPost(dto);
+        ra.addFlashAttribute("msg", r > 0 ? "게시물이 등록되었어요." : "등록 실패");
+        return "redirect:/community/main";
     }
 
     @PostMapping("/community/mention/add")
     @ResponseBody
     public String addMention(@ModelAttribute MentionDTO mentionDTO, HttpSession session) {
-        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-        if (loginUser == null) return "unauthorized";
+        Integer userId = getLoginUserId(session);
+        if (userId == null) return "unauthorized";
 
         CommentDTO comment = new CommentDTO();
         comment.setPostId(mentionDTO.getPostId());
-        comment.setUserId(loginUser.getUserId());
+        comment.setUserId(userId);
         comment.setContent(mentionDTO.getContent());
         communityDAO.insertComment(comment);
 
@@ -83,82 +129,65 @@ public class CommunityController {
     }
 
     @GetMapping("/community/search")
-    public String searchPosts(@RequestParam(required = false) String keyword, Model model, HttpSession session) {
-        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-        model.addAttribute("loginUser", loginUser);
+    public String searchPosts(@RequestParam(required = false) String keyword,
+                              Model model, HttpSession session) {
+        Integer userId = getLoginUserId(session);
+        if (userId == null) return "redirect:/signin";
+
+        model.addAttribute("loginUser", communityService.getProfile(userId));
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            List<CommunityPostDTO> posts = communityService.searchPostsByKeyword(keyword);
+            List<CommunityPostDTO> posts = communityService.searchPostsByKeyword(keyword.trim());
             model.addAttribute("posts", posts);
+        } else {
+            model.addAttribute("posts", Collections.emptyList());
         }
 
         model.addAttribute("trends", communityService.findLatestTrends());
-        model.addAttribute("recommendedUsers", 
-            loginUser != null 
-                ? communityService.findRecommendedUsers(loginUser.getUserId()) 
-                : new ArrayList<>()
-        );
+        model.addAttribute("recommendedUsers", communityService.findRecommendedUsers(userId));
         model.addAttribute("keyword", keyword);
 
         return "community/communitySearch";
     }
-    
-    
-    
-    
-
-    private static final int DEMO_USER_ID = 1; // 샘플로 볼 사용자 ID (원하는 값으로 바꿔도 됨)
 
     @GetMapping("/community/notifications")
-    public String notificationPage(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "false") boolean preview, 
-                                   @RequestParam(required = false) Integer uid, HttpSession session, HttpServletRequest req, Model model) {
-
-        Object idObj = session.getAttribute("loginUserId");
-
-        if (idObj == null && preview) {
-            int previewUserId = (uid != null) ? uid : DEMO_USER_ID;
-            model.addAttribute("notifications", communityService.listNotifications(previewUserId, page, size, req));
-            model.addAttribute("unreadCount", communityService.countNotificationsUnread(previewUserId));
-            model.addAttribute("page", page);
-            model.addAttribute("size", size);
-            model.addAttribute("isPreview", true);
-            return "community/communityNotifications";
+    public String notificationPage(@RequestParam(defaultValue = "1") int page,
+                                   @RequestParam(defaultValue = "20") int size,
+                                   HttpSession session,
+                                   HttpServletRequest req,
+                                   Model model) {
+        Integer userId = getLoginUserId(session);
+        if (userId == null) {
+            return "redirect:/Scout/signin";
         }
 
-        if (idObj == null) {
-            return "redirect:/login";
+        UserDTO loginUser = communityService.getProfile(userId);
+        if (loginUser == null) {
+            session.removeAttribute("loginUserId");
+            session.removeAttribute("loginUser");
+            return "redirect:/Scout/signin";
         }
-
-        int userId = (idObj instanceof Number) ? ((Number) idObj).intValue() : Integer.parseInt(String.valueOf(idObj));
+        model.addAttribute("loginUser", loginUser);
+        session.setAttribute("loginUser", loginUser);
 
         model.addAttribute("notifications", communityService.listNotifications(userId, page, size, req));
         model.addAttribute("unreadCount", communityService.countNotificationsUnread(userId));
+        model.addAttribute("recommendedUsers", communityService.findRecommendedUsers(userId));
         model.addAttribute("page", page);
         model.addAttribute("size", size);
         model.addAttribute("isPreview", false);
+
         return "community/communityNotifications";
     }
-    
-    
-    
-    
-    
+
 
     @GetMapping("/community/messages")
     public String openMessagesPage(@RequestParam(value = "roomId", required = false) Integer roomId,
-                                    Model model, HttpSession session) {
-        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+                                   Model model, HttpSession session) {
+        Integer userId = getLoginUserId(session);
+        if (userId == null) return "redirect:/signin";
 
-        if (loginUser == null) {
-            loginUser = new UserDTO();
-            loginUser.setUserId(999);
-            loginUser.setNickname("테스트유저");
-            loginUser.setHandle("@testuser");
-            loginUser.setProfileImage("community/dog.jpg");
-        }
-
-        int userId = loginUser.getUserId();
-
+        UserDTO loginUser = communityService.getProfile(userId);
         List<ChatRoomDTO> chatRooms = communityService.findChatRoomsByUserId(userId);
 
         if (roomId == null && !chatRooms.isEmpty()) {
@@ -166,8 +195,8 @@ public class CommunityController {
         }
 
         List<ChatMessageDTO> messages = (roomId != null)
-            ? communityService.findMessagesByRoomId(roomId)
-            : List.of();
+                ? communityService.findMessagesByRoomId(roomId)
+                : Collections.emptyList();
 
         model.addAttribute("chatRooms", chatRooms);
         model.addAttribute("messages", messages);
@@ -180,7 +209,9 @@ public class CommunityController {
     @PostMapping("/community/messages/send")
     @ResponseBody
     public String sendMessage(@RequestParam int roomId, @RequestParam String content, HttpSession session) {
-        int userId = ((UserDTO) session.getAttribute("loginUser")).getUserId();
+        Integer userId = getLoginUserId(session);
+        if (userId == null) return "unauthorized";
+
         ChatMessageDTO dto = new ChatMessageDTO();
         dto.setChatRoomId(roomId);
         dto.setSenderId(userId);
@@ -188,140 +219,122 @@ public class CommunityController {
         int result = communityService.insertChatMessage(dto);
         return result > 0 ? "success" : "fail";
     }
-    
-    
-    
 
     @GetMapping("/community/communities")
     public String communitiesPage(HttpSession session, Model model) {
+        Integer userId = getLoginUserId(session);
+        if (userId == null) return "redirect:/signin";
 
-        List<CommunityDTO> communityList = communityService.getAllCommunities();
-        model.addAttribute("communityList", communityList);
-
-        List<TrendDTO> trendList = communityService.findLatestTrends();
-        model.addAttribute("trendList", trendList);
-
-        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-        if (loginUser != null) {
-            List<UserDTO> recommendedUsers = communityService.findRecommendedUsers(loginUser.getUserId());
-            model.addAttribute("recommendedUsers", recommendedUsers);
-        } else {
-            model.addAttribute("recommendedUsers", Collections.emptyList());
-        }
-
+        model.addAttribute("communityList", communityService.getAllCommunities());
+        model.addAttribute("trendList", communityService.findLatestTrends());
+        model.addAttribute("recommendedUsers", communityService.findRecommendedUsers(userId));
         return "community/communityCommunities";
     }
 
     @PostMapping("/community/communities/create")
-    public String createCommunity(@RequestParam String name, @RequestParam String description) {
+    public String createCommunity(@RequestParam String name, @RequestParam String description, HttpSession session) {
+        Integer userId = getLoginUserId(session);
+        if (userId == null) return "redirect:/signin";
+
         CommunityDTO dto = new CommunityDTO();
         dto.setName(name);
         dto.setDescription(description);
-        communityService.createCommunity(dto); 
-
+        communityService.createCommunity(dto);
         return "redirect:/community/communities";
     }
-    
-    
-    
-    
-    
-    
+
     @GetMapping("/community/profile")
-    public String profilePage(@RequestParam(required = false) Integer userId,
-                              @RequestParam(required = false) String handle,
-                              @RequestParam(defaultValue = "1") int page,
-                              @RequestParam(defaultValue = "20") int size,
-                              HttpSession session,
-                              Model model) {
+    public String profilePage(
+            @RequestParam(value = "userId", required = false) Integer userIdParam,
+            HttpSession session,
+            Model model) {
 
-        Integer loginId = null;
-        Object idObj = session.getAttribute("loginUserId");
-        if (idObj instanceof Number) loginId = ((Number) idObj).intValue();
-        else if (idObj != null) {
-            try { loginId = Integer.parseInt(String.valueOf(idObj)); } catch (Exception ignore) {}
+        Integer targetUserId = resolveTargetUserId(userIdParam, session);
+
+        if (targetUserId == null) {
+            model.addAttribute("error", "조회할 사용자 정보를 찾을 수 없습니다.");
+            return "community/error";
         }
-        boolean loggedIn = (loginId != null && loginId > 0);
+        int uid = targetUserId;
 
-        com.app.dto.community.UserDTO user = null;
-        if (userId != null && userId > 0) {
-            user = communityService.getProfile(userId);
-        } else if (handle != null && !handle.isBlank()) {
-            user = communityService.getProfileByHandle(handle);
-        } else if (loggedIn) {
-            user = communityService.getProfile(loginId);
-        } else {
-            model.addAttribute("guest", true);
-            return "community/communityProfile";
-        }
-
-        if (user == null) {
-            model.addAttribute("guest", true);
-            return "community/communityProfile";
-        }
-
-        int targetId = user.getUserId();
-
-        model.addAttribute("user", user);
-        model.addAttribute("isOwner", loggedIn && (loginId == targetId));
-        model.addAttribute("loggedIn", loggedIn);
-        model.addAttribute("followerCount", communityService.getFollowerCount(targetId));
-        model.addAttribute("followingCount", communityService.getFollowingCount(targetId));
-        model.addAttribute("posts", communityService.getUserPosts(targetId, page, size));
-        model.addAttribute("recommendedUsers", communityService.findRecommendedUsers(targetId));
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
+        UserDTO profile = communityService.getProfile(uid);
+        model.addAttribute("user", profile);
 
         return "community/communityProfile";
     }
     
+    private Integer resolveTargetUserId(Integer userIdParam, HttpSession session) {
+        if (userIdParam != null) return userIdParam;
+
+        return getLoginUserId(session);
+    }
 
     @GetMapping("/community/profile/edit")
-    public String profileEditForm(@RequestParam(defaultValue = "false") boolean preview,
-                                  @RequestParam(required = false) Integer uid,
-                                  HttpSession session, Model model) {
-        Object idObj = session.getAttribute("loginUserId");
+    public String profileEditForm(HttpSession session, Model model) {
+        Integer userId = getLoginUserId(session);
+        if (userId == null) return "redirect:/signin";
 
-        // 로그인 안 됐는데 preview 요청이면 통과
-        if (idObj == null && preview) {
-            int targetId = (uid != null) ? uid : DEMO_USER_ID;
-            model.addAttribute("user", communityService.getProfile(targetId));
-            model.addAttribute("loginUser", null);
-            model.addAttribute("isOwner", false);
-            model.addAttribute("preview", true);     // ⬅ JSP에서 읽기전용 처리
-            return "community/communityProfileEdit";
-        }
+        UserDTO me = communityService.getProfile(userId);
 
-        // 그 외엔 로그인 요구
-        if (idObj == null) return "redirect:/login";
+        model.addAttribute("loginUser", me);
+        model.addAttribute("user", asViewUser(me));
 
-        int userId = (idObj instanceof Number) ? ((Number) idObj).intValue()
-                                               : Integer.parseInt(String.valueOf(idObj));
-        model.addAttribute("user", communityService.getProfile(userId));
-        model.addAttribute("loginUser", communityService.getProfile(userId));
         model.addAttribute("isOwner", true);
         model.addAttribute("preview", false);
         return "community/communityProfileEdit";
     }
-
-    @PostMapping("/community/profile/edit")
-    public String profileEditSave(@RequestParam String nickname,
-                                  @RequestParam(name = "profileImageFile", required = false) MultipartFile file,
-                                  HttpServletRequest req,
-                                  HttpSession session,
-                                  RedirectAttributes ra) {
-        Object idObj = session.getAttribute("loginUserId");
-        if (idObj == null) return "redirect:/login";
-
-        int userId = (idObj instanceof Number) ? ((Number) idObj).intValue()
-                                               : Integer.parseInt(String.valueOf(idObj));
-        try {
-
-            communityService.updateProfileBasic(userId, nickname, file, req);
-            ra.addFlashAttribute("msg", "프로필이 저장되었습니다.");
-        } catch (Exception e) {
-            ra.addFlashAttribute("msg", "저장 중 오류: " + e.getMessage());
+    
+    private Map<String, Object> asViewUser(UserDTO dto) {
+        if (dto == null) return Collections.emptyMap();
+        Map<String, Object> m = new HashMap<>();
+        m.put("name", dto.getNickname()); 
+        m.put("id", dto.getHandle()); 
+        m.put("userId", dto.getUserId());
+        m.put("nickname", dto.getNickname());
+        m.put("handle", dto.getHandle());
+        return m;
+    }   
+    
+    @GetMapping("/community/settings/account")
+    public String accountSettingsPage(HttpSession session, Model model) {
+        Integer loginUserId = (Integer) session.getAttribute("loginUserId");
+        if (loginUserId == null) {
+            return "redirect:/login";
         }
-        return "redirect:/community/profile?userId=" + userId;
+
+        User user = communityService.getUserById(loginUserId);
+        model.addAttribute("user", user);
+
+        String idLike = null;
+        if (user != null) {
+            try {
+                idLike = user.getId(); 
+            } catch (Exception ignore) { }
+        }
+        String displayName = (idLike != null && !idLike.trim().isEmpty()) ? idLike : "Guest";
+        String atId        = displayName;
+
+        model.addAttribute("displayName", displayName);
+        model.addAttribute("atId", atId);
+
+        return "community/settingsAccount";
     }
+
+    @PostMapping("/community/settings/account")
+    public String updateAccountSettings(@ModelAttribute User userForm,
+                                        HttpSession session,
+                                        RedirectAttributes redirectAttributes) {
+        Integer loginUserId = (Integer) session.getAttribute("loginUserId");
+        if (loginUserId == null) {
+            return "redirect:/login";
+        }
+
+        userForm.setId(String.valueOf(loginUserId));
+        communityService.updateUserAccount(userForm);
+
+        redirectAttributes.addFlashAttribute("msg", "계정 정보가 수정되었습니다.");
+        return "redirect:/community/settings/account";
+    }
+
+    
 }
