@@ -28,7 +28,7 @@
 }
 
 .comment-box {
-	background: #fafbfc;
+	background: #fae7c9; /* 댓글 입력창 리스트 배경색 */
 	border: 1px solid #e7e8ea;
 	border-radius: 8px;
 	padding: 25px 18px 20px 18px;
@@ -106,15 +106,120 @@
 .comment-guide i {
 	font-size: 15px;
 }
+
+/* ===== 댓글 리스트: 모던 카드 스타일 ===== */
+:root{
+  --c-bg:#f7f8fa;           /* 페이지 배경 톤 */
+  --c-card:#ffffff;         /* 카드 바탕 */
+  --c-border:#e8eaef;       /* 연한 보더 */
+  --c-text:#111827;         /* 본문 텍스트 */
+  --c-sub:#6b7280;          /* 서브 텍스트 */
+  --radius:12px;
+  --shadow:0 6px 20px rgba(17,24,39,.06);
+}
+
+/* 리스트 컨테이너: 입력 박스와 톤 맞춤 */
+.comment-list-container{
+  margin-top:14px;
+  background:var(--c-card);
+  border:1px solid var(--c-border);
+  border-radius:var(--radius);
+  padding:12px;
+  background-color: #fae7c9; /* 댓글창 리스트 배경색 */
+}
+
+
+/* 불릿 제거 + 간격 통일 */
+.comment-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;                 /* 아이템 간 간격 */
+}
+
+/* 개별 댓글 카드 */
+.comment-item{
+  border:1px solid var(--c-border);
+  border-radius:10px;
+  background:var(--c-card);
+  box-shadow:var(--shadow);
+  padding:12px 14px;
+  transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.comment-item:hover{
+  transform:translateY(-1px);
+  border-color:#d7dbe4;
+  box-shadow:0 10px 24px rgba(17,24,39,.08);
+}
+
+/* 상단 행: 작성자 표시 */
+.comment-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:6px;
+}
+.comment-top .name{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-weight:700;
+  font-size:14px;
+  color:var(--c-text);
+  line-height:1;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#f3f6ff;
+  border:1px solid #dbe4ff;
+}
+/* 작은 컬러 점(아바타 느낌) */
+.comment-top .name::before{
+  content:"";
+  width:8px;height:8px;border-radius:50%;
+  background:#eb5e00; /* 포인트 블루 */
+  display:inline-block;
+  box-shadow:0 0 0 3px rgba(59,130,246,.15);
+}
+
+/* 본문: 말줄바꿈/단어 줄바꿈/타이포 */
+.comment-body{
+  color:var(--c-text);
+  font-size:15px;
+  line-height:1.6;
+  white-space:pre-wrap;
+  word-break:break-word;
+  margin-top:2px;
+}
+
+/* 리스트 위/아래 쓸데없는 점(•) 보이는 경우 방지용 리셋 */
+.comment-list-container ul{ list-style:none; padding-left:0; margin:0; }
+.comment-list-container li::marker{ content:""; }
+
+/* 다크 모드 자동 대응(선택) */
+@media (prefers-color-scheme: dark){
+  :root{
+    --c-bg:#0f1115;
+    --c-card:#161a22;
+    --c-border:#252b37;
+    --c-text:#e6eaf2;
+    --c-sub:#9aa3b2;
+    --shadow:0 10px 26px rgba(0,0,0,.35);
+  }
+  .comment-top .name{ background:#1b2230; border-color:#2a3345; }
+  .comment-top .name::before{ box-shadow:0 0 0 3px rgba(59,130,246,.20); }
+}
 </style>
 </head>
 <body>
 	<div class="comment-wrap">
+		<div class="comment-box">
 		<div class="comment-title">
 			댓글 <span class="comment-count">(${commentCount}건)</span>
 		</div>
-		<div class="comment-box">
-			<form method="post" action="보낼경로">
+			<form method="post" action="/travelDestination/${travelId}">
+			<input type="hidden" name="travelId" value="${travelId}">
 				<c:choose>
 					<c:when test="${not empty sessionScope.loginUser}">
 						<textarea name="content" rows="3" class="comment-textarea"
@@ -133,6 +238,16 @@
 					<i class="fa-regular fa-circle-question"></i> <span>유의사항</span>
 				</div>
 			</form>
+		</div>
+		<div class="comment-list-container" style="max-height:420px; overflow:auto;">
+			<ul class="comment-list">
+	  			<c:forEach var="cmt" items="${commentList}">
+	    			<li class="comment-item">
+	      				<div class="comment-top"><span class="name">${cmt.name}</span></div>
+	      				<div class="comment-body">${cmt.content}</div>
+	    			</li>
+	  			</c:forEach>
+			</ul>
 		</div>
 	</div>
 </body>

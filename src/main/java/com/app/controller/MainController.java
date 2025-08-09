@@ -3,6 +3,7 @@ package com.app.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,12 +11,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.dto.festival.FestivalDTO;
+import com.app.dto.travelDestination.DetailComment;
 import com.app.dto.travelDestination.HashTags;
 import com.app.dto.travelDestination.TravelDestination;
 import com.app.dto.travelDestination.TravelInfo;
+import com.app.dto.user.User;
 import com.app.service.travelDestination.TravelDestinationService;
 
 @Controller
@@ -79,11 +83,39 @@ public class MainController {
 		
 		TravelInfo travelInfo = travelDestinationService.findTravelInfo(travelId);
 		
-		travelDestinationService.increaseView(travelId);
+		List<DetailComment> commentList = travelDestinationService.findCommentList(travelId);
 		
+		int commentCount = travelDestinationService.countComments(travelId);
+		
+		travelDestinationService.increaseView(travelId);
+		model.addAttribute("commentCount",commentCount);
+		model.addAttribute("commentList",commentList);
 		model.addAttribute("travel", travelDestination);
 		model.addAttribute("hashtag", hashtag);
 		model.addAttribute("travelInfo", travelInfo);
 		return "travelDestination/detail";
+	}
+	
+	//댓글 입력값 받아오기
+	@PostMapping("/travelDestination/{travelId}")
+	public String travelDestinationDetailAction(@PathVariable int travelId,@RequestParam String content,HttpSession session) {
+		
+		User loginUser = (User) session.getAttribute("loginUser");
+		
+		DetailComment dc = new DetailComment();
+		dc.setTravelId(travelId);
+	    dc.setContent(content);
+	    dc.setUserId(loginUser.getId());        // 세션의 User 객체에서 가져오기
+	    dc.setName(loginUser.getName());        // 세션의 User 객체에서 가져오기
+	    
+	    if((dc.getContent().trim()).isEmpty()) {
+	    	return "redirect:/travelDestination/" + travelId;
+	    }
+	    
+	    travelDestinationService.insertComment(dc);
+		
+		
+		
+		return "redirect:/travelDestination/"+travelId;
 	}
 }
