@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <html>
@@ -7,7 +8,7 @@
   <title>프로필 편집</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- 공통 스타일(인라인) -->
+  <!-- === 공통 + 페이지 통합 CSS (이 파일만으로 사용) === -->
   <style>
     :root{
       --color-light:#ff9752; --color-base:#ee853f; --color-dark:#eb5e00;
@@ -16,40 +17,51 @@
     /* Base */
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:Arial,sans-serif;background:var(--color-bg);color:var(--color-font)}
-    /* 3컬럼 레이아웃 */
+    a{text-decoration:none;color:inherit}
+
+    /* 3컬럼 레이아웃 (커뮤니티/프로필과 동일) */
     .layout{display:grid;grid-template-columns:260px 1fr 300px;min-height:100vh;background:var(--color-white)}
-    .sidebar{border-right:1px solid var(--color-border);padding:16px 12px}
-    .main{border-right:1px solid var(--color-border)}
-    .rightbar{border-left:1px solid var(--color-border);padding:20px;background:#f7fafc}
-    /* 사이드바 공통 */
-    .sidebar-logo{text-align:center;margin-bottom:12px}
+    .main{background:#fff;border-right:1px solid var(--color-border)}
+    .rightbar{background:#f7fafc;border-left:1px solid #e6ecf0;padding:20px}
+
+    /* 사이드바 (공통) */
+    .sidebar{background:#fff;border-right:1px solid var(--color-border);display:flex;flex-direction:column;justify-content:space-between;padding:16px 12px;position:sticky;top:0;height:100vh}
+    .sidebar-logo{text-align:center;margin-bottom:15px}
     .sidebar-logo img{width:90%}
-    .sidebar-menu{list-style:none;margin:0;padding:0}
-    .sidebar-menu li{margin:8px 0}
-    .sidebar-menu a{display:block;padding:10px 14px;border-radius:999px;text-decoration:none;color:var(--color-font);font-weight:700}
+    .sidebar-menu{list-style:none;margin:16px 0 0;padding:0}
+    .sidebar-menu li{margin-bottom:8px}
+    .sidebar-menu a{display:block;padding:10px 14px;border-radius:999px;color:var(--color-font);font-weight:bold}
     .sidebar-menu a:hover{background:#f3f3f3}
     .sidebar-menu a.active{background:#dfeee6}
-    /* 카드/폼 */
-    .card{max-width:720px;margin:20px auto;background:#fff;border:1px solid var(--color-border);border-radius:12px;padding:20px}
-    h2{margin:0 0 16px 0}
-    .row{display:grid;grid-template-columns:180px 1fr;gap:12px;align-items:center;margin-bottom:14px}
-    .input{width:100%;padding:10px 12px;border:1px solid var(--color-border);border-radius:8px}
-    /* 버튼 */
-    .btn{border:none;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer}
+    .sidebar-bottom{border-top:1px solid var(--color-border);padding-top:12px}
+    .sidebar-profile{display:flex;align-items:center;gap:10px}
+    .avatar-initial{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#eee;color:#444;border:1px solid var(--color-border);font-weight:700}
+
+    /* 버튼 (공통) */
+    .btn{border:none;border-radius:999px;padding:8px 14px;font-weight:700;cursor:pointer}
     .btn-primary{background:var(--color-dark);color:#fff}
     .btn-primary:hover{background:var(--color-base)}
     .btn-ghost{background:transparent;color:var(--color-dark)}
     .btn-outline{background:#fff;border:1px solid var(--color-border);color:var(--color-font)}
+
+    /* 카드/폼 (편집 페이지 전용) */
+    .card{max-width:720px;margin:20px auto;background:#fff;border:1px solid var(--color-border);border-radius:12px;padding:20px}
+    h2{margin:0 0 16px 0}
+    .row{display:grid;grid-template-columns:180px 1fr;gap:12px;align-items:center;margin-bottom:14px}
+    .input{width:100%;padding:10px 12px;border:1px solid var(--color-border);border-radius:8px}
+
     /* 알림 */
     .alert{border-radius:8px;padding:10px 12px;margin-bottom:12px}
     .alert-ok{background:#e6fff2;border:1px solid #b6f0cf}
     .alert-err{background:#fff3f3;border:1px solid #ffd3d3}
     .alert-warn{background:#fffbe6;border:1px solid #ffe58f}
+
     /* 아바타/프리뷰 */
     .preview{display:flex;align-items:center;justify-content:space-between;gap:12px}
     .preview-left{display:flex;align-items:center;gap:12px}
     .preview img{width:72px;height:72px;border-radius:50%;object-fit:cover;border:1px solid var(--color-border);background:#fff}
     .muted{color:#6b7280;font-size:13px}
+
     /* 반응형 */
     @media (max-width:1024px){
       .layout{grid-template-columns:1fr}
@@ -61,16 +73,56 @@
 <body>
 <div class="layout">
 
-  <!-- 사이드바 -->
+  <!-- 사이드바 (공통 마크업) -->
   <aside class="sidebar">
-    <div class="sidebar-logo" style="text-align:left;">
-      <a href="${ctx}/community/profile" class="btn btn-ghost">← 프로필로 돌아가기</a>
+    <div>
+      <div class="sidebar-logo">
+        <a href="${ctx}/community/main"><img src="https://i.imgur.com/xpGazxz.png" alt="Logo" /></a>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="${ctx}/community/main">🏠 홈</a></li>
+        <li><a href="${ctx}/community/search">🔍 검색</a></li>
+        <li><a href="${ctx}/community/notifications">🔔 알림</a></li>
+        <li><a href="${ctx}/community/messages">✉️ 채팅</a></li>
+        <li><a href="${ctx}/community/communities">👥 커뮤니티</a></li>
+        <li><a class="active" href="${ctx}/community/profile/edit">🧑‍ 프로필 편집</a></li>
+        <li><a href="${ctx}/community/settings/account">⚙️ 설정</a></li>
+      </ul>
     </div>
-    <ul class="sidebar-menu">
-      <li style="font-weight:700;margin:8px 0;">프로필</li>
-      <li><a href="${ctx}/community/profile/edit" class="active">프로필 편집</a></li>
-      <li style="margin-top:8px;"><a href="${ctx}/community/settings/account">⚙️ 계정 설정</a></li>
-    </ul>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-profile">
+        <c:choose>
+          <c:when test="${not empty loginUser}">
+            <c:set var="sbName" value="${not empty loginUser.nickname ? loginUser.nickname : (not empty loginUser.userId ? loginUser.userId : 'Guest')}"/>
+            <div class="avatar-initial" title="${sbName}">
+              ${fn:substring(sbName,0,1)}
+            </div>
+            <div>
+              <strong><c:out value="${sbName}"/></strong><br>
+              <span style="font-size:12px;color:gray;">@<c:out value="${not empty loginUser.handle ? loginUser.handle : loginUser.userId}"/></span>
+            </div>
+          </c:when>
+          <c:when test="${not empty user}">
+            <c:set var="sbName" value="${not empty user.nickname ? user.nickname : (not empty user.userId ? user.userId : 'Guest')}"/>
+            <div class="avatar-initial" title="${sbName}">
+              ${fn:substring(sbName,0,1)}
+            </div>
+            <div>
+              <strong><c:out value="${sbName}"/></strong><br>
+              <span style="font-size:12px;color:gray;">@<c:out value="${not empty user.handle ? user.handle : user.userId}"/></span>
+            </div>
+          </c:when>
+          <c:otherwise>
+            <div class="avatar-initial" title="Guest">G</div>
+            <div>
+              <strong>비회원</strong><br>
+              <span style="font-size:12px;color:gray;">@guest</span>
+            </div>
+          </c:otherwise>
+        </c:choose>
+      </div>
+    </div>
   </aside>
 
   <!-- 메인 -->
@@ -126,11 +178,10 @@
     </form>
   </main>
 
-  <!-- 필요하면 우측 칼럼 사용 -->
-  <aside class="rightbar"></aside>
+  <aside class="rightbar"><!-- 필요 시 위젯 영역 --></aside>
 </div>
 
-<!-- 파일 미리보기 (preview 모드면 비활성) -->
+
 <script>
 (function(){
   var form = document.querySelector('form.card');

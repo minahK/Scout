@@ -184,7 +184,7 @@ body {
 
 	<div class="icons">
 		<i class="fa fa-search"></i>
-		<i class="fas fa-comments"></i>
+		<i class="fas fa-comments" onclick="location.href='/community/main'"></i>
 		<!-- 로그인 여부에 따라 출력 변경 -->
 		<c:choose>
 			<c:when test="${not empty sessionScope.loginUser}">
