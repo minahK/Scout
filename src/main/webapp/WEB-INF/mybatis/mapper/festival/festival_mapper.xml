@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mapper.festival.FestivalMapper">
+
+    <!-- 축제 목록 조회 -->
+    <select id="findFestivalList" parameterType="map" resultType="com.app.dto.festival.FestivalDTO">
+        SELECT 
+            id, title, location,
+            start_date AS startDate,
+            end_date AS endDate,
+            image_name AS imageName,
+            content,
+            view_count AS viewCount
+        FROM travel_festival
+        WHERE 1=1
+        <if test="keyword != null and keyword != ''">
+            AND (title LIKE '%' || #{keyword} || '%'
+            OR location LIKE '%' || #{keyword} || '%')
+        </if>
+        
+        <if test="status == 'ongoing'">
+        	AND start_date &lt;= SYSDATE
+        	AND end_date &gt;= SYSDATE
+        </if>
+        
+        <choose>
+            <when test="sort == 'popular'">
+                ORDER BY view_count DESC
+            </when>
+            <when test="sort == startdate">
+            	ORDER BY start_date ASC
+            </when>
+            <otherwise>
+                ORDER BY id DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 조회수 증가 -->
+    <update id="updateViewCount" parameterType="int">
+        UPDATE travel_festival SET view_count = view_count + 1 WHERE id = #{id}
+    </update>
+
+    <!-- 상세 조회 -->
+    <select id="findFestivalById" parameterType="int" resultType="com.app.dto.festival.FestivalDTO">
+        SELECT 
+            id, title, location,
+            start_date AS startDate,
+            end_date AS endDate,
+            image_name AS imageName,
+            content,
+            view_count AS viewCount
+        FROM travel_festival
+        WHERE id = #{id}
+    </select>
+
+</mapper>

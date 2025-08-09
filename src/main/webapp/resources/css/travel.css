@@ -1,0 +1,174 @@
+@charset "UTF-8";
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f7f8fa;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.travel-list-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.travel-list-header h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 2px solid #f39c12; 
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.travel-list-header p {
+    font-size: 14px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.travel-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.travel-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+}
+
+.travel-card:hover {
+    box-shadow: 
+    	0 6px 15px rgba(0, 0, 0, 0.2),
+    	0 6px 20px rgba(255, 127, 50, 0.4),
+    	0 0 35px rgba(255, 127, 50, 0.4); 
+    transform: translateY(-8px); 
+}
+
+.travel-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.travel-card-content {
+    padding: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.travel-card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #222;
+    line-height: 1.4;
+}
+
+.travel-card-meta {
+    font-size: 13px;
+    color: #777;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.travel-card-meta i {
+	color: #f39c12;
+    margin-right: 4px;
+}
+
+.travel-card-desc {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.travel-card-footer {
+    font-size: 12px;
+    color: #aaa;
+    text-align: right;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 8px;
+}
+
+/* 총 건수와 정렬 버튼 바(부모) */
+.travel-header-bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+/* 총 건수 */
+.travel-count {
+	font-size: 16px;
+	color: #333;
+}
+
+.travel-count .count {
+    color: #ff7f32;
+    font-weight: bold;
+}
+
+/* 정렬 버튼 컨테이너 */
+.travel-sort {
+    display: flex;
+    justify-content: flex-end; 
+    gap: 15px;
+    margin: 10px 0 20px 0; 
+}
+
+.travel-sort .sort-tab {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    color: #555;
+    padding-bottom: 4px;
+    transition: color 0.2s ease;
+}
+
+.travel-sort .sort-tab:hover {
+    color: #ff7f32;
+}
+
+.travel-sort .sort-tab.active {
+    color: #ff7f32;
+    font-weight: bold;
+}
+
+.travel-sort .sort-tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ff7f32;
+}
+
+
+

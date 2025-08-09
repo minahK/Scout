@@ -5,8 +5,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+
+</style>
 </head>
 <body>
-	<h1>안녕하세여</h1>
+	<!-- 상단바 -->
+	<%@ include file="tdHeader.jsp"%>
+	
+	<!-- 바디 -->
+	<%@ include file="tdBody.jsp"%>
+
+	<!-- 푸터 -->
+	<%@ include file="../main/footer.jsp" %>
+	
+	
+	
 </body>
 </html>
