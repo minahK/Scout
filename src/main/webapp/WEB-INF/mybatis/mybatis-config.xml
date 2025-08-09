@@ -11,6 +11,16 @@
 
 	<typeAliases>
 		<!-- <typeAlias type="com.app.dto.room.Room" alias="Room" />  -->
+		<typeAlias type="com.app.dto.community.CommunityPostDTO" alias="CommunityPost" />
+		<typeAlias type="com.app.dto.community.MentionDTO" alias="Mention" />
+		<typeAlias type="com.app.dto.community.CommentDTO" alias="Comment" />
+		<typeAlias type="com.app.dto.community.TrendDTO" alias="Trend" />
+		<typeAlias type="com.app.dto.community.UserDTO" alias="User" />
+		<typeAlias type="com.app.dto.community.ChatRoomDTO" alias="ChatRoom" />
+		<typeAlias type="com.app.dto.community.ChatMessageDTO" alias="ChatMessage" />
+		<typeAlias type="com.app.dto.community.ChatParticipantDTO" alias="ChatParticipant" />
+		<typeAlias type="com.app.dto.community.CommunityDTO" alias="Community" />
+		<typeAlias type="com.app.dto.community.NotificationDTO" alias="Notification" />
 	</typeAliases>
 
 </configuration>
