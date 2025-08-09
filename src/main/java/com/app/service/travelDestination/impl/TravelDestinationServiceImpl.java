@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.dao.travelDestination.TravelDestinationDAO;
 import com.app.dto.festival.FestivalDTO;
+import com.app.dto.travelDestination.DetailComment;
 import com.app.dto.travelDestination.HashTags;
 import com.app.dto.travelDestination.TravelDestination;
 import com.app.dto.travelDestination.TravelInfo;
@@ -82,4 +83,22 @@ public class TravelDestinationServiceImpl implements TravelDestinationService {
 		List<FestivalDTO> result = travelDestinationDAO.findFestivalList();
 		return result;
 	}
+
+	@Override
+	public List<DetailComment> findCommentList(int travelId) {
+		List<DetailComment> result = travelDestinationDAO.findCommentList(travelId);
+		return result;
+	}
+
+	@Override
+	public int insertComment(DetailComment dc) {
+		int result = travelDestinationDAO.insertComment(dc);
+		return result;
+	}
+
+	@Override
+	public int countComments(int travelId) {
+		 return travelDestinationDAO.countComments(travelId);
+	}
+	
 }

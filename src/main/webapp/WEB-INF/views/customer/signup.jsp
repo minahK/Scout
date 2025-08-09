@@ -33,7 +33,7 @@ body {
 	}
 }
 
-.logo {
+.loginpage .logo {
 	display: block;
 	margin: 0 auto;
 }
@@ -137,6 +137,8 @@ button:hover {
 </head>
 <body>
 
+	<%@ include file="../travelDestination/tdHeader.jsp"%>
+	<div class="loginpage">
 	<div class="container">
 		<img src="/images/ScoutLogo.png" alt="TRACE 로고" width="150"
 			height="100" class="logo">
@@ -191,7 +193,7 @@ button:hover {
 			</div>
 		</form>
 	</div>
-
+	</div>
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"

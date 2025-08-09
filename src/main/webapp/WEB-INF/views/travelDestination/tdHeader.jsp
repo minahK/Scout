@@ -11,7 +11,10 @@ body {
 	padding-top: 70px;
 	background-color: #fff;
 }
-
+.loginname {
+	font-weight: bold;
+	font-size:16px;
+}
 /* 상단 네비게이션 */
 .top-nav {
 	background: white !important;
@@ -176,11 +179,11 @@ body {
 		<i class="fas fa-comments"></i>
 		<c:choose>
 			<c:when test="${not empty sessionScope.loginUser}">
-				<span>${sessionScope.loginUser.id} 님</span>
+				<span class="loginname">${sessionScope.loginUser.name} 님</span>
 			</c:when>
 			<c:otherwise>
 				<i class="fa-solid fa-circle-user"
-					onclick="location.href='${pageContext.request.contextPath}/signin'"></i>
+					onclick="location.href='/Scout/signin'"></i>
 			</c:otherwise>
 		</c:choose>
 		<!-- <i class="fa-solid fa-circle-user" onclick="location.href='/Scout/signin'"></i> -->

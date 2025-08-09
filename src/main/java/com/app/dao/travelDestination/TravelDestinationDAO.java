@@ -3,6 +3,7 @@ package com.app.dao.travelDestination;
 import java.util.List;
 
 import com.app.dto.festival.FestivalDTO;
+import com.app.dto.travelDestination.DetailComment;
 import com.app.dto.travelDestination.HashTags;
 import com.app.dto.travelDestination.TravelDestination;
 import com.app.dto.travelDestination.TravelInfo;
@@ -30,5 +31,11 @@ public interface TravelDestinationDAO {
 	TravelInfo findTravelInfo(int travelId);
 
 	List<FestivalDTO> findFestivalList();
+
+	List<DetailComment> findCommentList(int travelId);
+
+	int insertComment(DetailComment dc);
+
+	int countComments(int travelId);
 
 }

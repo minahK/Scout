@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.app.dao.travelDestination.TravelDestinationDAO;
 import com.app.dto.festival.FestivalDTO;
+import com.app.dto.travelDestination.DetailComment;
 import com.app.dto.travelDestination.HashTags;
 import com.app.dto.travelDestination.TravelDestination;
 import com.app.dto.travelDestination.TravelInfo;
@@ -88,5 +89,22 @@ public class TravelDestinationDAOImpl implements TravelDestinationDAO{
 	public List<FestivalDTO> findFestivalList() {
 		List<FestivalDTO> result = sqlSessionTemplate.selectList("travelDestination_mapper.findFestivalList");
 		return result;
+	}
+
+	@Override
+	public List<DetailComment> findCommentList(int travelId) {
+		List<DetailComment> result = sqlSessionTemplate.selectList("travelDestination_mapper.findCommentList",travelId);
+		return result;
+	}
+
+	@Override
+	public int insertComment(DetailComment dc) {
+		int result = sqlSessionTemplate.insert("travelDestination_mapper.insertComment",dc);
+		return result;
+	}
+
+	@Override
+	public int countComments(int travelId) {
+		return sqlSessionTemplate.selectOne("travelDestination_mapper.countComments", travelId);
 	}
 }

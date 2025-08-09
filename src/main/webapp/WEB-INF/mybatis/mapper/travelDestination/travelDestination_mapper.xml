@@ -79,4 +79,20 @@
 		where rownum &lt;=4
 	</select>
 	
+	<select id="findCommentList" resultType="DetailComment">
+		SELECT * FROM DETAIL_COMMENT
+		WHERE TRAVEL_ID = #{travelId}
+		order by id desc
+	</select>
+	
+	<insert id="insertComment" parameterType="DetailComment">
+    	INSERT INTO DETAIL_COMMENT (ID, TRAVEL_ID, USER_ID, NAME, CONTENT)
+    	VALUES (SEQ_DETAIL_COMMENT.NEXTVAL, #{travelId}, #{userId}, #{name}, #{content})
+ 	 </insert>
+  
+  	<select id="countComments" parameterType="int" resultType="int">
+	    SELECT COUNT(*) FROM DETAIL_COMMENT
+	    WHERE TRAVEL_ID = #{travelId}
+	</select>
+	
 </mapper>

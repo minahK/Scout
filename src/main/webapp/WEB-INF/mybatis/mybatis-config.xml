@@ -32,6 +32,7 @@
         <typeAlias alias="FestivalDTO" type="com.app.dto.festival.FestivalDTO"/>
 		<typeAlias type="com.app.dto.user.User" alias="User"/>
 		<typeAlias type="com.app.dto.user.UserSearchCondition" alias="UserSearchCondition"/>
+		<typeAlias type="com.app.dto.travelDestination.DetailComment" alias="DetailComment" />
 	</typeAliases>
 
 </configuration>
