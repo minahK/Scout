@@ -130,4 +130,10 @@ public class MainController {
 		
 		return "redirect:/travelDestination/"+travelId;
 	}
+	
+	//테마 페이지
+	@GetMapping("/travelDestination/theme")
+	public String travelDestinationTheme() {
+		return "travelDestination/theme";
+	}
 }
