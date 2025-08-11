@@ -131,9 +131,7 @@
     <div class="sidebar">
         <div>
             <div class="sidebar-logo">
-                <a href="/community/main">
-                    <img src="https://i.imgur.com/xpGazxz.png" alt="Logo" />
-                </a>
+               <a href="${ctx}/"><img src="https://i.imgur.com/xpGazxz.png" alt="Logo" /></a>
             </div>
             <ul>
                 <li><a href="/community/main">🏠 홈</a></li>
