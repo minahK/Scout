@@ -214,6 +214,7 @@
 </head>
 <body>
 	<div class="comment-wrap">
+		<div id="comment-section"></div>
 		<div class="comment-box">
 		<div class="comment-title">
 			댓글 <span class="comment-count">(${commentCount}건)</span>
@@ -231,7 +232,7 @@
 					</c:otherwise>
 				</c:choose>
 				<div class="comment-btn-row">
-					<button type="submit" class="register-btn">
+					<button type="submit" class="register-btn" ${sessionScope.loginUser != null ? "" : "disabled"}>
 						등록</button>
 				</div>
 				<div class="comment-guide">

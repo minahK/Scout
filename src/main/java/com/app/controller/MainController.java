@@ -56,17 +56,29 @@ public class MainController {
 	public String travelDestination(Model model,HttpServletRequest request) {
 		String sort = request.getParameter("sort");
 		String tag = request.getParameter("tag");
+		
+		int page = 1;
+		try {
+		    page = Integer.parseInt(request.getParameter("page"));
+		    if (page < 1) page = 1;
+		} catch (Exception e) {
+		    page = 1;
+		}
+		int offset = (page - 1) * 8;
+		
 		model.addAttribute("tag", tag);
 		model.addAttribute("sort", sort);
+		model.addAttribute("offset",offset);
+		
+		
 		
 		List<TravelDestination> travelList;
 		if (tag != null && !tag.isEmpty()) {
-	        // **태그와 정렬 동시 적용!**
-	        travelList = travelDestinationService.findTravelTagAndSortList(tag, sort);
+	        travelList = travelDestinationService.findTravelTagAndSortList(tag, sort,offset);
 	    } else if (sort != null && !sort.isEmpty()) {
-	        travelList = travelDestinationService.findTravelList(sort);
+	        travelList = travelDestinationService.findTravelList(sort,offset);
 	    } else {
-	        travelList = travelDestinationService.findTravelList("recent"); // 기본 최신순
+	        travelList = travelDestinationService.findTravelList("recent",offset); // 기본 최신순
 	    }
 	    model.addAttribute("travelList", travelList);
 		
@@ -117,5 +129,11 @@ public class MainController {
 		
 		
 		return "redirect:/travelDestination/"+travelId;
+	}
+	
+	//테마 페이지
+	@GetMapping("/travelDestination/theme")
+	public String travelDestinationTheme() {
+		return "travelDestination/theme";
 	}
 }

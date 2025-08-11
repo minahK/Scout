@@ -22,8 +22,11 @@ public class TravelDestinationDAOImpl implements TravelDestinationDAO{
 	SqlSessionTemplate sqlSessionTemplate;
 
 	@Override
-	public List<TravelDestination> findTravelList(String sort) {
-		List<TravelDestination> travelList = sqlSessionTemplate.selectList("travelDestination_mapper.findTravelList",sort);
+	public List<TravelDestination> findTravelList(String sort,int offset) {
+		Map<String, Object> sortOffset = new HashMap<>();
+		sortOffset.put("sort", sort);
+		sortOffset.put("offset", offset);
+		List<TravelDestination> travelList = sqlSessionTemplate.selectList("travelDestination_mapper.findTravelList",sortOffset);
 		return travelList;
 	}
 
@@ -70,10 +73,11 @@ public class TravelDestinationDAOImpl implements TravelDestinationDAO{
 	}
 
 	@Override
-	public List<TravelDestination> findTravelTagAndSortList(String tag, String sort) {
+	public List<TravelDestination> findTravelTagAndSortList(String tag, String sort,int offset) {
 		Map<String, Object> tagSort = new HashMap<>();
 		tagSort.put("tag", tag);
 		tagSort.put("sort", sort);
+		tagSort.put("offset", offset);
 		
 		List<TravelDestination> result = sqlSessionTemplate.selectList("travelDestination_mapper.findTravelTagAndSortList", tagSort);
 		return result;

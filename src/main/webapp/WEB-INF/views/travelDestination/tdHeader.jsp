@@ -158,7 +158,7 @@ body {
 			<a href="/" class="active">홈</a>
 		</div>
 		<div class="menu-item">
-			<a href="theme.jsp">테마</a>
+			<a href="/travelDestination/theme">테마</a>
 		</div>
 		<div class="menu-item">
 			<a href="/RecommendedCourse">추천코스</a>
@@ -167,7 +167,7 @@ body {
 			<a href="javascript:void(0)">여행정보</a>
 			<div class="dropdown">
 				<div class="dropdown-list">
-					<a href="/travelDestination?sort=recent">여행지</a> <a
+					<a href="/travelDestination">여행지</a> <a
 						href="/travel/list">여행기사</a> <a href="/festival/list">여행행사</a>
 				</div>
 			</div>

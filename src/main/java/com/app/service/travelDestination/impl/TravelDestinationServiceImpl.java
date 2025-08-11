@@ -20,8 +20,8 @@ public class TravelDestinationServiceImpl implements TravelDestinationService {
 	TravelDestinationDAO travelDestinationDAO;
 
 	@Override
-	public List<TravelDestination> findTravelList(String sort) {
-		List<TravelDestination> travelList = travelDestinationDAO.findTravelList(sort);
+	public List<TravelDestination> findTravelList(String sort,int offset) {
+		List<TravelDestination> travelList = travelDestinationDAO.findTravelList(sort,offset);
 		return travelList;
 	}
 
@@ -63,12 +63,12 @@ public class TravelDestinationServiceImpl implements TravelDestinationService {
 	@Override
 	public List<TravelDestination> findTravelTagList(String tag) {
 		List<TravelDestination> result = travelDestinationDAO.findTravelTagList(tag);
-		return result;
+		return result; 
 	}
 
 	@Override
-	public List<TravelDestination> findTravelTagAndSortList(String tag, String sort) {
-		List<TravelDestination> result = travelDestinationDAO.findTravelTagAndSortList(tag, sort);
+	public List<TravelDestination> findTravelTagAndSortList(String tag, String sort,int offset) {
+		List<TravelDestination> result = travelDestinationDAO.findTravelTagAndSortList(tag, sort,offset);
 		return result;
 	}
 

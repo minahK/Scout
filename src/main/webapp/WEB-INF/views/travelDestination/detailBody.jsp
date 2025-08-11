@@ -248,7 +248,7 @@ html {
 			<div class="tab active" data-target="photo-section">사진보기</div>
 			<div class="tab" data-target="detail-section">상세정보</div>
 			<div class="tab" data-target="comment-section">댓글</div>
-			<div class="tab" data-target="recommend-section">추천여행</div>
+			<!-- <div class="tab" data-target="recommend-section">추천여행</div> -->
 		</div>
 
 		<!-- 섹션 id 지정! -->
