@@ -78,11 +78,11 @@ body {
 }
 
 .more {
-    color: #246bbb;
+    color: #000;
     text-decoration: underline;
     font-size: 17px;
     margin-top: 13px;
-    font-weight: 500;
+    font-weight: 800;
     cursor: pointer;
     display: inline-block;
     transition: color 0.13s;

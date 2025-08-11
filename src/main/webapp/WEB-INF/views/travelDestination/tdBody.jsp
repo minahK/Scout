@@ -199,6 +199,32 @@
             background: #ee853f;
             color: white;
         }
+        .pagination {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 0 2px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333;
+    background: #f0f0f0;
+    font-size: 14px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.pagination a:hover {
+    background: #ddd;
+}
+
+.pagination a.active {
+    background: #2196f3;
+    color: #fff;
+    font-weight: bold;
+}
     </style>
 </head>
 <body>
@@ -228,8 +254,8 @@
                     총 <span class="total-number"><c:out value="${fn:length(travelList)}" /></span>건
                 </span>
                 <div class="sort-options">
-                    <span onClick="location.href='/travelDestination?sort=recent'">최신순</span>
-                    <span onClick="location.href='/travelDestination?sort=popularity'">인기순</span>
+                    <span class="sortAction" onClick="addSort('recent')">최신순</span>
+                    <span class="sortAction" onClick="addSort('popularity')">인기순</span>
                 </div>
             </div>
         </div>
@@ -247,46 +273,52 @@
                 </li>
             </c:forEach>
         </ul>
-        <div style="text-align:center; margin:30px 0;">
-            <c:if test="${totalPage > 1}">
-                <c:forEach begin="1" end="${totalPage}" var="pageNum">
-                    <a href="?page=${pageNum}"
-                       style="padding:7px 12px; margin:0 2px; border-radius:6px;
-                              color:${currentPage == pageNum ? '#fff' : '#222'};
-                              background:${currentPage == pageNum ? '#2196f3' : '#f6f6f6'};
-                              font-weight:${currentPage == pageNum ? '700' : '400'};
-                              text-decoration:none;">
-                        ${pageNum}
-                    </a>
-                </c:forEach>
-            </c:if>
-        </div>
-    </section>
+
+			<div class="pagination">
+				<c:if test="${totalPages > 1}">
+					<c:forEach begin="1" end="${totalPages}" var="pageNum">
+						<a href="?page=${pageNum}&sort=${sort}&tag=${tag}"
+							class="${pageNum == currentPage ? 'active' : ''}"> ${pageNum}
+						</a>
+					</c:forEach>
+				</c:if>
+			</div>
+			
+			<div class="pagination">
+    <a href="?page=1" class="${currentPage == 1 ? 'active' : ''}">1</a>
+    <a href="?page=2" class="${currentPage == 2 ? 'active' : ''}">2</a>
+    <a href="?page=3" class="${currentPage == 3 ? 'active' : ''}">3</a>
+    <a href="?page=4" class="${currentPage == 4 ? 'active' : ''}">4</a>
+</div>
+		</section>
+		
+		
     <!-- 우측 필터/태그 -->
     <aside class="right-panel">
         <div class="tag-group">
             <h4>테마별</h4>
             <div class="tags">
             	<span onClick="location.href='/travelDestination?sort=recent'">#전체</span>
-                <span onClick="location.href='/travelDestination?tag=제주시'">#제주시</span>
-                <span onClick="location.href='/travelDestination?tag=서귀포시'">#서귀포시</span>
-                <span onClick="location.href='/travelDestination?tag=핫플'">#핫플</span>
-                <span onClick="location.href='/travelDestination?tag=맛집'">#맛집</span>
-                <span onClick="location.href='/travelDestination?tag=숙소'">#숙소</span>
-                <span onClick="location.href='/travelDestination?tag=호텔'">#호텔</span>
-                <span onClick="location.href='/travelDestination?tag=가볼만한곳'">#가볼만한곳</span>
-                <span onClick="location.href='/travelDestination?tag=실내여행지'">#실내여행지</span>
-                <span onClick="location.href='/travelDestination?tag=이색체험'">#이색체험</span>
-                <span onClick="location.href='/travelDestination?tag=음식'">#음식</span>
-                <span onClick="location.href='/travelDestination?tag=쇼핑'">#쇼핑</span>
-                <span onClick="location.href='/travelDestination?tag=트레킹'">#트레킹</span>
-                <span onClick="location.href='/travelDestination?tag=드라이브코스'">#드라이브코스</span>
-                <span onClick="location.href='/travelDestination?tag=제주여행'">#제주여행</span>
+                <span onClick="addTag('제주시')">#제주시</span>
+                <span onClick="addTag('서귀포시')">#서귀포시</span>
+                <span onClick="addTag('핫플')">#핫플</span>
+                <span onClick="addTag('맛집')">#맛집</span>
+                <span onClick="addTag('숙소')">#숙소</span>
+                <span onClick="addTag('호텔')">#호텔</span>
+                <span onClick="addTag('가볼만한곳')">#가볼만한곳</span>
+                <span onClick="addTag('실내여행지')">#실내여행지</span>
+                <span onClick="addTag('이색체험')">#이색체험</span>
+                <span onClick="addTag('음식')">#음식</span>
+                <span onClick="addTag('쇼핑')">#쇼핑</span>
+                <span onClick="addTag('트레킹')">#트레킹</span>
+                <span onClick="addTag('드라이브코스')">#드라이브코스</span>
+                <span onClick="addTag('제주여행')">#제주여행</span>
             </div>
         </div>
     </aside>
 </div>
 <script>
+//태그 활성화
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const selectedTag = urlParams.get('tag');
@@ -300,6 +332,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+//sort 활성화
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedSort = urlParams.get('sort');
+    const sorts = document.querySelectorAll('.sortAction');
+    sorts.forEach(sortEl => {
+    	if (selectedSort === 'recent' && sortEl.textContent.trim().includes('최신순')) {
+    	    sortEl.classList.add('active');
+    	} else if (selectedSort === 'popularity' && sortEl.textContent.trim().includes('인기순')) {
+    	    sortEl.classList.add('active');
+    	}
+    });
+});
+
+//주소창 tag 추가
+function addTag(tagValue) {
+    const url = new URL(window.location.href); 
+    url.searchParams.set('tag', tagValue);     
+    window.location.href = url.toString();     
+}
+//주소창 sort 추가
+function addSort(sortValue) {
+    const url = new URL(window.location.href); 
+    url.searchParams.set('sort', sortValue);     
+    window.location.href = url.toString();   
+}
 </script>
 </body>
 </html>

@@ -167,7 +167,7 @@ body {
 			<a href="javascript:void(0)">여행정보</a>
 			<div class="dropdown">
 				<div class="dropdown-list">
-					<a href="/travelDestination?sort=recent">여행지</a> <a
+					<a href="/travelDestination">여행지</a> <a
 						href="/travel/list">여행기사</a> <a href="/festival/list">여행행사</a>
 				</div>
 			</div>

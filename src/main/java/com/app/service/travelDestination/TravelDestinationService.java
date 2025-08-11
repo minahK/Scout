@@ -10,7 +10,7 @@ import com.app.dto.travelDestination.TravelInfo;
 
 public interface TravelDestinationService {
 
-	List<TravelDestination> findTravelList(String sort);
+	List<TravelDestination> findTravelList(String sort,int offset);
 
 	TravelDestination findTravelById(int travelId);
 
@@ -26,7 +26,7 @@ public interface TravelDestinationService {
 
 	List<TravelDestination> findTravelTagList(String tag);
 
-	List<TravelDestination> findTravelTagAndSortList(String tag, String sort);
+	List<TravelDestination> findTravelTagAndSortList(String tag, String sort,int offset);
 
 	TravelInfo findTravelInfo(int travelId);
 
