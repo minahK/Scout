@@ -78,16 +78,17 @@ body {
 }
 
 .more {
-    color: #246bbb;
+    color: #222;
     text-decoration: underline;
     font-size: 17px;
     margin-top: 13px;
     font-weight: 500;
     cursor: pointer;
     display: inline-block;
+    text-decoration: none;
     transition: color 0.13s;
 }
-.more:hover { color: #09346b; }
+.more:hover { color: #eb5e00; }
 
 /* 컨트롤러 */
 .visual-controls {

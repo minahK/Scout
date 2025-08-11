@@ -169,7 +169,7 @@ body {
 			<a href="theme.jsp">테마</a>
 		</div>
 		<div class="menu-item">
-			<a href="theme.jsp">추천코스</a>
+			<a href="/RecommendedCourse">추천코스</a>
 		</div>
 		<div class="menu-item">
 			<a href="javascript:void(0)">여행정보</a>

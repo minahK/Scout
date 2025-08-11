@@ -25,8 +25,8 @@
 			<span class="footer-link-emoji">☎️</span>
 			<div>
 				<div class="footer-link-title">
-					전화/실시간 문자 채팅 상담<br> <span
-						style="color: #159c3f; font-weight: 900; font-size: 18px;">1330
+					실시간 채팅 상담<br> <span
+						style="color: #159c3f; font-weight: 900; font-size: 18px;">제주도
 						관광안내</span>
 				</div>
 			</div>
