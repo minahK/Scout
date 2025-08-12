@@ -72,9 +72,9 @@ button:hover {
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 	<div class="container">
-		<h1>비밀번호 찾기</h1>
+		<h1>비밀번호 재설정 페이지</h1>                                                                                                                                                                                                                                                                                                                                                                                                        
 
-		<form action="<c:url value='/Scout/sendResetLink'/>" method="post">
+		<form action="<c:url value='/Scout/sendMail.do'/>" method="post">
 			<label for="email">가입한 이메일 주소</label> <input type="email"
 				name="email" id="email" required />
 			<button type="submit">재설정 링크 보내기</button>

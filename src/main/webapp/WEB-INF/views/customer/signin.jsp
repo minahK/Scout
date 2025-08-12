@@ -273,7 +273,7 @@ button:hover {
 
 		<div class="options">
 			<a href="/Scout/signup">회원가입</a> <a href="/Scout/findPw">비밀번호
-				찾기</a>
+				재설정</a>
 		</div>
 	</div>
 
