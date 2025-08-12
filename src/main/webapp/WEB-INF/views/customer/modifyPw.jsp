@@ -1,154 +1,104 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 재설정</title>
-<link rel="stylesheet" href="<c:url value='/css/reset-password.css'/>">
-
-<style type="text/css">
+<style>
 body {
-	font-family: Arial, sans-serif;
-	background-color: #f5f7fa;
+	font-family: sans-serif;
+	background-color: #FFFFFF;
 	margin: 0;
 	padding: 0;
 }
 
-.container {
-	max-width: 400px;
+form {
+	max-width: 360px;
 	margin: 80px auto;
-	padding: 30px;
-	background: #ffffff;
-	border-radius: 8px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+	padding: 30px 25px;
+	border-radius: 10px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-	text-align: center;
-	margin-bottom: 20px;
-	color: #333;
-}
-
-.form-group {
-	margin-bottom: 15px;
-}
-
-.form-group label {
+label {
 	display: block;
-	margin-bottom: 6px;
-	font-weight: 600;
+	margin-bottom: 8px;
+	font-weight: bold;
+	color: #eb5e00; /* 진한색 */
 }
 
-.form-group input {
+input[type="password"] {
 	width: 100%;
-	padding: 8px 10px;
-	border: 1px solid #ccd0d5;
-	border-radius: 4px;
+	padding: 10px 12px;
+	font-size: 15px;
+	border: 2px solid #f7d49c; /* 연한색 */
+	border-radius: 6px;
 	box-sizing: border-box;
+	transition: border-color 0.3s ease;
+}
+
+input[type="password"]:focus {
+	border-color: #ee853f; /* 기본색 */
+	outline: none;
+	box-shadow: 0 0 4px rgba(238, 133, 63, 0.5);
 }
 
 button {
 	width: 100%;
-	padding: 10px;
-	background-color: #007bff;
-	border: none;
+	margin-top: 20px;
+	padding: 12px;
+	background-color: #ff9752; /* 옅은색 */
 	color: white;
+	border: none;
+	border-radius: 6px;
 	font-size: 16px;
-	border-radius: 4px;
 	cursor: pointer;
+	transition: background-color 0.25s ease;
 }
 
 button:hover {
-	background-color: #0056b3;
+	background-color: #eb5e00; /* 진한색 */
 }
 
-.alert {
-	padding: 10px 15px;
+.msg-error {
+	color: red;
 	margin-bottom: 15px;
-	border-radius: 4px;
 	font-size: 14px;
 }
 
-.alert.success {
-	background: #e6f4ea;
-	color: #027a48;
+.msg-success {
+	color: green;
+	margin-bottom: 15px;
+	font-size: 14px;
 }
 
-.alert.error {
-	background: #ffebe6;
-	color: #bf2600;
-}
-
-.link {
-	text-align: center;
-	margin-top: 20px;
-}
-
-.link a {
-	color: #007bff;
-	text-decoration: none;
-}
-
-.link a:hover {
-	text-decoration: underline;
+@media ( max-width : 480px) {
+	form {
+		margin: 40px 15px;
+		padding: 20px;
+	}
 }
 </style>
 </head>
 <body>
-	<div class="container">
-		<h1>비밀번호 재설정</h1>
 
-		<!-- 플래시 메시지 -->
-		<c:if test="${not empty message}">
-			<div class="alert success">${message}</div>
-		</c:if>
+	<form action="/Scout/resetPw" method="post">
 		<c:if test="${not empty error}">
-			<div class="alert error">${error}</div>
+			<div class="msg-error">${error}</div>
+		</c:if>
+		<c:if test="${not empty message}">
+			<div class="msg-success">${message}</div>
 		</c:if>
 
-		<!-- 토큰 검증 실패 메시지 -->
-		<c:if test="${not empty invalidToken}">
-			<div class="alert error">${invalidToken}</div>
-		</c:if>
+		<!-- 이메일 히든 필드로 전달 -->
+		<input type="hidden" name="email" value="${email}"> <label
+			for="password">새 비밀번호</label> <input type="password" id="password"
+			name="password" required>
 
-		<!-- 비밀번호 재설정 폼 -->
-		<c:if test="${empty invalidToken}">
-			<form action="<c:url value='/customer/resetPw'/>" method="post">
-				<input type="hidden" name="token" value="${param.token}" />
+		<button type="submit">변경</button>
+	</form>
 
-				<div class="form-group">
-					<label for="password">새 비밀번호</label> <input type="password"
-						id="password" name="password" required minlength="8">
-				</div>
-
-				<div class="form-group">
-					<label for="confirmPassword">비밀번호 확인</label> <input type="password"
-						id="confirmPassword" name="confirmPassword" required minlength="8">
-				</div>
-
-				<button type="submit">비밀번호 변경</button>
-			</form>
-		</c:if>
-
-		<p class="link">
-			<a href="<c:url value='/customer/login'/>">로그인 페이지로 돌아가기</a>
-		</p>
-	</div>
-
-	<!-- (선택) 클라이언트 측 비밀번호 일치 체크 -->
-	<script>
-    const form = document.querySelector('form');
-    form.addEventListener('submit', e => {
-      const pwd = form.password.value;
-      const confirm = form.confirmPassword.value;
-      if (pwd !== confirm) {
-        e.preventDefault();
-        alert('입력하신 비밀번호가 서로 다릅니다.');
-      }
-    });
-    </script>
 </body>
 </html>

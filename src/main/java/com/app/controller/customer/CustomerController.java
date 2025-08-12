@@ -1,25 +1,33 @@
 package com.app.controller.customer;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-//import com.app.common.CommonCode;
 import com.app.dto.api.ApiResponse;
 import com.app.dto.api.ApiResponseHeader;
 import com.app.dto.user.User;
 import com.app.dto.user.UserDupCheck;
-import com.app.service.email.EmailService;
-import com.app.service.user.PasswordResetService;
+import com.app.mapper.UserMapper;
+import com.app.service.email.MailService;
 import com.app.service.user.UserService;
 import com.app.util.LoginManager;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@EnableAsync
 @Slf4j
 @Controller
 @RequestMapping("/Scout")
@@ -27,8 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerController {
 
 	private final UserService userService;
-	private final PasswordResetService passwordResetService;
-	private final EmailService emailService;
+	private final MailService emailService;
 
 	// 1) 회원가입 폼 보여주기
 	@GetMapping("/signup")
@@ -44,7 +51,6 @@ public class CustomerController {
 		// 디버그용: 넘어온 값 확인
 		System.out.println("가입 정보 → id: " + user.getId() + ", pw: " + user.getPw() + ", name: " + user.getName()
 				+ ", email: " + user.getEmail());
-		
 
 		int result = userService.saveCustomerUser(user);
 		if (result > 0) {
@@ -88,12 +94,12 @@ public class CustomerController {
 
 	// 로그인 처리
 	@PostMapping("/signin")
-	public String signinAction(User user, HttpSession session) {
+	public String signinAction(Model model, User user, HttpSession session) {
 //		user.setUserType(CommonCode.USER_USERTYPE_CUSTOMER);
 		User loginUser = userService.checkUserLogin(user);
 
 		if (loginUser == null) {
-			return "customer/signin";
+		model.addAttribute("loginError", "아이디 또는 비밀번호가 틀렸습니다.");
 		}
 		session.setAttribute("loginUser", loginUser);
 		LoginManager.setSessionLoginUserId(session, loginUser.getId());
@@ -117,25 +123,36 @@ public class CustomerController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		LoginManager.logout(session);
-		return "redirect:/main";
+		return "redirect:/Scout/signin";
 	}
 
-	// 비밀번호 변경 폼
-	@GetMapping("/modifyPw")
-	public String modifyPwForm() {
-		return "customer/modifyPw";
+	@GetMapping("/resetPw")
+	public String resetPwForm(@RequestParam String email, Model model) {
+	    model.addAttribute("email", email);
+	    return "customer/modifyPw";
 	}
 
-	// 비밀번호 변경 처리
-	@PostMapping("/modifyPw")
-	public String modifyPwAction(User user, HttpSession session) {
-		user.setId(LoginManager.getLoginUserId(session));
-		int result = userService.modifyUserPw(user);
-		if (result > 0) {
-			return "redirect:/Scout/mypage";
-		}
-		return "customer/modifyPw";
+
+	@PostMapping("/resetPw")
+	public String resetPwAction(@RequestParam("email") String email,
+	                            @RequestParam("password") String password,
+	                            Model model) {
+	    // 비밀번호 해시 처리 필수 (예: BCrypt)
+	    int updated = userMapper.updatePasswordByEmail(email, password);
+
+	    if (updated == 1) {
+	        model.addAttribute("message", "비밀번호가 변경되었습니다.");
+	        return "redirect:/Scout/signin";
+	    } else {
+	        model.addAttribute("error", "변경에 실패했습니다. 이메일을 확인해주세요.");
+	        model.addAttribute("email", email);
+	        return "customer/modifyPw";
+	    }
 	}
+
+
+
+
 
 	// 비밀번호 찾기 폼
 	@GetMapping("/findPw")
@@ -143,29 +160,40 @@ public class CustomerController {
 		return "customer/findPw";
 	}
 
-	// 비밀번호 재설정 링크 발송 처리
-	@PostMapping("/sendResetLink")
-	public String sendResetLink(@RequestParam("email") String email, RedirectAttributes redirectAttrs) {
+	@Autowired
+	private UserMapper userMapper;
 
-		email = email.trim();
-		// 1) 이메일 존재 여부 확인
-		if (!userService.existsByEmail(email)) {
-			redirectAttrs.addFlashAttribute("error", "등록된 이메일이 없습니다.");
-			return "redirect:/Scout/findPw";
+	@PostMapping("/sendMail.do")
+	public ResponseEntity<String> sendSimpleMail(@RequestParam("email") String email)
+			throws MessagingException, UnsupportedEncodingException {
+		String genericMsg = "입력하신 아이디로 안내 메일을 보냈습니다. 메일을 확인해 주세요.";
+		String errorMsg = "오류가 발생하였습니다. 다시 시도하여 주세요";
+		log.info("📩 입력된 이메일 = {}", email);
+
+		User user = userMapper.selectByEmail(email);
+		if (user != null) {
+			String resetLink = "http://localhost:8080/Scout/resetPw?email=" + URLEncoder.encode(email, StandardCharsets.UTF_8); // 필요 시 토큰 방식 추가
+			String htmlContent = buildHtmlContent(resetLink);
+
+			// 실제 메일 전송
+			emailService.sendMail(email, "비밀번호 재설정 안내", htmlContent);
+
+			return ResponseEntity.ok(genericMsg);
+		} else {
+			return ResponseEntity.ok(errorMsg);
 		}
 
-		try {
-			// 2) 토큰 생성 및 저장
-			String token = passwordResetService.createToken(email);
-			// 3) 이메일 발송
-			emailService.sendPasswordResetEmail(email, token);
-
-			redirectAttrs.addFlashAttribute("message", "비밀번호 재설정 링크를 이메일로 발송했습니다. 스팸함도 확인해 주세요.");
-		} catch (Exception ex) {
-			log.error("비밀번호 재설정 이메일 발송 실패", ex);
-			redirectAttrs.addFlashAttribute("error", "메일 전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-		}
-
-		return "redirect:/Scout/findPw";
 	}
+
+	private String buildHtmlContent(String resetLink) {
+		return new StringBuilder().append("<!DOCTYPE html>").append("<html><head><style>")
+				.append("body { font-family: Arial; background-color: #f9f9f9; padding: 20px; }")
+				.append(".btn { display:inline-block; padding:10px 20px; background:#ff9752; ")
+				.append("color:white; text-decoration:none; border-radius:5px; }").append("</style></head><body>")
+				.append("<h2>비밀번호 재설정 안내</h2>").append("<p>아래 버튼을 클릭하여 비밀번호를 재설정하세요. 이 링크는 1시간 동안만 유효합니다.</p>")
+				.append("<a href='").append(resetLink).append("' class='btn'>비밀번호 재설정</a>")
+				.append("<p style='margin-top:20px;'>요청하지 않으셨다면 이 메일을 무시해 주세요.</p>").append("</body></html>")
+				.toString();
+	}
+
 }

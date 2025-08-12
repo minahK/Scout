@@ -4,18 +4,27 @@
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:context="http://www.springframework.org/schema/context"
-
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans.xsd
-http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
-http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
-http://www.springframework.org/schema/context
-http://www.springframework.org/schema/context/spring-context.xsd">
+	xsi:schemaLocation="
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/util
+         http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/task
+         http://www.springframework.org/schema/task/spring-task-3.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<bean id="data_source" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
 		<!-- 서비스명(Service Name)인 ORCL을 쓴다면 slash 표기 -->
 		<property name="url" value="jdbc:oracle:thin:@//192.168.0.122:1521/ORCL" />
+	<!-- 데이터소스 -->
+	<bean id="data_source"
+		class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.OracleDriver" />
+		<property name="url"
+			value="jdbc:oracle:thin:@//192.168.0.122:1521/ORCL" />
 		<property name="username" value="scott" />
 		<property name="password" value="tiger" />
 	</bean>
@@ -26,52 +35,48 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 		<property name="mapperLocations"
 			value="/WEB-INF/mybatis/mapper/**/*_mapper.xml"></property>
 		<property name="configLocation"
-			value="/WEB-INF/mybatis/mybatis-config.xml"></property>
+			value="/WEB-INF/mybatis/mybatis-config.xml" />
+
+		<!-- 매퍼 XML도 WEB-INF 기준으로 로드 -->
+		<property name="mapperLocations"
+			value="/WEB-INF/mybatis/mapper/**/*.xml" />
+
+		<property name="dataSource" ref="data_source" />
 	</bean>
 
+	<!-- SqlSessionTemplate -->
 	<bean id="sqlSessionTemplate"
 		class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 
-
+	<!-- Mapper 인터페이스 스캔 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 		<!-- 매퍼 인터페이스가 위치한 패키지 -->
 		<property name="basePackage" value="com.app.mapper" />
 	</bean>
 
-	<!-- <context:component-scan -->
-	<!-- base-package="com.app.service"></context:component-scan> -->
-	<!-- <context:component-scan -->
-	<!-- base-package="com.app.dao"></context:component-scan> -->
-
+	<!-- 컴포넌트 스캔 -->
 	<context:component-scan base-package="com.app" />
 
-	<!-- <bean id="sampleScheduler" -->
-	<!-- class="com.app.scheduler.DailySalesScheduler" /> -->
-	<!-- <task:scheduler id="mainScheduler" pool-size="10" /> -->
-	<!-- <task:executor id="mainTaskExecutor" pool-size="10" /> -->
-	<!-- <task:annotation-driven -->
-	<!-- executor="mainTaskExecutor" scheduler="mainScheduler" /> -->
-
-	<!-- gmail설정 -->
+	<!-- Gmail JavaMailSender 설정 -->
 	<bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
-		<property name="username" value="자신의 이메일 아이디" /> <!-- 자신의 이메일 아이디 -->
-		<property name="password" value="자신의 비밀번호" /> <!-- 자신의 비밀번호 -->
-		<!-- 보안연결 TLS과 관련된 설정 -->
+		<property name="username"
+			value="scoutprojecttester@gmail.com" />
+		<property name="password" value="myfsvrormibwyzdb" />
 		<property name="javaMailProperties">
 			<props>
-				<prop key="mail.smtp.starttls.enable">true</prop>
-				<prop key="mail.smtp.auth">true</prop>
 				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
 				<prop key="mail.debug">true</prop>
 			</props>
 		</property>
 	</bean>
 
 </beans>
-

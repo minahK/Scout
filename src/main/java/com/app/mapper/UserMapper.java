@@ -32,11 +32,30 @@ public interface UserMapper {
 	@Select("SELECT pw FROM T_USER WHERE email = #{email}")
 	String findPasswordByEmail(@Param("email") String email);
 
+	// 이메일 찾기
+	@Select("SELECT email FROM T_USER WHERE id = #{id}")
+	String findEmailById(@Param("id") String id);
+
 	// 6) 비밀번호 재설정
 	@Update("UPDATE T_USER SET pw = #{newPw} WHERE email = #{email}")
 	int updatePwByEmail(@Param("email") String email, @Param("newPw") String newPw);
 
 	User selectByEmail(@Param("email") String email);
 
-	int updatePasswordByEmail(@Param("email") String email, @Param("newPw") String newPw);
+	// 비밀번호 재설정 토큰으로 사용자 찾기
+	User findByResetToken(@Param("token") String token);
+
+	// 토큰 저장 (발급 시)
+	void saveResetToken(@Param("userId") Long userId, @Param("token") String token);
+
+	// 비밀번호 변경
+	int updatePassword(@Param("userId") Long userId, @Param("password") String password);
+
+	// 토큰 제거 (사용 후)
+	void clearResetToken(@Param("userId") String userId);
+
+	int updatePasswordByEmail(@Param("email") String email,
+            @Param("pw") String pw);
+
+
 }
