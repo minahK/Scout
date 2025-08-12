@@ -92,12 +92,18 @@ estival-card-title {
     justify-content: space-between;
     font-size: 13px;
     color: #777;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    align-items: center;
 }
 
 .festival-card-meta i {
-    margin-right: 4px;
     color: #ff7f27;
+}
+
+.festival-card-meta span {
+    display: flex;
+    align-items: center;
+    gap: 2px;
 }
 
 .festival-card-desc {

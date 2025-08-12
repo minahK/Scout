@@ -64,6 +64,13 @@
     white-space: pre-line;
 }
 
+.festival-content img {
+	display:block;
+	margin: 20px auto;
+	max-width: 100%;
+	height: auto;
+}
+
 /* 부가 정보 박스 */
 .festival-info {
     margin-top: 30px;
