@@ -189,7 +189,7 @@ body {
 </head>
 <body>
 	<div class="theme-slide-wrap">
-		<div class="theme-slide-title">함께 떠나는 힐링테마 여행</div>
+		<div class="theme-slide-title">함께 떠나는 힐링코스 여행</div>
 		<div class="theme-slider-area">
 			<button class="theme-slider-btn prev" id="prevBtn" disabled>&lt;</button>
 			<div class="theme-slider-outer">
@@ -197,45 +197,38 @@ body {
 					<!-- 카드 샘플, c:forEach 등으로 반복 생성 가능 -->
 					<div class="theme-card">
 						<div class="theme-card-img-wrap">
-							<img class="theme-card-img" src="/resources/image/sample.jpg" alt="1">
+							<img class="theme-card-img" src="https://api.cdn.visitjeju.net/photomng/imgpath/202111/05/448c06e4-73c2-47ff-b230-c76bb72ff86f.JPG" alt="1">
 						</div>
-						<div class="theme-card-title">입안 가득 바다의 맛🌊</div>
-						<div class="theme-card-desc">전남 미식 여행 코스 추천</div>
+						<div class="theme-card-title">싱그러운 제주 향기🌊</div>
+						<div class="theme-card-desc">제주도 산책길 올레코스 추천</div>
 					</div>
 					<div class="theme-card">
 						<div class="theme-card-img-wrap">
-							<img class="theme-card-img" src="/resources/image/sample2.jpg" alt="2">
+							<img class="theme-card-img" src="https://api.cdn.visitjeju.net/photomng/imgpath/202408/21/47091457-d3b2-4d0a-bfcd-175cbf8fd14a.jpg" alt="2">
 						</div>
 						<div class="theme-card-title">낭만 치사랑 한도 초과🧡</div>
-						<div class="theme-card-desc">서울·경기 능소화 명소 4</div>
+						<div class="theme-card-desc">제주 해안도로 드라이브 코스</div>
 					</div>
 					<div class="theme-card">
 						<div class="theme-card-img-wrap">
-							<img class="theme-card-img" src="/resources/image/sample3.jpg" alt="3">
+							<img class="theme-card-img" src="https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/5d903f92-b1af-4149-a080-17aacdac7605.jpg" alt="3">
 						</div>
 						<div class="theme-card-title">푸르름이 짙어지는 여름,</div>
 						<div class="theme-card-desc">싱그러운 가든 체험 여행</div>
 					</div>
 					<div class="theme-card">
 						<div class="theme-card-img-wrap">
-							<img class="theme-card-img" src="/resources/image/sample.jpg" alt="4">
+							<img class="theme-card-img" src="https://api.cdn.visitjeju.net/photomng/imgpath/201810/16/1ddbbf85-d954-4234-b16f-65af69c042fb.jpg" alt="4">
 						</div>
 						<div class="theme-card-title">놀면서 배우는 여름방학!</div>
-						<div class="theme-card-desc">아이랑 가기 좋은 체험 여행지 3</div>
+						<div class="theme-card-desc">아이랑 가기 좋은 체험 여행지</div>
 					</div>
 					<div class="theme-card">
 						<div class="theme-card-img-wrap">
-							<img class="theme-card-img" src="/resources/image/sample2.jpg" alt="5">
+							<img class="theme-card-img" src="https://api.cdn.visitjeju.net/photomng/imgpath/202111/05/7da14e5e-d808-4389-925e-e0a592a71000.jpg" alt="5">
 						</div>
-						<div class="theme-card-title">일출 명소부터 짜릿한 체험까지!</div>
-						<div class="theme-card-desc">경주에서 보내는 특별한 하루</div>
-					</div>
-					<div class="theme-card">
-						<div class="theme-card-img-wrap">
-							<img class="theme-card-img" src="/resources/image/sample3.jpg" alt="6">
-						</div>
-						<div class="theme-card-title">새로운 감성 여행</div>
-						<div class="theme-card-desc">아름다운 시골 풍경</div>
+						<div class="theme-card-title">잔잔한 힐링부터 짜릿한 체험!</div>
+						<div class="theme-card-desc">제주에서 보내는 특별한 하루</div>
 					</div>
 					<!-- 필요한 만큼 카드 추가/반복문으로 대체 가능 -->
 				</div>

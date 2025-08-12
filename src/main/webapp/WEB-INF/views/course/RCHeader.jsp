@@ -166,7 +166,7 @@ body {
 			<a href="/" class="active">홈</a>
 		</div>
 		<div class="menu-item">
-			<a href="theme.jsp">테마</a>
+			<a href="/travelDestination/theme">테마</a>
 		</div>
 		<div class="menu-item">
 			<a href="/RecommendedCourse">추천코스</a>
