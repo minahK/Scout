@@ -506,7 +506,7 @@ html, body {
 			<c:choose>
 				<c:when test="${not empty user}">
 					<c:set var="displayName"
-						value="${not empty user.nickname ? user.nickname : (not empty user.userId ? user.userId : 'Guest')}" />
+						value="${not empty user.name ? user.name : (not empty user.id ? user.id : 'Guest')}" />
 				</c:when>
 				<c:otherwise>
 					<c:set var="displayName" value="Guest" />
