@@ -55,7 +55,7 @@ a {
 }
 
 .sidebar {
-	background: #fff;
+	background: var(--color-white);
 	border-right: 1px solid var(--color-border);
 	display: flex;
 	flex-direction: column;
@@ -81,6 +81,12 @@ a {
 	padding: 0
 }
 
+.sidebar-menu ul {
+	list-style: none;
+	margin: 16px 0 0;
+	padding: 0
+}
+
 .sidebar-menu li {
 	margin-bottom: 8px
 }
@@ -89,6 +95,7 @@ a {
 	display: block;
 	padding: 10px 14px;
 	border-radius: 999px;
+	text-decoration: none;
 	color: var(--color-font);
 	font-weight: bold
 }

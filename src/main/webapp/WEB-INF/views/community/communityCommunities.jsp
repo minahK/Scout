@@ -23,7 +23,6 @@ body {
 	margin: 0
 }
 
-/* ===== 레이아웃 ===== */
 .layout {
 	display: grid;
 	grid-template-columns: 260px 1fr 300px;
@@ -41,7 +40,6 @@ body {
 	padding: 20px;
 }
 
-/* ===== 사이드바 ===== */
 .sidebar {
 	background: #fff;
 	border-right: 1px solid var(--border);
@@ -101,7 +99,6 @@ body {
 	gap: 10px
 }
 
-/* initials avatar */
 .avatar-initial {
 	width: 38px;
 	height: 38px;
@@ -115,7 +112,6 @@ body {
 	border: 1px solid var(--border);
 }
 
-/* ===== 상단 헤더 ===== */
 .community-header {
 	position: sticky;
 	top: 0;
@@ -145,7 +141,6 @@ body {
 	height: 28px;
 }
 
-/* ===== 필터 ===== */
 .filters {
 	display: flex;
 	gap: 10px;
@@ -170,7 +165,6 @@ body {
 	color: #fff;
 }
 
-/* ===== 커뮤니티 카드 ===== */
 .community-box {
 	background: #fff;
 	padding: 16px;
@@ -186,7 +180,6 @@ body {
 	color: #555;
 }
 
-/* ===== 우측 위젯 ===== */
 .widget {
 	background: #fff;
 	border: 1px solid #e6ecf0;
@@ -269,7 +262,6 @@ body {
 	background: var(--color-dark);
 }
 
-/* ===== 모달 ===== */
 .modal-backdrop {
 	display: none;
 	position: fixed;
@@ -334,26 +326,13 @@ body {
 					<a href="${ctx}/"><img src="https://i.imgur.com/xpGazxz.png" alt="Logo" /></a>
 				</div>
 				<ul>
-					<li><a
-						href="${pageContext.request.contextPath}/community/main">🏠 홈</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/community/search">🔍
-							검색</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/community/notifications">🔔
-							알림</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/community/messages">✉️
-							채팅</a></li>
-					<li><a class="active"
-						href="${pageContext.request.contextPath}/community/communities">👥
-							커뮤니티</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/community/profile">🧑‍
-							프로필</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/community/settings/account">⚙️
-							설정</a></li>
+					<li><a href="${pageContext.request.contextPath}/community/main">🏠 홈</a></li>
+					<li><a href="${pageContext.request.contextPath}/community/search">🔍 검색</a></li>
+					<li><a href="${pageContext.request.contextPath}/community/notifications">🔔 알림</a></li>
+					<li><a href="${pageContext.request.contextPath}/community/messages">✉️ 채팅</a></li>
+					<li><a class="active" href="${pageContext.request.contextPath}/community/communities">👥 커뮤니티</a></li>
+					<li><a href="${pageContext.request.contextPath}/community/profile">🧑‍ 프로필</a></li>
+					<li><a href="${pageContext.request.contextPath}/community/settings/account">⚙️ 설정</a></li>
 				</ul>
 			</div>
 			<div class="sidebar-bottom">

@@ -331,6 +331,104 @@ html, body {
 		display: none
 	}
 }
+
+.widget {
+	background: var(--color-white);
+	border: 1px solid #e6ecf0;
+	border-radius: 12px;
+	padding: 14px 16px;
+	margin-bottom: 16px;
+}
+
+.widget h4 {
+	margin: 0 0 10px 0;
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--color-font);
+}
+
+.widget ul {
+	list-style: none;
+	padding: 0px;
+}
+
+.trend-item {
+	margin: 8px 0;
+}
+
+.trend-item a {
+	color: var(--color-font);
+	text-decoration: none;
+	font-weight: 700;
+}
+
+.trend-more {
+	display: inline-block;
+	margin-top: 8px;
+	font-size: 14px;
+	color: var(--color-dark);
+	text-decoration: underline;
+}
+
+.follow-list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.follow-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.follow-left {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-width: 0;
+}
+
+.follow-name {
+	font-weight: 700;
+	color: var(--color-font);
+	line-height: 1.2;
+}
+
+.follow-handle {
+	font-size: 12px;
+	color: #657786;
+}
+
+.follow-btn {
+	border: none;
+	border-radius: 20px;
+	padding: 6px 12px;
+	cursor: pointer;
+	font-weight: 700;
+	color: var(--color-white);
+	background: var(--color-base);
+}
+
+.follow-btn:hover {
+	background: var(--color-dark);
+}
+
+.btn {
+	padding: 8px 14px;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.btn.primary {
+	background: var(--color-dark);
+	color: var(--color-white);
+}
+
+.btn.primary:hover {
+	background: var(--color-base);
+}
 </style>
 </head>
 <body>
@@ -463,15 +561,9 @@ html, body {
 			</div>
 
 			<nav class="tabbar">
-				<a class="active"
-					href="${ctx}/community/profile?userId=${not empty user ? user.userId : 0}">게시물</a>
-				<a
-					href="${ctx}/community/profile/replies?userId=${not empty user ? user.userId : 0}">답글</a>
-				<a
-					href="${ctx}/community/profile/media?userId=${not empty user ? user.userId : 0}">미디어</a>
-				<a
-					href="${ctx}/community/profile/likes?userId=${not empty user ? user.userId : 0}">마음에
-					들어요</a>
+				<a class="active" href="${ctx}/community/profile?userId=${not empty user ? user.userId : 0}">게시물</a>
+				<a href="${ctx}/community/profile/media?userId=${not empty user ? user.userId : 0}">미디어</a>
+				<a href="${ctx}/community/profile/likes?userId=${not empty user ? user.userId : 0}">마음에 들어요</a>
 			</nav>
 
 			<section class="feed">
@@ -575,38 +667,20 @@ html, body {
 		<aside class="rightbar">
 			<section class="widget">
 				<h4>팔로우 추천</h4>
-				<div class="follow-list"
-					style="display: flex; flex-direction: column; gap: 12px;">
-					<c:forEach var="u" items="${recommendedUsers}">
-						<c:set var="rName"
-							value="${not empty u.nickname ? u.nickname : (not empty u.userId ? u.userId : 'User')}" />
-						<div
-							style="display: flex; align-items: center; justify-content: space-between;">
-							<div
-								style="display: flex; align-items: center; gap: 10px; min-width: 0;">
-								<div class="avatar-initial" title="${rName}">
-									${fn:substring(rName,0,1)}</div>
+				<div class="follow-list">
+					<c:forEach var="user" items="${recommendedUsers}">
+						<div class="follow-item">
+							<div class="follow-left">
+								<div class="avatar-initial">
+									${fn:substring(user.nickname,0,1)}</div>
 								<div>
-									<div
-										style="font-weight: 700; color: var(--color-font); line-height: 1.2;">
-										<c:out value="${rName}" />
-									</div>
-									<div style="font-size: 12px; color: #657786;">
-										<c:choose>
-											<c:when test="${not empty u.handle}">
-											@<c:out value="${u.handle}" />
-											</c:when>
-											<c:when test="${not empty u.userId}">
-											@<c:out value="${u.userId}" />
-											</c:when>
-											<c:otherwise>@user</c:otherwise>
-										</c:choose>
-									</div>
+									<div class="follow-name">${user.nickname}</div>
+									<div class="follow-handle">@${user.handle}</div>
 								</div>
 							</div>
-							<form method="post" action="${ctx}/community/follow">
-								<input type="hidden" name="targetUserId" value="${u.userId}" />
-								<button type="submit" class="btn btn-primary">팔로우</button>
+							<form method="post" action="/community/follow">
+								<input type="hidden" name="targetUserId" value="${user.userId}" />
+								<button type="submit" class="follow-btn">팔로우</button>
 							</form>
 						</div>
 					</c:forEach>

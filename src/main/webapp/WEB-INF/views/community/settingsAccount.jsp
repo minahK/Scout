@@ -99,17 +99,6 @@ a {
 	background: #dfeee6
 }
 
-.sidebar-bottom {
-	border-top: 1px solid var(--color-border);
-	padding-top: 12px
-}
-
-.sidebar-profile {
-	display: flex;
-	align-items: center;
-	gap: 10px
-}
-
 .avatar-initial {
 	width: 38px;
 	height: 38px;
@@ -249,22 +238,6 @@ h2 {
 					<li><a class="active" href="${ctx}/community/settings/account">⚙️
 							설정</a></li>
 				</ul>
-			</div>
-
-			<div class="sidebar-bottom">
-				<c:set var="uid" value="${sessionScope.loginUserId}" />
-				<c:set var="sbName"
-					value="${not empty displayName ? displayName : (not empty uid ? uid : 'Guest')}" />
-				<c:set var="sbAt"
-					value="${not empty atId ? atId : (not empty uid ? uid : 'Guest')}" />
-				<div class="sidebar-profile">
-					<div class="avatar-initial" title="${sbName}">${fn:substring(sbName,0,1)}</div>
-					<div>
-						<strong><c:out value="${sbName}" /></strong><br> <span
-							style="font-size: 12px; color: #657786;">@<c:out
-								value="${sbAt}" /></span>
-					</div>
-				</div>
 			</div>
 		</aside>
 

@@ -73,15 +73,24 @@ public class CommunityController {
 
         if (!isEmpty(loginId)) {
             try {
-                UserDTO profile = communityService.getProfileByHandle(loginId); 
+                UserDTO profile = communityService.getProfileByHandle(loginId);
                 if (profile != null) {
                     session.setAttribute("loginUserId", profile.getUserId());
-                    session.setAttribute("loginUser",   profile);
+                    putCommunitySession(session, profile);
                     return profile.getUserId();
                 }
             } catch (Exception ignore) {}
         }
         return null;
+    }
+    
+    private void putCommunitySession(HttpSession session, UserDTO p) {
+        if (session == null || p == null) return;
+        session.setAttribute("communityUser", p);
+        String dn = (p.getNickname()!=null && !p.getNickname().isEmpty()) ? p.getNickname()
+                  : (p.getHandle()!=null && !p.getHandle().isEmpty()) ? p.getHandle()
+                  : String.valueOf(p.getUserId());
+        session.setAttribute("displayName", dn);
     }
 
     private Integer safeInt(Object v) {
@@ -259,7 +268,8 @@ public class CommunityController {
 
         UserDTO profile = communityService.getProfile(uid);
         model.addAttribute("user", profile);
-
+        model.addAttribute("recommendedUsers", communityService.findRecommendedUsers(targetUserId));
+        
         return "community/communityProfile";
     }
     

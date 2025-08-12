@@ -364,7 +364,6 @@ html, body {
 	background: var(--color-dark);
 }
 
-/* ===== 버튼 ===== */
 .btn {
 	padding: 8px 14px;
 	border: none;
@@ -379,6 +378,10 @@ html, body {
 
 .btn.primary:hover {
 	background: var(--color-base);
+}
+
+.comment-form.hidden {
+  display: none;
 }
 
 /* 반응형 */
@@ -473,12 +476,11 @@ html, body {
 					<p style="margin-top: 10px;">${post.content}</p>
 
 					<div class="post-actions">
-						<button type="button" class="comment-icon"
-							data-post-id="${post.postId}">💬</button>
-						<button>🔁</button>
-						<button>❤️</button>
-						<small>${post.createdAt}</small>
-					</div>
+			            <button type="button" class="comment-icon" data-post-id="${post.postId}">💬</button>
+			            <button>🔁</button>
+			            <button>❤️</button>
+			            <small>${post.createdAt}</small>
+			        </div>
 
 					<c:if test="${not empty commentsMap[post.postId]}">
 						<div class="comment-box">
@@ -492,12 +494,11 @@ html, body {
 					</c:if>
 
 					<form action="/community/mention/add" method="post"
-						class="comment-form" id="comment-form-${post.postId}"
-						style="display: none; margin-top: 10px;">
-						<input type="hidden" name="postId" value="${post.postId}" /> <input
-							type="text" name="content" placeholder="댓글을 입력하세요." />
-						<button type="submit" class="btn primary" style="margin-top: 0;">작성</button>
-					</form>
+			            class="comment-form hidden" style="margin-top: 10px;" data-form-id="${post.postId}">
+			            <input type="hidden" name="postId" value="${post.postId}" />
+			            <input type="text" name="content" placeholder="댓글을 입력하세요." />
+			            <button type="submit" class="btn primary" style="margin-top: 0;">작성</button>
+			        </form>
 				</div>
 			</c:forEach>
 		</main>
@@ -564,11 +565,9 @@ html, body {
         document.querySelectorAll('.comment-icon').forEach(icon => {
             icon.addEventListener('click', function () {
                 const postId = this.dataset.postId;
-                const form = document.getElementById(`comment-form-${postId}`);
-                if (form.style.display === 'none' || form.style.display === '') {
-                    form.style.display = 'flex';
-                } else {
-                    form.style.display = 'none';
+                const form = document.querySelector(`.comment-form[data-form-id="${postId}"]`);
+                if (form) {
+                    form.classList.toggle('hidden');
                 }
             });
         });
