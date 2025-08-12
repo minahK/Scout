@@ -23,10 +23,11 @@ body {
 /* Main Container */
 .container {
 	display: flex;
-	max-width: 1200px;
-	margin: 20px auto;
+	max-width: 900px;
+	margin: 40px auto;
 	padding: 0 20px;
-	gap: 20px;
+	gap: 30px;
+	    box-sizing: border-box;
 }
 
 .left-panel {
@@ -44,11 +45,17 @@ body {
 	border-bottom: 1px solid #eee;
 }
 
+.page-title p {
+	font-size: 15px;
+	color: #818181;
+	margin-bottom: 10px;
+	letter-spacing: -1px;
+}
+
 .page-title {
 	font-weight: 700;
-	font-size: 24px;
+	font-size: 30px;
 	color: #232323;
-	margin-bottom: 10px;
 	letter-spacing: -1px;
 }
 
@@ -56,7 +63,7 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 10px 0;
+	padding-bottom: 10px;
 	font-size: 14px;
 }
 
@@ -213,7 +220,8 @@ body {
 		<section class="left-panel">
 			<div class="header-container">
 				<div class="page-title">
-					<span># <c:choose>
+					<p>여행코스</p>
+					<span>#<c:choose>
 							<c:when test="${empty param.tag || param.tag eq '전체'}">제주</c:when>
 							<c:otherwise>${param.tag}</c:otherwise>
 						</c:choose>
@@ -265,7 +273,7 @@ body {
 
 		<aside class="right-panel">
 			<div class="filter-section">
-				<h4>코스 유형</h4>
+				<h4>추천 코스</h4>
 				<div class="tags">
 					<a href="?tag=전체"><span id="all-tag"
 						class="${(empty param.tag || param.tag eq '전체') ? 'active' : ''}">#전체</span></a>
