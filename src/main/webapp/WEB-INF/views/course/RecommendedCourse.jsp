@@ -326,5 +326,6 @@ body {
 	<script>
 		document.getElementById('filtered-count').textContent = '${totalCount}';
 	</script>
+	
 </body>
 </html>

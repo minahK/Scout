@@ -176,7 +176,7 @@ body {
 
 	<div class="icons">
 		<i class="fa fa-search"></i>
-		<i class="fas fa-comments"></i>
+		<i class="fas fa-comments" onclick="location.href='/community/main'"></i>
 		<c:choose>
 			<c:when test="${not empty sessionScope.loginUser}">
 				<span class="loginname">${sessionScope.loginUser.name} 님</span>

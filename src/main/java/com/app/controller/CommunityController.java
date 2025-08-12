@@ -228,6 +228,11 @@ public class CommunityController {
         int result = communityService.insertChatMessage(dto);
         return result > 0 ? "success" : "fail";
     }
+    
+    @GetMapping("/community/new-chat")
+    public String newChatPage(Model model) {
+        return "community/newChat"; 
+    }
 
     @GetMapping("/community/communities")
     public String communitiesPage(HttpSession session, Model model) {
