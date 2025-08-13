@@ -335,28 +335,6 @@ body {
 					<li><a href="${pageContext.request.contextPath}/community/settings/account">⚙️ 설정</a></li>
 				</ul>
 			</div>
-			<div class="sidebar-bottom">
-				<div class="sidebar-profile">
-					<c:choose>
-						<c:when
-							test="${not empty loginUser and not empty loginUser.nickname}">
-							<div class="avatar-initial" title="${loginUser.nickname}">
-								${fn:substring(loginUser.nickname,0,1)}</div>
-							<div>
-								<strong>${loginUser.nickname}</strong><br> <span
-									style="font-size: 12px; color: gray;">${loginUser.handle}</span>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="avatar-initial" title="Guest">G</div>
-							<div>
-								<strong>비회원</strong><br> <span
-									style="font-size: 12px; color: gray;">@guest</span>
-							</div>
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</div>
 		</div>
 
 		<main class="main">

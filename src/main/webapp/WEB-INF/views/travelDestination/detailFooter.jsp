@@ -8,7 +8,7 @@
 			<!-- <span class="footer-link-emoji"><img src="${pageContext.request.contextPath}/img/odii.png" alt="오디" style="height:32px;width:32px;"></span> -->
 			<span class="footer-link-emoji">🎧</span>
 			<div>
-				<div class="footer-link-title">오디 (Odii)</div>
+				<div class="footer-link-title">스카우트 (Scout)</div>
 				<div class="footer-link-desc">대한민국 관광지 오디오 해설</div>
 			</div>
 		</div>
@@ -25,7 +25,7 @@
 			<span class="footer-link-emoji">☎️</span>
 			<div>
 				<div class="footer-link-title">
-					전화/실시간 문자 채팅 상담<br> <span
+					실시간 채팅 상담<br> <span
 						style="color: #159c3f; font-weight: 900; font-size: 18px;">1330
 						관광안내</span>
 				</div>

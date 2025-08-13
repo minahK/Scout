@@ -9,12 +9,9 @@ body {
 	margin: 0;
 	font-family: 'Noto Sans KR', sans-serif;
 	padding-top: 70px;
-	background-color: #fff;
+	background-color: #fffff; /* 예시 배경색 */
 }
-.loginname {
-	font-weight: bold;
-	font-size:16px;
-}
+
 /* 상단 네비게이션 */
 .top-nav {
 	background: white !important;
@@ -28,7 +25,14 @@ body {
 	left: 0;
 	right: 0;
 	z-index: 1000;
+	transition: background-color 0.8s ease; /* 부드러운 페이드 */
+}
+
+.top-nav.white {
+	background: white !important;
+	border-bottom: 1px solid #eee;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	transition: none !important; /* 흰색 전환은 즉시 */
 }
 
 .top-nav .logo {
@@ -85,11 +89,15 @@ body {
 	gap: 20px;
 	font-size: 22px;
 	color: #222;
-	position: relative;
-	z-index: 9999;
 }
 
 .top-nav .icons i {
+	cursor: pointer;
+}
+
+.icons span {
+	font-size: 16px;
+	font-weight: 600;
 	cursor: pointer;
 }
 
@@ -101,10 +109,10 @@ body {
 	top: 100%;
 	transform: translateX(-50%);
 	background: #f6f6f6;
-	box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
+	box-shadow: 0 6px rgba(0, 0, 0, .06);
 	padding: 20px 40px;
 	border-bottom: 1px solid #eee;
-	border-radius: 0 0 18px 18px;
+	border-radius: 18px 18px 18px 18px;
 	min-width: 70px;
 	width: max-content;
 	z-index: 999;
@@ -145,6 +153,58 @@ body {
 		min-width: 120px;
 	}
 }
+
+/* 유저 드롭다운 */
+.user-menu {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+	top: -8px;
+}
+
+.user-name {
+    border-radius: 4px;
+}
+
+.user-dropdown {
+    display: none;
+	position: absolute;
+	left: 50%;
+	top: 100%;
+	transform: translateX(-50%);
+	background: #f6f6f6;
+	box-shadow: 0 6px rgba(0, 0, 0, .06);
+	padding: 20px 40px;
+	border-bottom: 1px solid #eee;
+	border-radius: 18px 18px 18px 18px;
+	min-width: 70px;
+	width: max-content;
+	z-index: 999;
+	white-space: nowrap;
+}
+
+.user-dropdown a {
+  display:block;
+  font-size:16px;
+  color:#444;
+  text-decoration:none;
+  padding:2px 0;
+  transition:.13s;
+}
+
+.user-dropdown a + a{ margin-top:20px; }
+
+.user-dropdown a:hover {
+    color:#eb5e00; 
+  	font-weight:600;
+}
+
+/* hover 시 표시 */
+.user-menu:hover .user-dropdown {
+    display: block;
+    
+}
+
 </style>
 
 <div class="top-nav">
@@ -167,26 +227,61 @@ body {
 			<a href="javascript:void(0)">여행정보</a>
 			<div class="dropdown">
 				<div class="dropdown-list">
-					<a href="/travelDestination">여행지</a> <a
-						href="/travel/list">여행기사</a> <a href="/festival/list">여행행사</a>
+					<a href="/travelDestination">여행지</a> <a href="/travel/list">여행기사</a>
+					<a href="/festival/list">여행행사</a>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<div class="icons">
-		<i class="fa fa-search"></i>
-		<i class="fas fa-comments" onclick="location.href='/community/main'"></i>
+		<i class="fa fa-search"></i> <i class="fas fa-comments"
+			onclick="location.href='/community/main'"></i>
+		<!-- 로그인 여부에 따라 출력 변경 -->
 		<c:choose>
 			<c:when test="${not empty sessionScope.loginUser}">
-				<span class="loginname">${sessionScope.loginUser.name} 님</span>
+				<div class="user-menu">
+					<span class="user-name">${sessionScope.loginUser.name} 님</span>
+					<div class="user-dropdown">
+						<a href="/community/profile">내 프로필</a> <a href="/Scout/logout">로그아웃</a>
+					</div>
+				</div>
 			</c:when>
+
 			<c:otherwise>
 				<i class="fa-solid fa-circle-user"
 					onclick="location.href='/Scout/signin'"></i>
 			</c:otherwise>
 		</c:choose>
-		<!-- <i class="fa-solid fa-circle-user" onclick="location.href='/Scout/signin'"></i> -->
 		<i class="fa fa-globe"></i>
 	</div>
 </div>
+
+<script>
+const topNav = document.querySelector('.top-nav');
+
+// 스크롤 시 흰색
+window.addEventListener('scroll', () => {
+    if(window.scrollY > 0){
+        topNav.classList.add('white');
+    } else {
+        topNav.classList.remove('white');
+    }
+});
+
+// 마우스 올리면 흰색
+topNav.addEventListener('mouseenter', () => {
+    topNav.classList.add('white');
+});
+topNav.addEventListener('mouseleave', () => {
+    if(window.scrollY === 0){
+        topNav.classList.remove('white');
+    }
+});
+document.querySelectorAll('.user-name').forEach(el => {
+    el.addEventListener('click', () => {
+        el.parentElement.querySelector('.user-dropdown')
+          .classList.toggle('show');
+    });
+});
+</script>

@@ -482,17 +482,6 @@ html, body {
 			            <small>${post.createdAt}</small>
 			        </div>
 
-					<c:if test="${not empty commentsMap[post.postId]}">
-						<div class="comment-box">
-							<c:forEach var="comment" items="${commentsMap[post.postId]}">
-								<div style="margin-bottom: 8px;">
-									<strong>${comment.nickname}</strong> <small
-										style="color: gray;">${comment.handle}</small><br> <span>${comment.content}</span>
-								</div>
-							</c:forEach>
-						</div>
-					</c:if>
-
 					<form action="/community/mention/add" method="post"
 			            class="comment-form hidden" style="margin-top: 10px;" data-form-id="${post.postId}">
 			            <input type="hidden" name="postId" value="${post.postId}" />

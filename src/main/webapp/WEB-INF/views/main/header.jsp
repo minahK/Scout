@@ -9,12 +9,12 @@ body {
 	margin: 0;
 	font-family: 'Noto Sans KR', sans-serif;
 	padding-top: 70px;
-	background-color: #ffe3b0; /* 예시 배경색 */
+	background-color: #fffff; /* 예시 배경색 */
 }
 
 /* 상단 네비게이션 */
 .top-nav {
-	background: rgba(255, 227, 176, 0.8); /* body색과 유사 + 반투명 */
+	background: white !important;
 	border-bottom: 1px solid transparent;
 	display: flex;
 	justify-content: space-between;
@@ -159,39 +159,50 @@ body {
     position: relative;
     display: inline-block;
     cursor: pointer;
+	top: -8px;
 }
 
 .user-name {
-    padding: 5px 10px;
     border-radius: 4px;
 }
 
 .user-dropdown {
     display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: white;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    min-width: 140px;
-    z-index: 1000;
+	position: absolute;
+	left: 50%;
+	top: 100%;
+	transform: translateX(-50%);
+	background: #f6f6f6;
+	box-shadow: 0 6px rgba(0, 0, 0, .06);
+	padding: 20px 40px;
+	border-bottom: 1px solid #eee;
+	border-radius: 18px 18px 18px 18px;
+	min-width: 70px;
+	width: max-content;
+	z-index: 999;
+	white-space: nowrap;
 }
 
 .user-dropdown a {
-    display: block;
-    padding: 8px 12px;
-    color: #333;
-    text-decoration: none;
+  display:block;
+  font-size:16px;
+  color:#444;
+  text-decoration:none;
+  padding:2px 0;
+  transition:.13s;
 }
 
+.user-dropdown a + a{ margin-top:20px; }
+
 .user-dropdown a:hover {
-    background: #f5f5f5;
+    color:#eb5e00; 
+  	font-weight:600;
 }
 
 /* hover 시 표시 */
 .user-menu:hover .user-dropdown {
     display: block;
+    
 }
 
 </style>

@@ -467,19 +467,16 @@ html, body {
 					${fn:substring(displayName,0,1)}</div>
 
 				<div class="head-actions">
-					<c:choose>
-						<c:when test="${isOwner}">
-							<a href="${ctx}/community/profile/edit" class="btn btn-ghost">프로필
-								수정</a>
-							<a href="${ctx}/community/post/new" class="btn btn-primary">게시하기</a>
-						</c:when>
-						<c:otherwise>
-							<form method="get" action="${ctx}/community/profile/edit"
-								style="text-align: right; margin-bottom: 12px;">
-								<button type="submit" class="btn btn-primary">프로필 편집</button>
-							</form>
-						</c:otherwise>
-					</c:choose>
+				    <c:choose>
+				        <c:when test="${isOwner}">
+				            <a href="${ctx}/community/profile/edit" class="btn btn-ghost">프로필 수정</a>
+				            <a href="${ctx}/community/post/new" class="btn btn-primary">게시하기</a>
+				        </c:when>
+				        <c:otherwise>
+				            <%-- 다른 사람의 프로필을 볼 때 팔로우/팔로잉 버튼이 표시될 위치 --%>
+				            <button type="submit" class="btn btn-primary">팔로우</button>
+				        </c:otherwise>
+				    </c:choose>
 				</div>
 			</div>
 
