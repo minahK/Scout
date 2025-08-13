@@ -10,4 +10,5 @@ public interface TravelCommentDAO {
 	void insertComment(CommentDTO comment);
 	void updateComment(CommentDTO comment);
 	void deleteComment(int id);
+	CommentDTO findById(int id);
 }

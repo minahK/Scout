@@ -90,33 +90,35 @@
 			    </form>
 			
 			    <!-- 댓글 목록 -->
-			    <div id="commentList" class="comment-list">
-			        <c:forEach var="comment" items="${comments}">
-			            <div class="comment" data-id="${comment.id}">
-			                <p><strong>${comment.author}</strong></p>
-			                <p class="comment-content">${comment.content}</p>
-			
-			                <!-- 수정 버튼 -->
-			                <button type="button" class="edit-btn">수정</button>
-			
-			                <!-- 수정 폼 -->
-			                <form class="edit-form"
-			                      action="${pageContext.request.contextPath}/travel/${travel.id}/comment/${comment.id}/update"
-			                      method="post" style="display:none;">
-			                    <textarea name="content" required>${comment.content}</textarea>
-			                    <button type="submit">수정 완료</button>
-			                    <button type="button" class="cancel-edit">취소</button>
-			                </form>
-			
-			                <!-- 삭제 버튼 -->
-			                <form action="${pageContext.request.contextPath}/travel/${travel.id}/comment/${comment.id}/delete"
-			                      method="post" style="display:inline;">
-			                    <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
-			                </form>
-			                <hr>
-			            </div>
-			        </c:forEach>
-			    </div>
+				<div id="commentList" class="comment-list">
+				    <c:forEach var="comment" items="${comments}">
+				        <div class="comment" data-id="${comment.id}">
+				            <p><strong>${comment.author}</strong></p>
+				            <p class="comment-content">${comment.content}</p>
+				
+				            <c:if test="${isLoggedIn and not empty loginUserId and loginUserId eq comment.author}">
+				                <!-- 수정 버튼 -->
+				                <button type="button" class="edit-btn">수정</button>
+				
+				                <!-- 수정 폼 -->
+				                <form class="edit-form"
+				                      action="${pageContext.request.contextPath}/travel/${travel.id}/comment/${comment.id}/update"
+				                      method="post" style="display:none;">
+				                    <textarea name="content" required>${comment.content}</textarea>
+				                    <button type="submit">수정 완료</button>
+				                    <button type="button" class="cancel-edit">취소</button>
+				                </form>
+				
+				                <!-- 삭제 버튼 -->
+				                <form action="${pageContext.request.contextPath}/travel/${travel.id}/comment/${comment.id}/delete"
+				                      method="post" style="display:inline;">
+				                    <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+				                </form>
+				            </c:if>
+				            <hr>
+				        </div>
+				    </c:forEach>
+				</div>
 			</div>
 
         <!-- 목록으로 돌아가기 버튼 -->

@@ -39,4 +39,10 @@ public class TravelCommentDAOImpl implements TravelCommentDAO {
 		sqlSession.delete("com.app.mapper.travel.TravelCommentMapper.deleteComment", id);
 	}
 
+	@Override
+	public CommentDTO findById(int id) {
+		
+		return sqlSession.selectOne("com.app.mapper.travel.TravelCommentMapper.findById", id);
+	}
+
 }
