@@ -32,7 +32,7 @@ h1, h2 {
 	margin-bottom: 10px;
 }
 
-.logo {
+.loginpage .logo {
 	display: block;
 	margin: 0 auto;
 }
@@ -213,7 +213,8 @@ button:hover {
 </style>
 </head>
 <body>
-
+	<%@ include file="../travelDestination/tdHeader.jsp"%>
+	<div class="loginpage">
 	<div class="container">
 		<img src="/images/ScoutLogo.png" alt="TRACE 로고" width="150"
 			height="100" class="logo">
@@ -276,7 +277,7 @@ button:hover {
 			<a href="/Scout/signup">회원가입</a> <a href="/Scout/findPw">비밀번호 재설정</a>
 		</div>
 	</div>
-
+	</div>
 	<script>
 		function togglePassword() {
 			const pwField = document.getElementById("pw");

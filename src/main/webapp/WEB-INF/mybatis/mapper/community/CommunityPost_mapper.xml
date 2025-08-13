@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CommunityPost_mapper">
+
+	<select id="selectUserPkByLoginId" resultType="int">
+	  SELECT USERID
+	  FROM T_USER
+	  WHERE ID = #{id}
+	</select>
+
+  <!-- ====================== 게시글 ====================== -->
+  <select id="findAllPosts" resultType="CommunityPost">
+    SELECT
+      P.PostID,
+      P.AuthorID,
+      P.Content,
+      P.ImageURL,
+      P.CreatedAt,
+      P.UpdatedAt,
+      P.LikesCount,
+      P.RepostsCount,
+      P.ReplyToPostID,
+      U.NAME AS authorNickname,   -- 닉네임 = 이름
+      U.ID   AS handle,           -- 핸들   = ID
+      NULL   AS profileImage      -- 이미지 없음
+    FROM T_TRACE_POSTS P
+    JOIN T_USER U ON P.AuthorID = U.USERID
+    ORDER BY P.CreatedAt DESC
+  </select>
+
+  <insert id="insertPost" parameterType="CommunityPost">
+    INSERT INTO T_TRACE_POSTS (
+      PostID, AuthorID, Content, ImageURL, CreatedAt
+    ) VALUES (
+      T_TRACE_POSTS_SEQ.NEXTVAL,
+      #{authorId},
+      #{content},
+      #{imageUrl},
+      SYSDATE
+    )
+  </insert>
+
+  <select id="findPostsByKeyword" resultType="CommunityPost">
+    SELECT
+      P.*,
+      U.NAME AS authorNickname,
+      NULL   AS profileImage,
+      U.ID   AS handle
+    FROM T_TRACE_POSTS P
+    JOIN T_USER U ON P.AuthorID = U.USERID
+    WHERE P.Content LIKE '%' || #{keyword} || '%'
+    ORDER BY P.CreatedAt DESC
+  </select>
+
+  <select id="findPostsByCategory" resultType="CommunityPost" parameterType="string">
+    SELECT
+      P.*,
+      U.NAME AS Nickname,
+      U.ID   AS Handle,
+      NULL   AS ProfileImage
+    FROM T_TRACE_POSTS P
+    JOIN T_USER U ON P.AuthorID = U.USERID
+    WHERE LOWER(P.Content) LIKE '%' || LOWER(#{category}) || '%'
+    ORDER BY P.CreatedAt DESC
+  </select>
+
+  <!-- ====================== 댓글/멘션 ====================== -->
+  <insert id="insertComment" parameterType="Comment">
+    INSERT INTO T_TRACE_COMMENTS (
+      CommentID, PostID, WriterID, Content, CreatedAt
+    ) VALUES (
+      T_TRACE_COMMENTS_SEQ.NEXTVAL,
+      #{postId},
+      #{userId},
+      #{content},
+      SYSDATE
+    )
+  </insert>
+
+  <select id="getLastCommentId" resultType="int">
+    SELECT T_TRACE_COMMENTS_SEQ.CURRVAL FROM DUAL
+  </select>
+
+  <insert id="insertMention" parameterType="Mention">
+    INSERT INTO T_TRACE_MENTIONS (
+      MentionID, PostID, CommentID, MentionedUserID, MentionedAt
+    ) VALUES (
+      T_TRACE_MENTIONS_SEQ.NEXTVAL,
+      #{postId},
+      #{commentId},
+      #{mentionedUserId},
+      SYSDATE
+    )
+  </insert>
+
+  <select id="findMentionsByPostId" parameterType="int" resultType="Mention">
+    SELECT MentionID, PostID, MentionedUserID, MentionedAt
+    FROM T_TRACE_MENTIONS
+    WHERE PostID = #{postId}
+    ORDER BY MentionedAt ASC
+  </select>
+
+  <!-- ====================== 트렌드/추천 ====================== -->
+  <select id="findLatestTrends" resultType="Trend">
+    SELECT Hashtag
+    FROM T_TRACE_TRENDS
+    WHERE Region = '대한민국'
+    ORDER BY CollectedAt DESC
+    FETCH FIRST 3 ROWS ONLY
+  </select>
+
+  <select id="findRecommendedUsers" parameterType="int" resultType="UserDTO">
+    SELECT
+      USERID      AS userId,
+      NAME        AS nickname,
+      ID          AS handle,
+      NULL        AS profileImage,  -- 필드가 있으면 null로 채움
+      EMAIL       AS email
+    FROM T_USER
+    WHERE USERID NOT IN (
+      SELECT FollowingID FROM T_TRACE_FOLLOWS WHERE FollowerID = #{userId}
+    )
+    AND USERID != #{userId}
+    FETCH FIRST 3 ROWS ONLY
+  </select>
+
+  <!-- ====================== 채팅 ====================== -->
+  <select id="findChatRoomsByUserId" resultType="ChatRoom">
+    SELECT * FROM T_TRACE_CHATROOMS
+    WHERE ChatRoomID IN (
+      SELECT ChatRoomID
+      FROM T_TRACE_CHAT_PARTICIPANTS
+      WHERE UserID = #{userId}
+    )
+  </select>
+
+  <select id="findMessagesByRoomId" resultType="ChatMessage">
+    SELECT *
+    FROM T_TRACE_CHAT_MESSAGES
+    WHERE ChatRoomID = #{chatRoomId}
+    ORDER BY SentAt
+  </select>
+
+  <insert id="insertChatMessage" parameterType="ChatMessage">
+    INSERT INTO T_TRACE_CHAT_MESSAGES (
+      MessageID, ChatRoomID, SenderID, Content, SentAt
+    ) VALUES (
+      T_TRACE_CHAT_MESSAGES_SEQ.NEXTVAL,
+      #{chatRoomId},
+      #{senderId},
+      #{content},
+      SYSDATE
+    )
+  </insert>
+
+  <!-- ====================== 커뮤니티 목록 ====================== -->
+  <select id="findAllCommunities" resultType="Community">
+    SELECT 
+      COMMUNITY_ID AS communityId,
+      Name         AS name,
+      Description  AS description,
+      TO_CHAR(CREATED_AT, 'YYYY-MM-DD HH24:MI:SS') AS createdAt
+    FROM T_TRACE_COMMUNITIES
+    ORDER BY CREATED_AT DESC
+  </select>
+
+  <insert id="insertCommunity" parameterType="Community">
+    INSERT INTO T_TRACE_COMMUNITIES (
+      COMMUNITY_ID, NAME, DESCRIPTION, CREATED_AT
+    ) VALUES (
+      T_TRACE_COMMUNITIES_SEQ.NEXTVAL,
+      #{name},
+      #{description},
+      SYSDATE
+    )
+  </insert>
+
+  <!-- ====================== 알림 ====================== -->
+  <resultMap id="NotificationMap" type="Notification">
+    <id     property="notificationId" column="NOTIFICATIONID"/>
+    <result property="userId"         column="USERID"/>
+    <result property="type"           column="TYPE"/>
+    <result property="referenceId"    column="REFERENCEID"/>
+    <result property="isRead"         column="ISREAD"/>
+    <result property="createdAt"      column="CREATEDAT"/>
+    <result property="actorUserId"    column="ACTOR_USER_ID"/>
+    <result property="actorNickname"  column="ACTOR_NICKNAME"/>
+    <result property="postId"         column="POST_ID"/>
+  </resultMap>
+
+  <select id="findNotificationsByUserId" resultMap="NotificationMap">
+    SELECT
+      n.NotificationID,
+      n.UserID,
+      n.Type,
+      n.ReferenceID,
+      n.IsRead,
+      n.CreatedAt,
+      (
+        CASE n.Type
+          WHEN 'mention' THEN (
+            SELECT c.WriterID
+            FROM T_TRACE_MENTIONS m
+            JOIN T_TRACE_COMMENTS c ON c.CommentID = m.CommentID
+            WHERE m.MentionID = n.ReferenceID
+          )
+          WHEN 'like'    THEN (SELECT l.UserID FROM T_TRACE_LIKES    l WHERE l.LikeID   = n.ReferenceID)
+          WHEN 'retweet' THEN (SELECT r.UserID FROM T_TRACE_REPOSTS  r WHERE r.RepostID = n.ReferenceID)
+          WHEN 'follow'  THEN (SELECT f.FollowerID FROM T_TRACE_FOLLOWS f WHERE f.FollowID = n.ReferenceID)
+        END
+      ) AS ACTOR_USER_ID,
+      (
+        SELECT u.NAME
+        FROM T_USER u
+        WHERE u.USERID = (
+          CASE n.Type
+            WHEN 'mention' THEN (
+              SELECT c.WriterID
+              FROM T_TRACE_MENTIONS m
+              JOIN T_TRACE_COMMENTS c ON c.CommentID = m.CommentID
+              WHERE m.MentionID = n.ReferenceID
+            )
+            WHEN 'like'    THEN (SELECT l.UserID FROM T_TRACE_LIKES    l WHERE l.LikeID   = n.ReferenceID)
+            WHEN 'retweet' THEN (SELECT r.UserID FROM T_TRACE_REPOSTS  r WHERE r.RepostID = n.ReferenceID)
+            WHEN 'follow'  THEN (SELECT f.FollowerID FROM T_TRACE_FOLLOWS f WHERE f.FollowID = n.ReferenceID)
+          END
+        )
+      ) AS ACTOR_NICKNAME,
+      (
+        CASE n.Type
+          WHEN 'mention' THEN (SELECT m.PostID FROM T_TRACE_MENTIONS m WHERE m.MentionID = n.ReferenceID)
+          WHEN 'like'    THEN (SELECT l.PostID FROM T_TRACE_LIKES    l WHERE l.LikeID    = n.ReferenceID)
+          WHEN 'retweet' THEN (SELECT r.PostID FROM T_TRACE_REPOSTS  r WHERE r.RepostID  = n.ReferenceID)
+          WHEN 'follow'  THEN NULL
+        END
+      ) AS POST_ID
+    FROM T_TRACE_NOTIFICATIONS n
+    WHERE n.UserID = #{userId}
+    ORDER BY n.CreatedAt DESC
+    OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+  </select>
+
+  <select id="countUnread" resultType="int">
+    SELECT COUNT(*) FROM T_TRACE_NOTIFICATIONS
+    WHERE UserID = #{userId} AND IsRead = 'N'
+  </select>
+
+  <update id="markAsRead">
+    UPDATE T_TRACE_NOTIFICATIONS SET IsRead='Y'
+    WHERE NotificationID = #{notificationId}
+  </update>
+
+  <update id="markAllAsRead">
+    UPDATE T_TRACE_NOTIFICATIONS SET IsRead='Y'
+    WHERE UserID = #{userId} AND IsRead='N'
+  </update>
+
+  <insert id="insert" parameterType="Notification">
+    INSERT INTO T_TRACE_NOTIFICATIONS
+      (NotificationID, UserID, Type, ReferenceID, IsRead, CreatedAt)
+    VALUES
+      (T_TRACE_NOTIFICATIONS_SEQ.NEXTVAL,
+       #{userId}, #{type}, #{referenceId}, NVL(#{isRead}, 'N'), SYSDATE)
+  </insert>
+
+  <!-- ====================== 프로필/유저 ====================== -->
+  <resultMap id="UserMap" type="UserDTO">
+    <id     property="userId"   column="USERID"/>
+    <result property="username" column="USERNAME"/>
+    <result property="handle"   column="HANDLE"/>
+    <result property="email"    column="EMAIL"/>
+    <result property="password" column="PASSWORD"/>
+    <result property="nickname" column="NICKNAME"/>
+    <!-- profileImage / userType / joinDate 제거 -->
+  </resultMap>
+
+  <select id="findUserById" resultMap="UserMap">
+    SELECT
+      USERID,
+      ID   AS USERNAME,
+      ID   AS HANDLE,
+      EMAIL,
+      PW   AS PASSWORD,
+      NAME AS NICKNAME
+    FROM T_USER
+    WHERE USERID = #{userId}
+  </select>
+
+  <select id="findUserByHandle" resultMap="UserMap">
+    SELECT
+      USERID,
+      ID   AS USERNAME,
+      ID   AS HANDLE,
+      EMAIL,
+      PW   AS PASSWORD,
+      NAME AS NICKNAME
+    FROM T_USER
+    WHERE ID = #{handle}
+  </select>
+
+  <!-- 계정 기본정보 (ID/EMAIL) -->
+  <update id="updateAccountCore" parameterType="UserDTO">
+    UPDATE T_USER
+    SET ID    = #{username},
+        EMAIL = #{email}
+    WHERE USERID = #{userId}
+  </update>
+
+  <!-- 프로필 수정 (닉네임만) -->
+  <update id="updateUserProfile">
+	  UPDATE T_USER
+	  <set>
+	    <if test="nickname != null and nickname != ''">
+	      NAME = #{nickname}
+	    </if>
+	  </set>
+	  WHERE USERID = #{userId}
+	</update>
+
+  <!-- 비밀번호 변경 -->
+  <update id="updateUserPassword">
+    UPDATE T_USER
+    SET PW = #{password}
+    WHERE USERID = #{userId}
+  </update>
+
+  <!-- ====================== 팔로워/팔로잉 카운트 ====================== -->
+  <select id="countFollowers" resultType="int">
+    SELECT COUNT(*) FROM T_TRACE_FOLLOWS WHERE FOLLOWINGID = #{userId}
+  </select>
+
+  <select id="countFollowing" resultType="int">
+    SELECT COUNT(*) FROM T_TRACE_FOLLOWS WHERE FOLLOWERID = #{userId}
+  </select>
+
+  <!-- ====================== 유저 게시물(피드) ====================== -->
+  <resultMap id="PostMap" type="CommunityPost">
+    <id     property="postId"        column="POSTID"/>
+    <result property="authorId"      column="AUTHORID"/>
+    <result property="content"       column="CONTENT"/>
+    <result property="imageURL"      column="IMAGEURL"/>
+    <result property="createdAt"     column="CREATEDAT"/>
+    <result property="updatedAt"     column="UPDATEDAT"/>
+    <result property="likesCount"    column="LIKESCOUNT"/>
+    <result property="repostsCount"  column="REPOSTSCOUNT"/>
+    <result property="replyToPostId" column="REPLYTOPOSTID"/>
+    <result property="category"      column="CATEGORY"/>
+  </resultMap>
+
+  <select id="findPostsByAuthor" resultMap="PostMap">
+    SELECT PostID, AuthorID, Content, ImageURL, CreatedAt, UpdatedAt,
+           LikesCount, RepostsCount, ReplyToPostID, Category
+    FROM T_TRACE_POSTS
+    WHERE AuthorID = #{userId}
+    ORDER BY CreatedAt DESC
+    OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+  </select>
+
+  <!-- ====================== 중복 체크 ====================== -->
+  <select id="countByHandleExceptUser" resultType="int">
+    SELECT COUNT(*)
+    FROM T_USER
+    WHERE ID = #{handle}
+      AND USERID != #{userId}
+  </select>
+
+  <select id="countByEmailExceptUser" resultType="int">
+    SELECT COUNT(*) FROM T_USER
+    WHERE EMAIL = #{email}
+      AND USERID != #{userId}
+  </select>
+  
+  <select id="selectUserById" parameterType="int" resultType="User">
+        SELECT USERID, ID, PW, NAME, EMAIL
+        FROM T_USER
+        WHERE USERID = #{userId}
+    </select>
+
+    <update id="updateUserAccount" parameterType="User">
+        UPDATE T_USER
+        SET
+            PW = #{pw},
+            NAME = #{name},
+            EMAIL = #{email}
+        WHERE USERID = #{userId}
+    </update>
+
+</mapper>

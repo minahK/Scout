@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.app.dao.user.impl.CustomerDAO;
 
@@ -21,7 +22,11 @@ public class SignInServlet extends HttpServlet {
 		CustomerDAO dao = new CustomerDAO();
 		try {
 			if (dao.signIn(id, pw)) {
-				resp.getWriter().println("로그인 성공");
+			    HttpSession session = req.getSession(true);
+			    session.setAttribute("id", id);           // ✅ String 로그인 아이디는 'id'에 저장
+			    // session.setAttribute("loginUserId", id);  // ❌ 여기에 String 넣지 마세요
+			    resp.sendRedirect(req.getContextPath() + "/community/main");
+			    return;
 			} else {
 				resp.getWriter().println("로그인 실패");
 			}

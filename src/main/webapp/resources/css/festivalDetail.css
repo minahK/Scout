@@ -1,0 +1,106 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+/* 컨테이너 */
+.container {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+/* 제목 */
+.festival-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.festival-title {
+    font-size: 36px;
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 8px;
+}
+.festival-title::after {
+    content: "";
+    width: 60px;
+    height: 3px;
+    background-color: #ff7f27;
+    border-radius: 2px;
+    display: block;
+    margin: 10px auto 0;
+}
+.festival-meta {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 14px;
+    color: #666;
+}
+.festival-meta i {
+    color: #ff7f27;
+}
+
+/* 대표 이미지 */
+.festival-image {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.festival-image img {
+    width: 100%;
+    max-width: 900px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 본문 */
+.festival-content {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #444;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    white-space: pre-line;
+}
+
+.festival-content img {
+	display:block;
+	margin: 20px auto;
+	max-width: 100%;
+	height: auto;
+}
+
+/* 부가 정보 박스 */
+.festival-info {
+    margin-top: 30px;
+    background: #fff8f0;
+    border: 1px solid #ff7f27;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 15px;
+}
+.festival-info strong {
+    color: #ff7f27;
+}
+
+/* 목록으로 돌아가기 */
+.back-btn-wrapper {
+    margin: 40px 0;
+    text-align: center;
+}
+.back-btn {
+    padding: 10px 20px;
+    background-color: #ff7f27;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+.back-btn:hover {
+    background-color: #e96b1f;
+}

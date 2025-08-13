@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC
+		   "-//mybatis.org//DTD Mapper 3.0//EN" 
+		   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		   
+<mapper namespace="travelDestination_mapper">
+	<select id="findTravelList" resultType="TravelDestination">
+    SELECT *
+    FROM T_TRAVEL_DESTINATION
+    <choose>
+        <when test="sort == 'recent'">
+            ORDER BY create_date DESC
+        </when>
+        <when test="sort == 'popularity'">
+            ORDER BY view_count DESC
+        </when>
+        <otherwise>
+            ORDER BY id DESC
+        </otherwise>
+    </choose>
+    OFFSET #{offset} ROWS FETCH NEXT 8 ROWS ONLY
+</select>
+	
+	<select id="findTravelTagAndSortList" resultType="TravelDestination">
+    SELECT td.id, td.create_date, td.name, td.latitude, td.longitude,
+           td.view_count, td.sumup, td.descride, td.image
+    FROM T_TRAVEL_DESTINATION td
+    JOIN TRAVEL_HASHTAG th ON td.id = th.id
+    <where>
+        <if test="tag != null and tag != ''">
+            AND th.tag = #{tag}
+        </if>
+    </where>
+    <choose>
+        <when test="sort == 'popularity'">
+            ORDER BY td.view_count DESC
+        </when>
+        <when test="sort == 'recent'">
+            ORDER BY td.create_date DESC
+        </when>
+        <otherwise>
+            ORDER BY td.id DESC
+        </otherwise>
+    </choose>
+    OFFSET #{offset} ROWS FETCH NEXT 8 ROWS ONLY
+</select>
+	
+	<select id="findTravelById" resultType="TravelDestination" parameterType="int">
+		SELECT * FROM T_TRAVEL_DESTINATION
+		where id = #{travelId}
+	</select>
+	
+	<select id="findTravelHPList" resultType="TravelDestination">
+		SELECT * FROM (
+        select * from T_TRAVEL_DESTINATION
+        where type='여행지'
+        order by id)
+		where ROWNUM &lt;=6
+	</select>
+	
+	<select id="findTravelMJList" resultType="TravelDestination">
+		SELECT * FROM (
+        select * from T_TRAVEL_DESTINATION
+        where type='맛집'
+        order by id)
+		where ROWNUM &lt;=6
+	</select>
+	
+	<select id="findTravelGSList" resultType="TravelDestination">
+		SELECT * FROM (
+        select * from T_TRAVEL_DESTINATION
+        where type='숙소'
+        order by id)
+		where ROWNUM &lt;=6
+	</select>
+	
+	<select id="findHashTags" resultType="HashTags">
+		SELECT * FROM TRAVEL_HASHTAG
+		where id= #{travelId}
+	</select>
+	
+	<update id="increaseView">
+    	UPDATE T_TRAVEL_DESTINATION
+    	SET view_count = view_count + 1
+    	WHERE id = #{id}
+	</update>
+	
+	<select id="findTravelInfo" parameterType="int" resultType="TravelInfo">
+		SELECT * FROM TRAVEL_INFO
+		WHERE id = #{travelId}
+	</select>
+	
+	<select id="findFestivalList" resultType="FestivalDTO">
+		select * from TRAVEL_festival
+		where rownum &lt;=4
+	</select>
+	
+	<select id="findCommentList" resultType="DetailComment">
+		SELECT * FROM DETAIL_COMMENT
+		WHERE TRAVEL_ID = #{travelId}
+		order by id desc
+	</select>
+	
+	<insert id="insertComment" parameterType="DetailComment">
+    	INSERT INTO DETAIL_COMMENT (ID, TRAVEL_ID, USER_ID, NAME, CONTENT)
+    	VALUES (SEQ_DETAIL_COMMENT.NEXTVAL, #{travelId}, #{userId}, #{name}, #{content})
+ 	 </insert>
+  
+  	<select id="countComments" parameterType="int" resultType="int">
+	    SELECT COUNT(*) FROM DETAIL_COMMENT
+	    WHERE TRAVEL_ID = #{travelId}
+	</select>
+	
+</mapper>

@@ -1,20 +1,24 @@
 package com.app.controller.customer;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.System.Logger;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.app.dto.api.ApiResponse;
@@ -105,7 +109,7 @@ public class CustomerController {
 		}
 
 		LoginManager.setSessionLoginUserId(session, loginUser.getId());
-		return "redirect:/Scout/mypage";
+		return "redirect:/";
 	}
 
 	// 마이페이지
