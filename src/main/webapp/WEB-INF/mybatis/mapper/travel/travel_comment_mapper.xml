@@ -37,4 +37,15 @@
         WHERE id = #{id}
     </delete>
     
+    <select id="findById" parameterType="int" resultType="CommentDTO">
+	    SELECT
+	        id,
+	        article_id AS articleId,
+	        author,
+	        content,
+	        reg_date   AS regDate
+	    FROM travel_comment
+	    WHERE id = #{id}
+</select>
+    
 </mapper>

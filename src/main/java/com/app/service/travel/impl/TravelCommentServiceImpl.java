@@ -39,4 +39,10 @@ public class TravelCommentServiceImpl implements TravelCommentService{
 		commentDAO.deleteComment(id);
 	}
 
+	@Override
+	public CommentDTO findById(int id) {
+		
+		return commentDAO.findById(id);
+	}
+
 }
