@@ -210,45 +210,11 @@
         overflow: hidden;
     }
     
-    .slider {
-        display: flex;
-        width: 300%;
-        height: 100%;
-        transition: transform 0.5s ease-in-out;
-    }
-
-    .slider img {
-        width: 33.333%;
+    .main-image-card img {
+        width: 100%;
         height: 100%;
         object-fit: cover;
-        flex-shrink: 0;
-    }
-
-    .slider-button {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        color: rgba(255, 255, 255, 0.8);
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-        z-index: 10;
-        font-size: 2em;
-        line-height: 1;
-        transition: color 0.3s ease;
-    }
-
-    .slider-button:hover {
-        color: rgba(255, 255, 255, 1);
-    }
-
-    #prev-button {
-        left: 10px;
-    }
-
-    #next-button {
-        right: 10px;
+        border-radius: 10px;
     }
 
     .main-image-card .info-overlay {
@@ -380,13 +346,11 @@
             </div>
 
             <div class="main-image-card">
-                <div class="slider" id="slider"></div>
+                <img src="https://api.cdn.visitjeju.net/photomng/imgpath/202409/20/c8df320a-80df-47d9-a541-bf86631e5d51.png" alt="성산일출봉">
                 <div class="info-overlay">
-                    <h3 id="overlay-title"></h3>
-                    <p id="overlay-info"></p>
+                    <h3>성산일출봉</h3>
+                    <p>#제주여행 #제주동부 #일출명소</p>
                 </div>
-                <button id="prev-button" class="slider-button">&#10094;</button>
-                <button id="next-button" class="slider-button">&#10095;</button>
             </div>
 
             <div class="menu-bar">
@@ -446,55 +410,6 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const slideContents = [
-            { src: '/resources/image/ilch.jpg', alt: '성산일출봉', title: '성산일출봉', info: '#제주여행 #제주동부 #일출명소' },
-            { src: '/resources/image/hae.jpg', alt: '협재해수욕장', title: '협재해수욕장', info: '#제주서부 #에메랄드빛바다 #협재' },
-            { src: '/resources/image/back.jpg', alt: '한라산 백록담', title: '한라산 백록담', info: '#제주중심 #등산 #백록담' }
-        ];
-
-        const slider = document.getElementById('slider');
-        const prevButton = document.getElementById('prev-button');
-        const nextButton = document.getElementById('next-button');
-        const overlayTitle = document.getElementById('overlay-title');
-        const overlayInfo = document.getElementById('overlay-info');
-        let currentIndex = 0;
-
-        function renderSlides() {
-            slider.innerHTML = '';
-            slideContents.forEach(content => {
-                const img = document.createElement('img');
-                img.src = content.src;
-                img.alt = content.alt;
-                slider.appendChild(img);
-            });
-        }
-
-        function updateSlider() {
-            const containerWidth = document.querySelector('.main-image-card').clientWidth;
-            slider.style.transform = `translateX(${-currentIndex * containerWidth}px)`;
-
-            overlayTitle.textContent = slideContents[currentIndex].title;
-            overlayInfo.textContent = slideContents[currentIndex].info;
-        }
-
-        prevButton.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateSlider();
-            }
-        });
-
-        nextButton.addEventListener('click', () => {
-            if (currentIndex < slideContents.length - 1) {
-                currentIndex++;
-                updateSlider();
-            }
-        });
-
-        window.addEventListener('resize', () => {
-            updateSlider();
-        });
-
         document.getElementById('places-tab').addEventListener('click', (e) => {
             e.preventDefault();
             document.getElementById('places-tab').classList.add('active');
@@ -515,13 +430,6 @@
             e.preventDefault();
             document.getElementById('language-module').classList.toggle('hidden');
         });
-
-        renderSlides();
-        window.addEventListener('load', () => {
-            updateSlider();
-        });
-        
-        updateSlider();
     });
 </script>
 </body>

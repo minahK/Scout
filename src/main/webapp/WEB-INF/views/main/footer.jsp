@@ -4,8 +4,6 @@
 	<div class="footer-top-row">
 		<!-- 1번째 카드: 오디(Odii) -->
 		<div class="footer-link-card purple" onClick="location.href='audioMain'">
-			<!-- 실제 이미지로 바꾸려면 아래 한 줄로 교체 -->
-			<!-- <span class="footer-link-emoji"><img src="${pageContext.request.contextPath}/img/odii.png" alt="오디" style="height:32px;width:32px;"></span> -->
 			<span class="footer-link-emoji">🎧</span>
 			<div>
 				<div class="footer-link-title">스카우트 (Scout)</div>

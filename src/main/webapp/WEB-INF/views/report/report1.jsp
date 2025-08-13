@@ -198,7 +198,7 @@
             <div class="search-container">
                 <div class="search-box">
                     <input type="text" placeholder="궁금한 내용을 검색해 보세요.">
-                    <button><img src="https://i.imgur.com/gK9u3jO.png" alt="검색 아이콘"></button>
+                    <button>검색</button>
                 </div>
             </div>
 
@@ -273,7 +273,7 @@
             <div class="search-container">
                 <div class="search-box">
                     <input type="text" placeholder="궁금한 내용을 검색해 보세요.">
-                    <button><img src="https://i.imgur.com/gK9u3jO.png" alt="검색 아이콘"></button>
+                    <button>검색</button>
                 </div>
               
             </div>

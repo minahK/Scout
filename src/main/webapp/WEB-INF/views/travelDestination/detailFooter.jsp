@@ -3,17 +3,15 @@
 <footer class="footer-section">
 	<div class="footer-top-row">
 		<!-- 1번째 카드: 오디(Odii) -->
-		<div class="footer-link-card purple">
-			<!-- 실제 이미지로 바꾸려면 아래 한 줄로 교체 -->
-			<!-- <span class="footer-link-emoji"><img src="${pageContext.request.contextPath}/img/odii.png" alt="오디" style="height:32px;width:32px;"></span> -->
+		<div class="footer-link-card purple" onClick="location.href='audioMain'">
 			<span class="footer-link-emoji">🎧</span>
 			<div>
 				<div class="footer-link-title">스카우트 (Scout)</div>
-				<div class="footer-link-desc">대한민국 관광지 오디오 해설</div>
+				<div class="footer-link-desc">제주도 관광지 오디오 해설</div>
 			</div>
 		</div>
 		<!-- 2번째 카드: 관광정보 -->
-		<div class="footer-link-card yellow">
+		<div class="footer-link-card blue" onClick="location.href='reportMain'">
 			<span class="footer-link-emoji">💻</span>
 			<div>
 				<div class="footer-link-title">관광정보</div>
@@ -21,12 +19,12 @@
 			</div>
 		</div>
 		<!-- 3번째 카드: 관광안내 -->
-		<div class="footer-link-card yellow2">
+		<div class="footer-link-card yellow" onClick="location.href='chatMain'">
 			<span class="footer-link-emoji">☎️</span>
 			<div>
 				<div class="footer-link-title">
 					실시간 채팅 상담<br> <span
-						style="color: #159c3f; font-weight: 900; font-size: 18px;">1330
+						style="color: #159c3f; font-weight: 900; font-size: 18px;">제주도
 						관광안내</span>
 				</div>
 			</div>
@@ -51,8 +49,8 @@
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 15px;
 	color: #333;
-/* 	padding-left: 150px;
-	padding-right: 150px; */
+	padding-left: 150px;
+	padding-right: 150px;
 }
 
 .footer-top-row {
@@ -70,13 +68,15 @@
 	display: flex;
 	align-items: center;
 	gap: 11px;
-	min-width: 162px;
+	 /* min-width:162px;  <-- 삭제 */
+  	width: fit-content;
 	padding: 14px 19px 11px 14px;
 	border-radius: 8px;
 	font-weight: 700;
 	background: #eee;
 	font-size: 16px;
 	box-shadow: 0 1.5px 9px rgba(110, 120, 170, 0.06);
+	flex: 0 0 auto;
 }
 
 .footer-link-card .footer-link-emoji {
@@ -103,9 +103,17 @@
 	border: 1.5px solid #c3a3e2;
 }
 
+.footer-link-card.purple:hover {
+	cursor: pointer;
+}
+
 .footer-link-card.yellow {
 	background: #fff2d9;
 	border: 1.5px solid #e1c98a;
+}
+
+.footer-link-card.yellow:hover {
+	cursor: pointer;
 }
 
 .footer-link-card.blue {
@@ -113,14 +121,8 @@
 	border: 1.5px solid #8bb2e9;
 }
 
-.footer-link-card.green {
-	background: #e8faed;
-	border: 1.5px solid #b0dab6;
-}
-
-.footer-link-card.yellow2 {
-	background: #fff7d8;
-	border: 1.5px solid #e6d493;
+.footer-link-card.blue:hover {
+	cursor: pointer;
 }
 
 .footer-middle-row {

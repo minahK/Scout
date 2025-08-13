@@ -28,7 +28,7 @@
 }
 
 .comment-box {
-	background: #fae7c9; /* 댓글 입력창 리스트 배경색 */
+	background: #f8f8f8; /* 댓글 입력창 리스트 배경색 */
 	border: 1px solid #e7e8ea;
 	border-radius: 8px;
 	padding: 25px 18px 20px 18px;
@@ -125,7 +125,7 @@
   border:1px solid var(--c-border);
   border-radius:var(--radius);
   padding:12px;
-  background-color: #fae7c9; /* 댓글창 리스트 배경색 */
+  background-color: #f8f8f8; /* 댓글창 리스트 배경색 */
 }
 
 
