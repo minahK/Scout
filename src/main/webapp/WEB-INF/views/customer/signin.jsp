@@ -136,10 +136,11 @@ button:hover {
 }
 
 .error-message {
-	color: red;
-	text-align: center;
-	margin-top: 10px;
-	font-size: 14px;
+    color: #dc3545;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
 }
 
 .checkbox-group {
@@ -222,8 +223,8 @@ button:hover {
 		<h2>로그인</h2>
 
 		<!-- 에러 메시지 표시 -->
-		<c:if test="${not empty error}">
-			<p class="error-message">${error}</p>
+		<c:if test="${not empty loginError}">
+			<p class="error-message">${loginError}</p>
 		</c:if>
 
 		<form action="/Scout/signin" method="post">
@@ -272,8 +273,7 @@ button:hover {
 
 
 		<div class="options">
-			<a href="/Scout/signup">회원가입</a> <a href="/Scout/findPw">비밀번호
-				재설정</a>
+			<a href="/Scout/signup">회원가입</a> <a href="/Scout/findPw">비밀번호 재설정</a>
 		</div>
 	</div>
 

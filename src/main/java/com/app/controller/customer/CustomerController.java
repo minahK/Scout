@@ -1,12 +1,14 @@
 package com.app.controller.customer;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.System.Logger;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -95,13 +97,12 @@ public class CustomerController {
 	// 로그인 처리
 	@PostMapping("/signin")
 	public String signinAction(Model model, User user, HttpSession session) {
-//		user.setUserType(CommonCode.USER_USERTYPE_CUSTOMER);
 		User loginUser = userService.checkUserLogin(user);
 
 		if (loginUser == null) {
-		    model.addAttribute("loginError", "아이디 또는 비밀번호가 틀렸습니다.");
+			model.addAttribute("loginError", "아이디 또는 비밀번호가 틀렸습니다.");
+			return "customer/signin";
 		}
-
 
 		LoginManager.setSessionLoginUserId(session, loginUser.getId());
 		return "redirect:/Scout/mypage";
@@ -129,31 +130,25 @@ public class CustomerController {
 
 	@GetMapping("/resetPw")
 	public String resetPwForm(@RequestParam String email, Model model) {
-	    model.addAttribute("email", email);
-	    return "customer/modifyPw";
+		model.addAttribute("email", email);
+		return "customer/modifyPw";
 	}
-
 
 	@PostMapping("/resetPw")
-	public String resetPwAction(@RequestParam("email") String email,
-	                            @RequestParam("password") String password,
-	                            Model model) {
-	    // 비밀번호 해시 처리 필수 (예: BCrypt)
-	    int updated = userMapper.updatePasswordByEmail(email, password);
+	public String resetPwAction(@RequestParam("email") String email, @RequestParam("password") String password,
+			Model model) {
+		// 비밀번호 해시 처리 필수 (예: BCrypt)
+		int updated = userMapper.updatePasswordByEmail(email, password);
 
-	    if (updated == 1) {
-	        model.addAttribute("message", "비밀번호가 변경되었습니다.");
-	        return "redirect:/Scout/signin";
-	    } else {
-	        model.addAttribute("error", "변경에 실패했습니다. 이메일을 확인해주세요.");
-	        model.addAttribute("email", email);
-	        return "customer/modifyPw";
-	    }
+		if (updated == 1) {
+			model.addAttribute("message", "비밀번호가 변경되었습니다.");
+			return "redirect:/Scout/signin";
+		} else {
+			model.addAttribute("error", "변경에 실패했습니다. 이메일을 확인해주세요.");
+			model.addAttribute("email", email);
+			return "customer/modifyPw";
+		}
 	}
-
-
-
-
 
 	// 비밀번호 찾기 폼
 	@GetMapping("/findPw")
@@ -173,7 +168,8 @@ public class CustomerController {
 
 		User user = userMapper.selectByEmail(email);
 		if (user != null) {
-			String resetLink = "http://localhost:8080/Scout/resetPw?email=" + URLEncoder.encode(email, StandardCharsets.UTF_8); // 필요 시 토큰 방식 추가
+			String resetLink = "http://localhost:8080/Scout/resetPw?email="
+					+ URLEncoder.encode(email, StandardCharsets.UTF_8); // 필요 시 토큰 방식 추가
 			String htmlContent = buildHtmlContent(resetLink);
 
 			// 실제 메일 전송
