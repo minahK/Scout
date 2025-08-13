@@ -96,9 +96,9 @@ body {
 }
 
 .icons span {
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
+	font-size: 16px;
+	font-weight: 600;
+	cursor: pointer;
 }
 
 /* 드롭다운 스타일 */
@@ -153,6 +153,47 @@ body {
 		min-width: 120px;
 	}
 }
+
+/* 유저 드롭다운 */
+.user-menu {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.user-name {
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    min-width: 140px;
+    z-index: 1000;
+}
+
+.user-dropdown a {
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+}
+
+.user-dropdown a:hover {
+    background: #f5f5f5;
+}
+
+/* hover 시 표시 */
+.user-menu:hover .user-dropdown {
+    display: block;
+}
+
 </style>
 
 <div class="top-nav">
@@ -175,21 +216,27 @@ body {
 			<a href="javascript:void(0)">여행정보</a>
 			<div class="dropdown">
 				<div class="dropdown-list">
-					<a href="/travelDestination">여행지</a> <a
-						href="/travel/list">여행기사</a> <a href="/festival/list">여행행사</a>
+					<a href="/travelDestination">여행지</a> <a href="/travel/list">여행기사</a>
+					<a href="/festival/list">여행행사</a>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<div class="icons">
-		<i class="fa fa-search"></i>
-		<i class="fas fa-comments" onclick="location.href='/community/main'"></i>
+		<i class="fa fa-search"></i> <i class="fas fa-comments"
+			onclick="location.href='/community/main'"></i>
 		<!-- 로그인 여부에 따라 출력 변경 -->
 		<c:choose>
 			<c:when test="${not empty sessionScope.loginUser}">
-				<span>${sessionScope.loginUser.name} 님</span>
+				<div class="user-menu">
+					<span class="user-name">${sessionScope.loginUser.name} 님</span>
+					<div class="user-dropdown">
+						<a href="/community/profile">내 프로필</a> <a href="/Scout/logout">로그아웃</a>
+					</div>
+				</div>
 			</c:when>
+
 			<c:otherwise>
 				<i class="fa-solid fa-circle-user"
 					onclick="location.href='/Scout/signin'"></i>
@@ -219,5 +266,11 @@ topNav.addEventListener('mouseleave', () => {
     if(window.scrollY === 0){
         topNav.classList.remove('white');
     }
+});
+document.querySelectorAll('.user-name').forEach(el => {
+    el.addEventListener('click', () => {
+        el.parentElement.querySelector('.user-dropdown')
+          .classList.toggle('show');
+    });
 });
 </script>

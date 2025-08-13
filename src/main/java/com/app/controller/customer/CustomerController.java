@@ -12,13 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.app.dto.api.ApiResponse;
@@ -105,9 +99,11 @@ public class CustomerController {
 
 		if (loginUser == null) {
 			model.addAttribute("loginError", "아이디 또는 비밀번호가 틀렸습니다.");
-			return "customer/signin";
+			return "customer/signin"; // 여기서 return해야 함
 		}
 
+		// 로그인 성공 시에만 실행
+		session.setAttribute("loginUser", loginUser);
 		LoginManager.setSessionLoginUserId(session, loginUser.getId());
 		return "redirect:/";
 	}
