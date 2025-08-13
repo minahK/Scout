@@ -12,7 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.app.dto.api.ApiResponse;
@@ -52,10 +58,22 @@ public class CustomerController {
 		System.out.println("가입 정보 → id: " + user.getId() + ", pw: " + user.getPw() + ", name: " + user.getName()
 				+ ", email: " + user.getEmail());
 
-		int result = userService.saveCustomerUser(user);
-		if (result > 0) {
-			redirectAttributes.addFlashAttribute("msg", "회원가입이 완료되었습니다.");
-			return "redirect:/Scout/signin";
+		// 이메일 중복 체크
+		if (userService.existsByEmail(user.getEmail())) {
+			redirectAttributes.addFlashAttribute("error", "이미 사용 중인 이메일입니다.");
+			return "redirect:/Scout/signup";
+		}
+
+		try {
+			int result = userService.saveCustomerUser(user);
+			if (result > 0) {
+				redirectAttributes.addFlashAttribute("msg", "회원가입이 완료되었습니다.");
+				return "redirect:/Scout/signin";
+			}
+		} catch (Exception e) {
+			log.error("회원가입 중 오류 발생: ", e);
+			redirectAttributes.addFlashAttribute("error", "회원가입 중 오류가 발생했습니다. 다시 시도하세요.");
+			return "redirect:/Scout/signup";
 		}
 
 		redirectAttributes.addFlashAttribute("error", "회원가입에 실패했습니다. 다시 시도하세요.");
@@ -75,6 +93,30 @@ public class CustomerController {
 	@PostMapping("/checkDupIdJson")
 	public ApiResponse<String> checkDupIdJson(@RequestBody UserDupCheck userDupCheck) {
 		boolean exists = userService.isDuplicatedId(userDupCheck.getId());
+
+		ApiResponseHeader header = new ApiResponseHeader();
+		header.setResultCode("0000");
+		header.setResultMessage("success");
+
+		ApiResponse<String> response = new ApiResponse<>();
+		response.setHeader(header);
+		response.setBody(exists ? "Y" : "N");
+		return response;
+	}
+
+	// 이메일 중복확인 (plain text)
+	@ResponseBody
+	@PostMapping("/checkDupEmail")
+	public String checkDupEmail(@RequestBody String email) {
+		boolean exists = userService.existsByEmail(email);
+		return exists ? "Y" : "N";
+	}
+
+	// 이메일 중복확인 (JSON)
+	@ResponseBody
+	@PostMapping("/checkDupEmailJson")
+	public ApiResponse<String> checkDupEmailJson(@RequestBody UserDupCheck userDupCheck) {
+		boolean exists = userService.existsByEmail(userDupCheck.getEmail());
 
 		ApiResponseHeader header = new ApiResponseHeader();
 		header.setResultCode("0000");

@@ -1,6 +1,5 @@
 package com.app.mapper;
 
-import com.app.dto.user.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,6 +22,9 @@ public interface UserMapper {
 	// 3) 회원 가입 처리
 	@Insert("INSERT INTO T_USER(id, pw, name, email) VALUES(#{id}, #{pw}, #{name}, #{email})")
 	int insertUser(User user);
+
+	// 3-1) 회원 가입 처리 (MERGE 방식)
+	int saveUserMerge(User user);
 
 	// 4) 로그인 시 사용자 정보 조회
 	@Select("SELECT * FROM T_USER WHERE id = #{id}")
