@@ -505,8 +505,8 @@ html, body {
 
 			<nav class="tabbar">
 				<a class="active" href="${ctx}/community/profile?id=${not empty user ? user.id : ''}">게시물</a>
-				<a href="${ctx}/community/profile/media?id=${not empty user ? user.id : ''}">미디어</a>
-				<a href="${ctx}/community/profile/likes?id=${not empty user ? user.id : ''}">마음에 들어요</a>
+				<a href="">미디어</a>
+				<a href="">마음에 들어요</a>
 			</nav>
 
 			<section class="feed">

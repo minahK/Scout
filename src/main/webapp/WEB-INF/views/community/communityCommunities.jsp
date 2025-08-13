@@ -345,8 +345,8 @@ body {
 
 			<div class="filters">
 				<a class="chip active" href="#">전체</a> <a class="chip"
-					href="?category=문화">문화</a> <a class="chip" href="?category=운동">운동</a>
-				<a class="chip" href="?category=여행">여행</a>
+					href="">문화</a> <a class="chip" href="">운동</a>
+				<a class="chip" href="">여행</a>
 			</div>
 
 			<c:forEach var="community" items="${communityList}">

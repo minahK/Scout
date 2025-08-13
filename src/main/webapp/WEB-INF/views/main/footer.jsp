@@ -3,7 +3,7 @@
 <footer class="footer-section">
 	<div class="footer-top-row">
 		<!-- 1번째 카드: 오디(Odii) -->
-		<div class="footer-link-card purple" onClick="location.href='audioMain'">
+		<div class="footer-link-card purple" onClick="location.href='/audioMain'">
 			<span class="footer-link-emoji">🎧</span>
 			<div>
 				<div class="footer-link-title">스카우트 (Scout)</div>
@@ -11,7 +11,7 @@
 			</div>
 		</div>
 		<!-- 2번째 카드: 관광정보 -->
-		<div class="footer-link-card blue" onClick="location.href='reportMain'">
+		<div class="footer-link-card blue" onClick="location.href='/reportMain'">
 			<span class="footer-link-emoji">💻</span>
 			<div>
 				<div class="footer-link-title">관광정보</div>
@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		<!-- 3번째 카드: 관광안내 -->
-		<div class="footer-link-card yellow" onClick="location.href='chatMain'">
+		<div class="footer-link-card yellow" onClick="location.href='/chatMain'">
 			<span class="footer-link-emoji">☎️</span>
 			<div>
 				<div class="footer-link-title">
