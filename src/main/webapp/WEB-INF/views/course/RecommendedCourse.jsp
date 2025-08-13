@@ -201,16 +201,6 @@ body {
 	color: white;
 	font-weight: 500;
 }
-
-.promo-banner {
-	margin-top: 20px;
-}
-
-.promo-banner img {
-	max-width: 100%;
-	border-radius: 8px;
-	border: 2px solid #f7d49c;
-}
 </style>
 </head>
 <body>
@@ -231,29 +221,19 @@ body {
 					<span class="total-count"> 총 <span class="total-number" id="filtered-count">0</span>건</span>
 				</div>
 			</div>
-
-			<c:set var="allTravelList" value="${
-                [
-                    { 'id': '1', 'name': '제주올레길', 'sumup': '제주 제주시', 'image': 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/4b/83/43/olle-trail-along-the.jpg?w=700&h=400&s=1', 'hashtags': '올레길,한라산,섬여행,힐링,사진스팟' },
-                    { 'id': '2', 'name': '제주 사계해안도로', 'sumup': '제주 서귀포시', 'image': 'https://allways.kg-mobility.com/wp-content/uploads/2021/06/shutterstock_1235487067.jpg', 'hashtags': '바다,해변,드라이브코스,커플여행,야경' },
-                    { 'id': '3', 'name': '한라산 숲 안에서 보내는 하루밤', 'sumup': '제주 제주시', 'image': 'https://cdn.jejusori.net/news/photo/201102/95115_102616_1845.jpg', 'hashtags': '한라산,에코투어,힐링,가족여행' },
-                    { 'id': '4', 'name': '제주도 세계자연유산 탐방 1코스', 'sumup': '제주 제주시', 'image': 'https://cdn.jejusori.net/news/photo/202110/334570_346433_5355.jpg', 'hashtags': '한라산,세계자연유산,에코투어,가족여행' },
-                    { 'id': '5', 'name': '몸과 마음을 치유하는 에코 테라피', 'sumup': '제주 서귀포시', 'image': 'https://api.cdn.visitjeju.net/photomng/imgpath/202111/05/8b95bbda-f861-43f8-bc38-726c0c421b70.jpg', 'hashtags': '에코투어,힐링,가족여행' }
-                ]
-            }" />
-
+			
 			<c:set var="totalCount" value="${0}" />
 			<ul class="travel-list">
 				<c:forEach var="travel" items="${allTravelList}">
 					<c:if test="${empty param.tag || param.tag eq '전체' || fn:contains(travel.hashtags, param.tag)}">
 						<c:set var="totalCount" value="${totalCount + 1}" />
 						<li class="travel-item">
-							<a href="/RecommendedCourse/Detail<c:out value="${travel.id}"/>">
+							<a href="/RecommendedCourse/Detail${travel.id}">
 								<img src="${travel.image}" alt="${travel.name}" />
 							</a>
 							<div class="travel-info">
 								<div class="travel-title">
-									<a href="/RecommendedCourse/Detail<c:out value="${travel.id}"/>">
+									<a href="/RecommendedCourse/Detail${travel.id}">
 										${travel.name}
 									</a>
 								</div>
@@ -275,50 +255,19 @@ body {
 			<div class="filter-section">
 				<h4>추천 코스</h4>
 				<div class="tags">
-					<a href="?tag=전체"><span id="all-tag"
-						class="${(empty param.tag || param.tag eq '전체') ? 'active' : ''}">#전체</span></a>
-					<a href="?tag=바다"><span
-						class="${param.tag eq '바다' ? 'active' : ''}">#바다</span></a>
-					<a href="?tag=해변"><span
-						class="${param.tag eq '해변' ? 'active' : ''}">#해변</span></a>
-					<a href="?tag=오름"><span
-						class="${param.tag eq '오름' ? 'active' : ''}">#오름</span></a>
-					<a href="?tag=올레길"><span
-						class="${param.tag eq '올레길' ? 'active' : ''}">#올레길</span></a>
-					<a href="?tag=한라산"><span
-						class="${param.tag eq '한라산' ? 'active' : ''}">#한라산</span></a>
-					<a href="?tag=우도"><span
-						class="${param.tag eq '우도' ? 'active' : ''}">#우도</span></a>
-					<a href="?tag=성산일출봉"><span
-						class="${param.tag eq '성산일출봉' ? 'active' : ''}">#성산일출봉</span></a>
-					<a href="?tag=섬여행"><span
-						class="${param.tag eq '섬여행' ? 'active' : ''}">#섬여행</span></a>
-					<a href="?tag=힐링"><span
-						class="${param.tag eq '힐링' ? 'active' : ''}">#힐링</span></a>
-					<a href="?tag=감성카페"><span
-						class="${param.tag eq '감성카페' ? 'active' : ''}">#감성카페</span></a>
-					<a href="?tag=야경"><span
-						class="${param.tag eq '야경' ? 'active' : ''}">#야경</span></a>
-					<a href="?tag=사진스팟"><span
-						class="${param.tag eq '사진스팟' ? 'active' : ''}">#사진스팟</span></a>
-					<a href="?tag=에코투어"><span
-						class="${param.tag eq '에코투어' ? 'active' : ''}">#에코투어</span></a>
-					<a href="?tag=수국명소"><span
-						class="${param.tag eq '수국명소' ? 'active' : ''}">#수국명소</span></a>
-					<a href="?tag=자전거여행"><span
-						class="${param.tag eq '자전거여행' ? 'active' : ''}">#자전거여행</span></a>
-					<a href="?tag=전통시장"><span
-						class="${param.tag eq '전통시장' ? 'active' : ''}">#전통시장</span></a>
-					<a href="?tag=먹거리"><span
-						class="${param.tag eq '먹거리' ? 'active' : ''}">#먹거리</span></a>
-					<a href="?tag=돌담길"><span
-						class="${param.tag eq '돌담길' ? 'active' : ''}">#돌담길</span></a>
-					<a href="?tag=해녀문화"><span
-						class="${param.tag eq '해녀문화' ? 'active' : ''}">#해녀문화</span></a>
-					<a href="?tag=가족여행"><span
-						class="${param.tag eq '가족여행' ? 'active' : ''}">#가족여행</span></a>
-					<a href="?tag=커플여행"><span
-						class="${param.tag eq '커플여행' ? 'active' : ''}">#커플여행</span></a>
+					<a href="?tag=전체"><span id="all-tag" class="${(empty param.tag || param.tag eq '전체') ? 'active' : ''}">#전체</span></a>
+					<a href="?tag=바다"><span class="${param.tag eq '바다' ? 'active' : ''}">#바다</span></a>
+					<a href="?tag=해변"><span class="${param.tag eq '해변' ? 'active' : ''}">#해변</span></a>
+					<a href="?tag=오름"><span class="${param.tag eq '오름' ? 'active' : ''}">#오름</span></a>
+					<a href="?tag=올레길"><span class="${param.tag eq '올레길' ? 'active' : ''}">#올레길</span></a>
+					<a href="?tag=한라산"><span class="${param.tag eq '한라산' ? 'active' : ''}">#한라산</span></a>
+					<a href="?tag=성산일출봉"><span class="${param.tag eq '성산일출봉' ? 'active' : ''}">#성산일출봉</span></a>
+					<a href="?tag=힐링"><span class="${param.tag eq '힐링' ? 'active' : ''}">#힐링</span></a>
+					<a href="?tag=야경"><span class="${param.tag eq '야경' ? 'active' : ''}">#야경</span></a>
+					<a href="?tag=사진스팟"><span class="${param.tag eq '사진스팟' ? 'active' : ''}">#사진스팟</span></a>
+					<a href="?tag=에코투어"><span class="${param.tag eq '에코투어' ? 'active' : ''}">#에코투어</span></a>
+					<a href="?tag=가족여행"><span class="${param.tag eq '가족여행' ? 'active' : ''}">#가족여행</span></a>
+					<a href="?tag=커플여행"><span class="${param.tag eq '커플여행' ? 'active' : ''}">#커플여행</span></a>
 				</div>
 			</div>
 		</aside>

@@ -448,57 +448,6 @@ html, body {
 					<li><a href="${ctx}/community/settings/account">⚙️ 설정</a></li>
 				</ul>
 			</div>
-			<div class="sidebar-bottom">
-				<div class="sidebar-profile">
-					<c:choose>
-						<c:when test="${not empty loginUser}">
-							<c:set var="sbName"
-								value="${not empty loginUser.nickname ? loginUser.nickname : (not empty loginUser.userId ? loginUser.userId : 'Guest')}" />
-							<div class="avatar-initial" title="${sbName}">
-								${fn:substring(sbName,0,1)}</div>
-							<div>
-								<strong><c:out value="${sbName}" /></strong><br>
-								<c:choose>
-									<c:when test="${not empty loginUser.handle}">
-										<span style="font-size: 12px; color: gray;">@<c:out
-												value="${loginUser.handle}" /></span>
-									</c:when>
-									<c:otherwise>
-										<span style="font-size: 12px; color: gray;">@<c:out
-												value="${loginUser.userId}" /></span>
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</c:when>
-						<c:when test="${not empty user}">
-							<c:set var="sbName"
-								value="${not empty user.nickname ? user.nickname : (not empty user.userId ? user.userId : 'Guest')}" />
-							<div class="avatar-initial" title="${sbName}">
-								${fn:substring(sbName,0,1)}</div>
-							<div>
-								<strong><c:out value="${sbName}" /></strong><br>
-								<c:choose>
-									<c:when test="${not empty user.handle}">
-										<span style="font-size: 12px; color: gray;">@<c:out
-												value="${user.handle}" /></span>
-									</c:when>
-									<c:otherwise>
-										<span style="font-size: 12px; color: gray;">@<c:out
-												value="${user.userId}" /></span>
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="avatar-initial" title="Guest">G</div>
-							<div>
-								<strong>비회원</strong><br> <span
-									style="font-size: 12px; color: gray;">@guest</span>
-							</div>
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</div>
 		</aside>
 
 		<main class="main">
@@ -506,7 +455,7 @@ html, body {
 			<c:choose>
 				<c:when test="${not empty user}">
 					<c:set var="displayName"
-						value="${not empty user.name ? user.name : (not empty user.id ? user.id : 'Guest')}" />
+						value="${not empty user.nickname ? user.nickname : (not empty user.id ? user.id : 'Guest')}" />
 				</c:when>
 				<c:otherwise>
 					<c:set var="displayName" value="Guest" />

@@ -16,57 +16,34 @@
 
 	<bean id="data_source" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-		<!-- 서비스명(Service Name)인 ORCL을 쓴다면 slash 표기 -->
 		<property name="url" value="jdbc:oracle:thin:@//192.168.0.122:1521/ORCL" />
-	<!-- 데이터소스 -->
-	<bean id="data_source"
-		class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="driverClassName"
-			value="oracle.jdbc.OracleDriver" />
-		<property name="url"
-			value="jdbc:oracle:thin:@//192.168.0.122:1521/ORCL" />
 		<property name="username" value="scott" />
 		<property name="password" value="tiger" />
 	</bean>
 
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
-		<property name="dataSource" ref="data_source"></property>
-		<!-- <property name="mapperLocations" value="/WEB-INF/mybatis/mapper/*.xml"></property> -->
-		<property name="mapperLocations"
-			value="/WEB-INF/mybatis/mapper/**/*_mapper.xml"></property>
-		<property name="configLocation"
-			value="/WEB-INF/mybatis/mybatis-config.xml" />
-
-		<!-- 매퍼 XML도 WEB-INF 기준으로 로드 -->
-		<property name="mapperLocations"
-			value="/WEB-INF/mybatis/mapper/**/*.xml" />
-
 		<property name="dataSource" ref="data_source" />
+		<property name="mapperLocations" value="/WEB-INF/mybatis/mapper/**/*.xml" />
+		<property name="configLocation" value="/WEB-INF/mybatis/mybatis-config.xml" />
 	</bean>
 
-	<!-- SqlSessionTemplate -->
 	<bean id="sqlSessionTemplate"
 		class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 
-	<!-- Mapper 인터페이스 스캔 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-		<!-- 매퍼 인터페이스가 위치한 패키지 -->
 		<property name="basePackage" value="com.app.mapper" />
 	</bean>
 
-	<!-- 컴포넌트 스캔 -->
 	<context:component-scan base-package="com.app" />
 
-	<!-- Gmail JavaMailSender 설정 -->
 	<bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
-		<property name="username"
-			value="scoutprojecttester@gmail.com" />
+		<property name="username" value="scoutprojecttester@gmail.com" />
 		<property name="password" value="myfsvrormibwyzdb" />
 		<property name="javaMailProperties">
 			<props>
