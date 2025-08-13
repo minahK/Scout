@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class CommunityPostDTO {
     int postId;
-    int authorId;
+    String authorId;
     String content;
     String imageUrl;
     String createdAt;
@@ -15,11 +15,10 @@ public class CommunityPostDTO {
     int likesCount;
     int repostsCount;
     Integer replyToPostId;
+    String category;
 
-    String authorNickname;
-    String profileImage;
-    String handle;
-
+    // 매퍼의 별칭과 일치하도록 수정
+    String authorName;
     List<CommentDTO> comments;
     List<MentionDTO> mentions;
 }

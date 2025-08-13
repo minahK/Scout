@@ -59,7 +59,7 @@
     .sidebar ul { list-style: none; margin: 16px 0 0; padding: 0; }
     .sidebar ul li { margin-bottom: 8px; }
     .sidebar a {
-        display: block; padding: 10px 14px; border-radius: 999px;
+        display: block; padding: 10px 14px; border-radius: 9999px;
         text-decoration: none; color: var(--color-font); font-weight: 700;
     }
     .sidebar a:hover { background: #f3f3f3; }
@@ -147,13 +147,12 @@
             <div class="sidebar-profile">
                 <c:choose>
                     <c:when test="${not empty loginUser}">
-                        <!-- 이니셜 아바타 (38px) -->
                         <div class="avatar-initial" style="width:38px;height:38px;background:#ee853f;">
-                            ${fn:substring(loginUser.nickname,0,1)}
+                            ${fn:substring(loginUser.name,0,1)}
                         </div>
                         <div>
-                            <strong>${loginUser.nickname}</strong><br>
-                            <span style="font-size: 12px; color: gray;">${loginUser.handle}</span>
+                            <strong>${loginUser.name}</strong><br>
+                            <span style="font-size: 12px; color: gray;">@${loginUser.id}</span>
                         </div>
                     </c:when>
                     <c:otherwise>
@@ -182,18 +181,16 @@
                     <c:forEach var="post" items="${posts}">
                         <div class="post-box">
                             <div class="post-info">
-                                <!-- 작성자 이니셜 아바타 (40px) -->
                                 <div class="avatar-initial" style="width:40px;height:40px;background:#eb5e00;">
-                                    ${fn:substring(post.authorNickname,0,1)}
+                                    ${fn:substring(post.authorName,0,1)}
                                 </div>
                                 <div>
-                                    <strong>${post.authorNickname}</strong><br>
-                                    <small>${post.handle}</small>
+                                    <strong>${post.authorName}</strong><br>
+                                    <small>${post.authorId}</small>
                                 </div>
                             </div>
                             <div class="post-content">
                                 <p>${post.content}</p>
-                                <!-- 게시물 이미지가 있는 경우만 노출 (원하시면 유지/삭제 선택) -->
                                 <c:if test="${not empty post.imageUrl}">
                                     <img src="/upload/${post.imageUrl}" alt="게시물 이미지" />
                                 </c:if>
@@ -227,17 +224,16 @@
                         <c:forEach var="user" items="${recommendedUsers}">
                             <li>
                                 <div class="follow-info">
-                                    <!-- 추천 유저 이니셜 아바타 (36px) -->
                                     <div class="avatar-initial" style="width:36px;height:36px;background:#ff9752;">
-                                        ${fn:substring(user.nickname,0,1)}
+                                        ${fn:substring(user.name,0,1)}
                                     </div>
                                     <div>
-                                        <strong>${user.nickname}</strong><br>
-                                        <small>@${user.handle}</small>
+                                        <strong>${user.name}</strong><br>
+                                        <small>@${user.id}</small>
                                     </div>
                                 </div>
                                 <form method="post" action="/community/follow">
-                                    <input type="hidden" name="targetUserId" value="${user.userId}"/>
+                                    <input type="hidden" name="targetUserId" value="${user.id}"/>
                                     <button type="submit" class="follow-btn">팔로우</button>
                                 </form>
                             </li>

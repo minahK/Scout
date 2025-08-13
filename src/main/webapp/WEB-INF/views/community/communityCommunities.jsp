@@ -376,16 +376,16 @@ body {
 					<c:forEach var="u" items="${recommendedUsers}" end="1">
 						<div class="follow-item">
 							<div class="follow-left">
-								<div class="avatar-initial" title="${u.nickname}">
-									${fn:substring(u.nickname,0,1)}</div>
+								<div class="avatar-initial" title="${u.name}">
+									${fn:substring(u.name,0,1)}</div>
 								<div>
-									<div class="follow-name">${u.nickname}</div>
-									<div class="follow-handle">@${u.handle}</div>
+									<div class="follow-name">${u.name}</div>
+									<div class="follow-handle">@${u.id}</div>
 								</div>
 							</div>
 							<form method="post"
 								action="${pageContext.request.contextPath}/community/follow">
-								<input type="hidden" name="targetUserId" value="${u.userId}" />
+								<input type="hidden" name="targetUserId" value="${u.id}" />
 								<button type="submit" class="follow-btn">팔로우</button>
 							</form>
 						</div>
@@ -416,7 +416,7 @@ body {
 
 	const modal = document.getElementById('communityModal');
 	const btn = document.getElementById('createCommunityBtn');
-	const closeBtn = document.getElementById('closeModal');
+	const closeModalBtn = document.getElementById('closeModal');
 
 	btn.onclick = () => {
 	    if (!isLogin) {
@@ -426,7 +426,7 @@ body {
 	    }
 	    modal.style.display = 'flex';
 	};
-	closeBtn.onclick = () => modal.style.display = 'none';
+	closeModalBtn.onclick = () => modal.style.display = 'none';
 	window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
 	</script>
 </body>

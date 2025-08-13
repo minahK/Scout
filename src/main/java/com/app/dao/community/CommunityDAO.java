@@ -1,4 +1,3 @@
-// com/app/dao/community/CommunityDAO.java
 package com.app.dao.community;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public interface CommunityDAO {
     int insertPost(CommunityPostDTO dto);
     List<CommunityPostDTO> findPostsByKeyword(String keyword);
     List<CommunityPostDTO> findPostsByCategory(String category);
-    List<CommunityPostDTO> findPostsByAuthor(@Param("userId") int userId,
+    List<CommunityPostDTO> findPostsByAuthor(@Param("id") String id,
                                              @Param("offset") int offset,
                                              @Param("limit") int limit);
 
@@ -27,10 +26,10 @@ public interface CommunityDAO {
 
     // ===== Trends & Recommend =====
     List<TrendDTO> findLatestTrends();
-    List<UserDTO> findRecommendedUsers(int userId);
+    List<User> findRecommendedUsers(@Param("id") String id);
 
     // ===== Chat =====
-    List<ChatRoomDTO> findChatRoomsByUserId(int userId);
+    List<ChatRoomDTO> findChatRoomsByUserId(@Param("id") String id);
     List<ChatMessageDTO> findMessagesByRoomId(int chatRoomId);
     int insertChatMessage(ChatMessageDTO dto);
 
@@ -39,28 +38,28 @@ public interface CommunityDAO {
     int insertCommunity(CommunityDTO dto);
 
     // ===== Notifications =====
-    List<NotificationDTO> findNotificationsByUserId(@Param("userId") int userId,
+    List<NotificationDTO> findNotificationsByUserId(@Param("id") String id,
                                                     @Param("offset") int offset,
                                                     @Param("limit") int limit);
-    int countUnread(int userId);
+    int countUnread(@Param("id") String id);
     int markAsRead(int notificationId);
-    int markAllAsRead(int userId);
+    int markAllAsRead(@Param("id") String id);
     int insertNotification(NotificationDTO dto);
 
     // ===== Users/Profile =====
-    UserDTO findUserById(int userId);
-    UserDTO findUserByHandle(String handle);
-    int updateAccountCore(UserDTO dto); 
-    int updateUserProfile(@Param("userId") int userId, @Param("nickname") String nickname);
-    int updateUserPassword(@Param("userId") int userId,
-                           @Param("password") String password);
+    User findUserById(@Param("id") String id);
+    User findUserByHandle(@Param("handle") String handle);
+    int updateAccountCore(User dto);
+    int updateUserProfile(@Param("id") String id, @Param("name") String name);
+    int updateUserPassword(@Param("id") String id, @Param("password") String password);
 
     // ===== Follow counts =====
-    int countFollowers(int userId);
-    int countFollowing(int userId);
+    int countFollowers(@Param("id") String id);
+    int countFollowing(@Param("id") String id);
     
-    int selectUserPkByLoginId(String id);
+    // 이 메서드는 로그인 ID를 받아 PK를 조회하는 용도이므로 int를 반환하는 것이 맞습니다.
+    int selectUserPkByLoginId(@Param("id") String id); 
     
-    User selectUserById(Integer userId);
+    User selectUserById(@Param("id") String id);
     void updateUserAccount(User user);
 }

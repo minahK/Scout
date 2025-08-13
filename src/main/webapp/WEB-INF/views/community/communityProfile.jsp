@@ -455,7 +455,7 @@ html, body {
 			<c:choose>
 				<c:when test="${not empty user}">
 					<c:set var="displayName"
-						value="${not empty user.nickname ? user.nickname : (not empty user.id ? user.id : 'Guest')}" />
+						value="${not empty user.name ? user.name : (not empty user.id ? user.id : 'Guest')}" />
 				</c:when>
 				<c:otherwise>
 					<c:set var="displayName" value="Guest" />
@@ -486,30 +486,27 @@ html, body {
 				</h2>
 				<div class="handle">
 					<c:choose>
-						<c:when test="${not empty user and not empty user.handle}">
-						@<c:out value="${user.handle}" />
-						</c:when>
-						<c:when test="${not empty user and not empty user.userId}">
-						@<c:out value="${user.userId}" />
+						<c:when test="${not empty user and not empty user.id}">
+						@<c:out value="${user.id}" />
 						</c:when>
 						<c:otherwise>@guest</c:otherwise>
 					</c:choose>
 				</div>
 				<div class="counts">
 					<a
-						href="${ctx}/community/profile/following?userId=${not empty user ? user.userId : 0}">
+						href="${ctx}/community/profile/following?id=${not empty user ? user.id : ''}">
 						<strong>${empty followingCount ? 0 : followingCount}</strong> 팔로잉
 					</a> <a
-						href="${ctx}/community/profile/followers?userId=${not empty user ? user.userId : 0}">
+						href="${ctx}/community/profile/followers?id=${not empty user ? user.id : ''}">
 						<strong>${empty followerCount ? 0 : followerCount}</strong> 팔로워
 					</a>
 				</div>
 			</div>
 
 			<nav class="tabbar">
-				<a class="active" href="${ctx}/community/profile?userId=${not empty user ? user.userId : 0}">게시물</a>
-				<a href="${ctx}/community/profile/media?userId=${not empty user ? user.userId : 0}">미디어</a>
-				<a href="${ctx}/community/profile/likes?userId=${not empty user ? user.userId : 0}">마음에 들어요</a>
+				<a class="active" href="${ctx}/community/profile?id=${not empty user ? user.id : ''}">게시물</a>
+				<a href="${ctx}/community/profile/media?id=${not empty user ? user.id : ''}">미디어</a>
+				<a href="${ctx}/community/profile/likes?id=${not empty user ? user.id : ''}">마음에 들어요</a>
 			</nav>
 
 			<section class="feed">
@@ -522,11 +519,8 @@ html, body {
 							<div class="meta">
 								<strong><c:out value="${displayName}" /></strong> ·
 								<c:choose>
-									<c:when test="${not empty user and not empty user.handle}">
-									@<c:out value="${user.handle}" />
-									</c:when>
-									<c:when test="${not empty user and not empty user.userId}">
-									@<c:out value="${user.userId}" />
+									<c:when test="${not empty user and not empty user.id}">
+									@<c:out value="${user.id}" />
 									</c:when>
 									<c:otherwise>@guest</c:otherwise>
 								</c:choose>
@@ -555,11 +549,8 @@ html, body {
 							<div class="meta">
 								<strong><c:out value="${displayName}" /></strong> ·
 								<c:choose>
-									<c:when test="${not empty user and not empty user.handle}">
-									@<c:out value="${user.handle}" />
-									</c:when>
-									<c:when test="${not empty user and not empty user.userId}">
-									@<c:out value="${user.userId}" />
+									<c:when test="${not empty user and not empty user.id}">
+									@<c:out value="${user.id}" />
 									</c:when>
 									<c:otherwise>@guest</c:otherwise>
 								</c:choose>
@@ -618,14 +609,14 @@ html, body {
 						<div class="follow-item">
 							<div class="follow-left">
 								<div class="avatar-initial">
-									${fn:substring(user.nickname,0,1)}</div>
+									${fn:substring(user.name,0,1)}</div>
 								<div>
-									<div class="follow-name">${user.nickname}</div>
-									<div class="follow-handle">@${user.handle}</div>
+									<div class="follow-name">${user.name}</div>
+									<div class="follow-handle">@${user.id}</div>
 								</div>
 							</div>
 							<form method="post" action="/community/follow">
-								<input type="hidden" name="targetUserId" value="${user.userId}" />
+								<input type="hidden" name="targetUserId" value="${user.id}" />
 								<button type="submit" class="follow-btn">팔로우</button>
 							</form>
 						</div>

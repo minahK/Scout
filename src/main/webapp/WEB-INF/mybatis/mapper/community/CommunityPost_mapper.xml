@@ -4,13 +4,12 @@
 
 <mapper namespace="CommunityPost_mapper">
 
-	<select id="selectUserPkByLoginId" resultType="int">
-	  SELECT USERID
+	<select id="selectUserPkByLoginId" resultType="String">
+	  SELECT ID
 	  FROM T_USER
 	  WHERE ID = #{id}
 	</select>
 
-  <!-- ====================== 게시글 ====================== -->
   <select id="findAllPosts" resultType="CommunityPost">
     SELECT
       P.PostID,
@@ -22,11 +21,11 @@
       P.LikesCount,
       P.RepostsCount,
       P.ReplyToPostID,
-      U.NAME AS authorNickname,   -- 닉네임 = 이름
-      U.ID   AS handle,           -- 핸들   = ID
-      NULL   AS profileImage      -- 이미지 없음
+      U.NAME AS authorName,
+      U.ID   AS authorId,
+      NULL   AS profileImage
     FROM T_TRACE_POSTS P
-    JOIN T_USER U ON P.AuthorID = U.USERID
+    JOIN T_USER U ON P.AuthorID = U.ID
     ORDER BY P.CreatedAt DESC
   </select>
 
@@ -45,11 +44,11 @@
   <select id="findPostsByKeyword" resultType="CommunityPost">
     SELECT
       P.*,
-      U.NAME AS authorNickname,
+      U.NAME AS authorName,
       NULL   AS profileImage,
-      U.ID   AS handle
+      U.ID   AS authorId
     FROM T_TRACE_POSTS P
-    JOIN T_USER U ON P.AuthorID = U.USERID
+    JOIN T_USER U ON P.AuthorID = U.ID
     WHERE P.Content LIKE '%' || #{keyword} || '%'
     ORDER BY P.CreatedAt DESC
   </select>
@@ -57,16 +56,15 @@
   <select id="findPostsByCategory" resultType="CommunityPost" parameterType="string">
     SELECT
       P.*,
-      U.NAME AS Nickname,
-      U.ID   AS Handle,
+      U.NAME AS authorName,
+      U.ID   AS authorId,
       NULL   AS ProfileImage
     FROM T_TRACE_POSTS P
-    JOIN T_USER U ON P.AuthorID = U.USERID
+    JOIN T_USER U ON P.AuthorID = U.ID
     WHERE LOWER(P.Content) LIKE '%' || LOWER(#{category}) || '%'
     ORDER BY P.CreatedAt DESC
   </select>
 
-  <!-- ====================== 댓글/멘션 ====================== -->
   <insert id="insertComment" parameterType="Comment">
     INSERT INTO T_TRACE_COMMENTS (
       CommentID, PostID, WriterID, Content, CreatedAt
@@ -102,7 +100,6 @@
     ORDER BY MentionedAt ASC
   </select>
 
-  <!-- ====================== 트렌드/추천 ====================== -->
   <select id="findLatestTrends" resultType="Trend">
     SELECT Hashtag
     FROM T_TRACE_TRENDS
@@ -111,28 +108,26 @@
     FETCH FIRST 3 ROWS ONLY
   </select>
 
-  <select id="findRecommendedUsers" parameterType="int" resultType="UserDTO">
+  <select id="findRecommendedUsers" parameterType="String" resultType="com.app.dto.user.User">
     SELECT
-      USERID      AS userId,
-      NAME        AS nickname,
-      ID          AS handle,
-      NULL        AS profileImage,  -- 필드가 있으면 null로 채움
-      EMAIL       AS email
+      USERID,
+      NAME AS name,       
+      ID AS id,
+      EMAIL
     FROM T_USER
-    WHERE USERID NOT IN (
-      SELECT FollowingID FROM T_TRACE_FOLLOWS WHERE FollowerID = #{userId}
+    WHERE ID NOT IN (
+      SELECT FollowingID FROM T_TRACE_FOLLOWS WHERE FollowerID = #{id}
     )
-    AND USERID != #{userId}
+    AND ID != #{id}
     FETCH FIRST 3 ROWS ONLY
   </select>
 
-  <!-- ====================== 채팅 ====================== -->
   <select id="findChatRoomsByUserId" resultType="ChatRoom">
     SELECT * FROM T_TRACE_CHATROOMS
     WHERE ChatRoomID IN (
       SELECT ChatRoomID
       FROM T_TRACE_CHAT_PARTICIPANTS
-      WHERE UserID = #{userId}
+      WHERE UserID = #{id}
     )
   </select>
 
@@ -155,7 +150,6 @@
     )
   </insert>
 
-  <!-- ====================== 커뮤니티 목록 ====================== -->
   <select id="findAllCommunities" resultType="Community">
     SELECT 
       COMMUNITY_ID AS communityId,
@@ -177,7 +171,6 @@
     )
   </insert>
 
-  <!-- ====================== 알림 ====================== -->
   <resultMap id="NotificationMap" type="Notification">
     <id     property="notificationId" column="NOTIFICATIONID"/>
     <result property="userId"         column="USERID"/>
@@ -214,7 +207,7 @@
       (
         SELECT u.NAME
         FROM T_USER u
-        WHERE u.USERID = (
+        WHERE u.ID = (
           CASE n.Type
             WHEN 'mention' THEN (
               SELECT c.WriterID
@@ -237,14 +230,14 @@
         END
       ) AS POST_ID
     FROM T_TRACE_NOTIFICATIONS n
-    WHERE n.UserID = #{userId}
+    WHERE n.UserID = #{id}
     ORDER BY n.CreatedAt DESC
     OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
   </select>
 
   <select id="countUnread" resultType="int">
     SELECT COUNT(*) FROM T_TRACE_NOTIFICATIONS
-    WHERE UserID = #{userId} AND IsRead = 'N'
+    WHERE UserID = #{id} AND IsRead = 'N'
   </select>
 
   <update id="markAsRead">
@@ -254,7 +247,7 @@
 
   <update id="markAllAsRead">
     UPDATE T_TRACE_NOTIFICATIONS SET IsRead='Y'
-    WHERE UserID = #{userId} AND IsRead='N'
+    WHERE UserID = #{id} AND IsRead='N'
   </update>
 
   <insert id="insert" parameterType="Notification">
@@ -262,80 +255,67 @@
       (NotificationID, UserID, Type, ReferenceID, IsRead, CreatedAt)
     VALUES
       (T_TRACE_NOTIFICATIONS_SEQ.NEXTVAL,
-       #{userId}, #{type}, #{referenceId}, NVL(#{isRead}, 'N'), SYSDATE)
+       #{id}, #{type}, #{referenceId}, NVL(#{isRead}, 'N'), SYSDATE)
   </insert>
 
-  <!-- ====================== 프로필/유저 ====================== -->
-  <resultMap id="UserMap" type="UserDTO">
-    <id     property="userId"   column="USERID"/>
-    <result property="username" column="USERNAME"/>
-    <result property="handle"   column="HANDLE"/>
-    <result property="email"    column="EMAIL"/>
-    <result property="password" column="PASSWORD"/>
-    <result property="nickname" column="NICKNAME"/>
-    <!-- profileImage / userType / joinDate 제거 -->
-  </resultMap>
+<resultMap id="UserMap" type="com.app.dto.user.User">
+    <id property="id" column="ID"/>
+    <result property="pw" column="PW"/>
+    <result property="name" column="NAME"/>
+    <result property="email" column="EMAIL"/>
+</resultMap>
 
-  <select id="findUserById" resultMap="UserMap">
+<select id="findUserById" resultMap="UserMap">
     SELECT
-      USERID,
-      ID   AS USERNAME,
-      ID   AS HANDLE,
-      EMAIL,
-      PW   AS PASSWORD,
-      NAME AS NICKNAME
+        USERID,  ID,      PW,
+        NAME,
+        EMAIL
     FROM T_USER
-    WHERE USERID = #{userId}
-  </select>
+    WHERE ID = #{id}
+</select>
 
   <select id="findUserByHandle" resultMap="UserMap">
     SELECT
       USERID,
-      ID   AS USERNAME,
-      ID   AS HANDLE,
-      EMAIL,
-      PW   AS PASSWORD,
-      NAME AS NICKNAME
+      ID,
+      PW,
+      NAME,
+      EMAIL
     FROM T_USER
     WHERE ID = #{handle}
   </select>
 
-  <!-- 계정 기본정보 (ID/EMAIL) -->
-  <update id="updateAccountCore" parameterType="UserDTO">
+  <update id="updateAccountCore" parameterType="com.app.dto.user.User">
     UPDATE T_USER
-    SET ID    = #{username},
+    SET ID    = #{id},
         EMAIL = #{email}
-    WHERE USERID = #{userId}
+    WHERE ID = #{id}
   </update>
 
-  <!-- 프로필 수정 (닉네임만) -->
   <update id="updateUserProfile">
 	  UPDATE T_USER
 	  <set>
-	    <if test="nickname != null and nickname != ''">
-	      NAME = #{nickname}
+	    <if test="name != null and name != ''">
+	      NAME = #{name}
 	    </if>
 	  </set>
-	  WHERE USERID = #{userId}
+	  WHERE ID = #{id}
 	</update>
 
-  <!-- 비밀번호 변경 -->
   <update id="updateUserPassword">
     UPDATE T_USER
-    SET PW = #{password}
-    WHERE USERID = #{userId}
+    SET PW = #{pw}
+    WHERE ID = #{id}
   </update>
 
-  <!-- ====================== 팔로워/팔로잉 카운트 ====================== -->
   <select id="countFollowers" resultType="int">
-    SELECT COUNT(*) FROM T_TRACE_FOLLOWS WHERE FOLLOWINGID = #{userId}
+    SELECT COUNT(*) FROM T_TRACE_FOLLOWS WHERE FOLLOWINGID = #{id}
   </select>
 
   <select id="countFollowing" resultType="int">
-    SELECT COUNT(*) FROM T_TRACE_FOLLOWS WHERE FOLLOWERID = #{userId}
+    SELECT COUNT(*) FROM T_TRACE_FOLLOWS WHERE FOLLOWERID = #{id}
   </select>
 
-  <!-- ====================== 유저 게시물(피드) ====================== -->
   <resultMap id="PostMap" type="CommunityPost">
     <id     property="postId"        column="POSTID"/>
     <result property="authorId"      column="AUTHORID"/>
@@ -351,40 +331,39 @@
 
   <select id="findPostsByAuthor" resultMap="PostMap">
     SELECT PostID, AuthorID, Content, ImageURL, CreatedAt, UpdatedAt,
-           LikesCount, RepostsCount, ReplyToPostID, Category
+           LikesCount, RepostsCount, ReplyToPostId, Category
     FROM T_TRACE_POSTS
-    WHERE AuthorID = #{userId}
+    WHERE AuthorID = #{id}
     ORDER BY CreatedAt DESC
     OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
   </select>
 
-  <!-- ====================== 중복 체크 ====================== -->
   <select id="countByHandleExceptUser" resultType="int">
     SELECT COUNT(*)
     FROM T_USER
-    WHERE ID = #{handle}
-      AND USERID != #{userId}
+    WHERE ID = #{id}
+      AND ID != #{id}
   </select>
 
   <select id="countByEmailExceptUser" resultType="int">
     SELECT COUNT(*) FROM T_USER
     WHERE EMAIL = #{email}
-      AND USERID != #{userId}
+      AND ID != #{id}
   </select>
   
-  <select id="selectUserById" parameterType="int" resultType="User">
+  <select id="selectUserById" parameterType="String" resultType="com.app.dto.user.User">
         SELECT USERID, ID, PW, NAME, EMAIL
         FROM T_USER
-        WHERE USERID = #{userId}
-    </select>
+        WHERE ID = #{id}
+  </select>
 
-    <update id="updateUserAccount" parameterType="User">
-        UPDATE T_USER
-        SET
-            PW = #{pw},
-            NAME = #{name},
-            EMAIL = #{email}
-        WHERE USERID = #{userId}
-    </update>
+  <update id="updateUserAccount" parameterType="com.app.dto.user.User">
+    UPDATE T_USER
+    SET
+        PW = #{pw},
+        NAME = #{name},
+        EMAIL = #{email}
+    WHERE ID = #{id}
+  </update>
 
 </mapper>

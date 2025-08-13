@@ -1,283 +1,208 @@
-CREATE TABLE T_TRACE_USERS (
-  UserID NUMBER PRIMARY KEY,
-  Username VARCHAR2(50),
-  Handle VARCHAR2(50) UNIQUE, 
-  Email VARCHAR2(100),
-  Password VARCHAR2(100),
-  Nickname VARCHAR2(50),
-  ProfileImage VARCHAR2(255),
-  UserType VARCHAR2(20),
-  JoinDate DATE
-);
-CREATE SEQUENCE T_TRACE_USERS_SEQ START WITH 1 INCREMENT BY 1;
+select * from T_USER;
 
--- Users
-INSERT INTO T_TRACE_USERS (UserID, Username, Handle, Email, Password, Nickname, ProfileImage, UserType, JoinDate)
-VALUES (T_TRACE_USERS_SEQ.NEXTVAL, 'jipgagosipda', '@jipgagosipda', 'nomore@example.com', 'pw1234', 'Min', 'avatar1.png', 'normal', SYSDATE);
-INSERT INTO T_TRACE_USERS (UserID, Username, Handle, Email, Password, Nickname, ProfileImage, UserType, JoinDate)
-VALUES (T_TRACE_USERS_SEQ.NEXTVAL, 'sunny', '@sunny', 'sunny@example.com', 'pw5678', 'Sunny', 'avatar2.png', 'normal', SYSDATE);
-INSERT INTO T_TRACE_USERS (UserID, Username, Handle, Email, Password, Nickname, ProfileImage, UserType, JoinDate)
-VALUES (T_TRACE_USERS_SEQ.NEXTVAL, 'leo', '@leo123', 'leo@example.com', 'pw9012', 'Leo', 'avatar3.png', 'normal', SYSDATE);
-INSERT INTO T_TRACE_USERS (UserID, Username, Handle, Email, Password, Nickname, ProfileImage, UserType, JoinDate)
-VALUES (T_TRACE_USERS_SEQ.NEXTVAL, 'mira', '@mira_hun', 'mira@example.com', 'pw3456', 'Mira', 'avatar4.png', 'normal', SYSDATE);
-INSERT INTO T_TRACE_USERS (UserID, Username, Handle, Email, Password, Nickname, ProfileImage, UserType, JoinDate)
-VALUES (T_TRACE_USERS_SEQ.NEXTVAL, 'hyun', '@hyun09', 'hyun@example.com', 'pw7890', 'Hyun', 'avatar5.png', 'normal', SYSDATE);
+-- DROP TABLE T_TRACE_USERS;
+-- DROP SEQUENCE T_TRACE_USERS_SEQ;
 
-select * from T_TRACE_USERS;
+-- T_USER 테이블에 ID 컬럼이 외래 키로 참조될 수 있도록 UNIQUE 제약조건 추가
+-- ALTER TABLE T_USER ADD CONSTRAINT UK_T_USER_ID UNIQUE (ID);
 
-UPDATE T_TRACE_USERS
-SET ProfileImage = 'dog.jpg'
-WHERE UserID = 1;
-
-UPDATE T_TRACE_USERS
-SET ProfileImage = 'lotus.jpg'
-WHERE UserID = 23;
-
-
-UPDATE T_TRACE_USERS
-SET ProfileImage = 'gnome.jpg'
-WHERE UserID = 24;
-
-
-UPDATE T_TRACE_USERS
-SET ProfileImage = 'christmas.jpg'
-WHERE UserID = 25;
-
-
-UPDATE T_TRACE_USERS
-SET ProfileImage = 'woman.jpg'
-WHERE UserID = 26;
-
-
-select * from T_user;
-
-
+-- 테이블 생성
 CREATE TABLE T_TRACE_POSTS (
   PostID NUMBER PRIMARY KEY,
-  AuthorID NUMBER REFERENCES T_USER(ID),
+  AuthorID VARCHAR2(255) REFERENCES T_USER(ID),
   Content CLOB,
   ImageURL VARCHAR2(255),
   CreatedAt DATE,
   UpdatedAt DATE,
   LikesCount NUMBER,
   RepostsCount NUMBER,
-  ReplyToPostID NUMBER
+  ReplyToPostID NUMBER,
+  Category VARCHAR2(30)
 );
 CREATE SEQUENCE T_TRACE_POSTS_SEQ START WITH 1 INCREMENT BY 1;
 
-select * from T_TRACE_POSTS;
-
--- posts
-INSERT INTO T_TRACE_POSTS (PostID, AuthorID, Content, ImageURL, CreatedAt, UpdatedAt, LikesCount, RepostsCount, ReplyToPostID)
-VALUES (T_TRACE_POSTS_SEQ.NEXTVAL, 1, '안녕하세요! TRACE 시작합니다.', NULL, SYSDATE, NULL, 5, 2, NULL);
-INSERT INTO T_TRACE_POSTS (PostID, AuthorID, Content, ImageURL, CreatedAt, UpdatedAt, LikesCount, RepostsCount, ReplyToPostID)
-VALUES (T_TRACE_POSTS_SEQ.NEXTVAL, 23, '오늘 날씨 너무 좋아요 ☀️', 'weather.jpg', SYSDATE, NULL, 3, 1, NULL);
-INSERT INTO T_TRACE_POSTS (PostID, AuthorID, Content, ImageURL, CreatedAt, UpdatedAt, LikesCount, RepostsCount, ReplyToPostID)
-VALUES (T_TRACE_POSTS_SEQ.NEXTVAL, 24, '🍜 점심은 라멘!', 'ramen.png', SYSDATE, NULL, 8, 4, NULL);
-INSERT INTO T_TRACE_POSTS (PostID, AuthorID, Content, ImageURL, CreatedAt, UpdatedAt, LikesCount, RepostsCount, ReplyToPostID)
-VALUES (T_TRACE_POSTS_SEQ.NEXTVAL, 25, '여행와서도 하루종일 코딩 중...', NULL, SYSDATE, NULL, 6, 2, NULL);
-INSERT INTO T_TRACE_POSTS (PostID, AuthorID, Content, ImageURL, CreatedAt, UpdatedAt, LikesCount, RepostsCount, ReplyToPostID)
-VALUES (T_TRACE_POSTS_SEQ.NEXTVAL, 26, '비행기 타러 갑니다 ✈️', 'flight.jpg', SYSDATE, NULL, 10, 5, NULL);
-
-
-ALTER TABLE T_TRACE_POSTS ADD Category VARCHAR2(30);
-
-UPDATE T_TRACE_POSTS SET Category = '테크놀로지' WHERE PostID = 21;
-UPDATE T_TRACE_POSTS SET Category = '여행' WHERE PostID = 24;
-UPDATE T_TRACE_POSTS SET Category = '엔터테인먼트' WHERE PostID = 26;
-
-
-
-
-
-
-
-
 CREATE TABLE T_TRACE_FOLLOWS (
   FollowID NUMBER PRIMARY KEY,
-  FollowerID NUMBER REFERENCES T_TRACE_USERS(UserID),
-  FollowingID NUMBER REFERENCES T_TRACE_USERS(UserID),
+  FollowerID VARCHAR2(255) REFERENCES T_USER(ID),
+  FollowingID VARCHAR2(255) REFERENCES T_USER(ID),
   FollowedAt DATE
 );
 CREATE SEQUENCE T_TRACE_FOLLOWS_SEQ START WITH 1 INCREMENT BY 1;
 
--- Follows
-INSERT INTO T_TRACE_FOLLOWS (FollowID, FollowerID, FollowingID, FollowedAt)
-VALUES (T_TRACE_FOLLOWS_SEQ.NEXTVAL, 1, 23, SYSDATE);
-INSERT INTO T_TRACE_FOLLOWS (FollowID, FollowerID, FollowingID, FollowedAt)
-VALUES (T_TRACE_FOLLOWS_SEQ.NEXTVAL, 1, 24, SYSDATE);
-INSERT INTO T_TRACE_FOLLOWS (FollowID, FollowerID, FollowingID, FollowedAt)
-VALUES (T_TRACE_FOLLOWS_SEQ.NEXTVAL, 23, 25, SYSDATE);
-INSERT INTO T_TRACE_FOLLOWS (FollowID, FollowerID, FollowingID, FollowedAt)
-VALUES (T_TRACE_FOLLOWS_SEQ.NEXTVAL, 25, 1, SYSDATE);
-INSERT INTO T_TRACE_FOLLOWS (FollowID, FollowerID, FollowingID, FollowedAt)
-VALUES (T_TRACE_FOLLOWS_SEQ.NEXTVAL, 26, 23, SYSDATE);
-
-
-
-CREATE TABLE T_TRACE_Likes (
+CREATE TABLE T_TRACE_LIKES (
   LikeID NUMBER PRIMARY KEY,
-  UserID NUMBER REFERENCES T_TRACE_USERS(UserID),
+  UserID VARCHAR2(255) REFERENCES T_USER(ID),
   PostID NUMBER REFERENCES T_TRACE_POSTS(PostID),
   LikedAt DATE
 );
-CREATE SEQUENCE T_TRACE_Likes_SEQ START WITH 1 INCREMENT BY 1;
-
--- Likes
-INSERT INTO T_TRACE_Likes (LikeID, UserID, postID, LikedAt)
-VALUES (T_TRACE_Likes_SEQ.NEXTVAL, 1, 21, SYSDATE);
-INSERT INTO T_TRACE_Likes (LikeID, UserID, postID, LikedAt)
-VALUES (T_TRACE_Likes_SEQ.NEXTVAL, 1, 26, SYSDATE);
-INSERT INTO T_TRACE_Likes (LikeID, UserID, postID, LikedAt)
-VALUES (T_TRACE_Likes_SEQ.NEXTVAL, 23, 1, SYSDATE);
-INSERT INTO T_TRACE_Likes (LikeID, UserID, postID, LikedAt)
-VALUES (T_TRACE_Likes_SEQ.NEXTVAL, 24, 28, SYSDATE);
-INSERT INTO T_TRACE_Likes (LikeID, UserID, postID, LikedAt)
-VALUES (T_TRACE_Likes_SEQ.NEXTVAL, 25, 27, SYSDATE);
-
-select * from T_TRACE_POSTS;
-select * from T_TRACE_USERS;
-
-CREATE TABLE T_TRACE_MENTIONS (
-  MentionID NUMBER PRIMARY KEY,
-  PostID NUMBER NOT NULL,
-  CommentID NUMBER NOT NULL,
-  MentionedUserID NUMBER NOT NULL,
-  MentionedAt DATE DEFAULT SYSDATE,
-
-  CONSTRAINT FK_MENTION_POST FOREIGN KEY (PostID)
-    REFERENCES T_TRACE_POSTS(PostID),
-
-  CONSTRAINT FK_MENTION_COMMENT FOREIGN KEY (CommentID)
-    REFERENCES T_TRACE_COMMENTS(CommentID),
-
-  CONSTRAINT FK_MENTION_USER FOREIGN KEY (MentionedUserID)
-    REFERENCES T_TRACE_USERS(UserID)
-);
-CREATE SEQUENCE T_TRACE_MENTIONS_SEQ START WITH 1 INCREMENT BY 1;
-
-INSERT INTO T_TRACE_MENTIONS (MentionID, PostID, CommentID, MentionedUserID, MentionedAt)
-VALUES (T_TRACE_MENTIONS_SEQ.NEXTVAL, 21, 52, 1, SYSDATE);
-INSERT INTO T_TRACE_MENTIONS (MentionID, PostID, CommentID, MentionedUserID, MentionedAt)
-VALUES (T_TRACE_MENTIONS_SEQ.NEXTVAL, 26, 54, 24, SYSDATE);
-INSERT INTO T_TRACE_MENTIONS (MentionID, PostID, CommentID, MentionedUserID, MentionedAt)
-VALUES (T_TRACE_MENTIONS_SEQ.NEXTVAL, 1, 51, 25, SYSDATE);
-INSERT INTO T_TRACE_MENTIONS (MentionID, PostID, CommentID, MentionedUserID, MentionedAt)
-VALUES (T_TRACE_MENTIONS_SEQ.NEXTVAL, 1, 51, 26, SYSDATE);
-INSERT INTO T_TRACE_MENTIONS (MentionID, PostID, CommentID, MentionedUserID, MentionedAt)
-VALUES (T_TRACE_MENTIONS_SEQ.NEXTVAL, 21, 55, 23, SYSDATE);
-
-select * from T_TRACE_POSTS;
-select * from T_TRACE_USERS;
-select * from T_TRACE_COMMENTS;
-select * from T_TRACE_MENTIONS;
+CREATE SEQUENCE T_TRACE_LIKES_SEQ START WITH 1 INCREMENT BY 1;
 
 CREATE TABLE T_TRACE_COMMENTS (
   CommentID NUMBER PRIMARY KEY,
-  PostID NUMBER NOT NULL,
-  WriterID NUMBER NOT NULL,
+  PostID NUMBER NOT NULL REFERENCES T_TRACE_POSTS(PostID),
+  WriterID VARCHAR2(255) NOT NULL REFERENCES T_USER(ID),
   Content VARCHAR2(1000) NOT NULL,
-  CreatedAt DATE DEFAULT SYSDATE,
-
-  CONSTRAINT FK_COMMENT_POST FOREIGN KEY (PostID)
-    REFERENCES T_TRACE_POSTS(PostID),
-
-  CONSTRAINT FK_COMMENT_WRITER FOREIGN KEY (WriterID)
-    REFERENCES T_TRACE_USERS(UserID)
+  CreatedAt DATE DEFAULT SYSDATE
 );
 CREATE SEQUENCE T_TRACE_COMMENTS_SEQ START WITH 1 INCREMENT BY 1;
 
-INSERT INTO T_TRACE_COMMENTS (CommentID, PostID, WriterID, Content, CreatedAt)
-VALUES (T_TRACE_COMMENTS_SEQ.NEXTVAL, 1, 1, '오늘 날씨 너무 좋다 ☀️', SYSDATE);
-INSERT INTO T_TRACE_COMMENTS (CommentID, PostID, WriterID, Content, CreatedAt)
-VALUES (T_TRACE_COMMENTS_SEQ.NEXTVAL, 21, 23, '@sunny랑 제주도 가고 싶다!', SYSDATE);
-INSERT INTO T_TRACE_COMMENTS (CommentID, PostID, WriterID, Content, CreatedAt)
-VALUES (T_TRACE_COMMENTS_SEQ.NEXTVAL, 1, 24, '정말 재밌는 여행이었어요!', SYSDATE);
-INSERT INTO T_TRACE_COMMENTS (CommentID, PostID, WriterID, Content, CreatedAt)
-VALUES (T_TRACE_COMMENTS_SEQ.NEXTVAL, 26, 25, '@mira_hun 그때 기억나? ㅎㅎ', SYSDATE);
-INSERT INTO T_TRACE_COMMENTS (CommentID, PostID, WriterID, Content, CreatedAt)
-VALUES (T_TRACE_COMMENTS_SEQ.NEXTVAL, 21, 26, '사진도 올려줘~', SYSDATE);
+CREATE TABLE T_TRACE_MENTIONS (
+  MentionID NUMBER PRIMARY KEY,
+  PostID NUMBER NOT NULL REFERENCES T_TRACE_POSTS(PostID),
+  CommentID NUMBER NOT NULL REFERENCES T_TRACE_COMMENTS(CommentID),
+  MentionedUserID VARCHAR2(255) NOT NULL REFERENCES T_USER(ID),
+  MentionedAt DATE DEFAULT SYSDATE
+);
+CREATE SEQUENCE T_TRACE_MENTIONS_SEQ START WITH 1 INCREMENT BY 1;
 
-select * from T_TRACE_POSTS;
-select * from T_TRACE_USERS;
-
-
-
-CREATE TABLE T_TRACE_Trends (
+CREATE TABLE T_TRACE_TRENDS (
   TrendID NUMBER PRIMARY KEY,
   Hashtag VARCHAR2(100),
   Region VARCHAR2(100),
   CollectedAt DATE
 );
-CREATE SEQUENCE T_TRACE_Trends_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE T_TRACE_TRENDS_SEQ START WITH 1 INCREMENT BY 1;
 
--- Trends
-INSERT INTO T_TRACE_Trends (TrendID, Hashtag, Region, CollectedAt)
-VALUES (T_TRACE_Trends_SEQ.NEXTVAL, '#제주도', '대한민국', SYSDATE);
-INSERT INTO T_TRACE_Trends (TrendID, Hashtag, Region, CollectedAt)
-VALUES (T_TRACE_Trends_SEQ.NEXTVAL, '#비행기', '대한민국', SYSDATE);
-INSERT INTO T_TRACE_Trends (TrendID, Hashtag, Region, CollectedAt)
-VALUES (T_TRACE_Trends_SEQ.NEXTVAL, '#애월읍', '대한민국', SYSDATE);
-INSERT INTO T_TRACE_Trends (TrendID, Hashtag, Region, CollectedAt)
-VALUES (T_TRACE_Trends_SEQ.NEXTVAL, '#에코랜드', '대한민국', SYSDATE);
-INSERT INTO T_TRACE_Trends (TrendID, Hashtag, Region, CollectedAt)
-VALUES (T_TRACE_Trends_SEQ.NEXTVAL, '#맛집추천', '대한민국', SYSDATE);
-
-select * from T_TRACE_POSTS;
-select * from T_TRACE_USERS;
-
-
-
-
-
-
-
-
-CREATE TABLE T_TRACE_Reposts (
+CREATE TABLE T_TRACE_REPOSTS (
   RepostID NUMBER PRIMARY KEY,
-  UserID NUMBER REFERENCES T_TRACE_USERS(UserID),
-  postID NUMBER REFERENCES T_TRACE_POSTS(postID),
+  UserID VARCHAR2(255) REFERENCES T_USER(ID),
+  PostID NUMBER REFERENCES T_TRACE_POSTS(PostID),
   RepostedAt DATE
 );
-CREATE SEQUENCE T_TRACE_Reposts_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE T_TRACE_REPOSTS_SEQ START WITH 1 INCREMENT BY 1;
 
--- Retweets
-INSERT INTO T_TRACE_Reposts (RepostID, UserID, postID, RepostedAt)
-VALUES (T_TRACE_Reposts_SEQ.NEXTVAL, 23, 1, SYSDATE);
-INSERT INTO T_TRACE_Reposts (RepostID, UserID, postID, RepostedAt)
-VALUES (T_TRACE_Reposts_SEQ.NEXTVAL, 24, 21, SYSDATE);
-INSERT INTO T_TRACE_Reposts (RepostID, UserID, postID, RepostedAt)
-VALUES (T_TRACE_Reposts_SEQ.NEXTVAL, 1, 26, SYSDATE);
-INSERT INTO T_TRACE_Reposts (RepostID, UserID, postID, RepostedAt)
-VALUES (T_TRACE_Reposts_SEQ.NEXTVAL, 26, 27, SYSDATE);
-INSERT INTO T_TRACE_Reposts (RepostID, UserID, postID, RepostedAt)
-VALUES (T_TRACE_Reposts_SEQ.NEXTVAL, 25, 28, SYSDATE);
-
-
-
-select * from T_TRACE_POSTS;
-select * from T_TRACE_USERS;
-
-CREATE TABLE T_TRACE_Notifications (
+CREATE TABLE T_TRACE_NOTIFICATIONS (
   NotificationID NUMBER PRIMARY KEY,
-  UserID NUMBER REFERENCES T_TRACE_USERS(UserID),
+  UserID VARCHAR2(255) REFERENCES T_USER(ID),
   Type VARCHAR2(50),
   ReferenceID NUMBER,
   IsRead CHAR(1),
   CreatedAt DATE
 );
-CREATE SEQUENCE T_TRACE_Notifications_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE T_TRACE_NOTIFICATIONS_SEQ START WITH 1 INCREMENT BY 1;
+
+
+
+
+
+
+SELECT * FROM T_TRACE_POSTS;
+SELECT * FROM T_TRACE_FOLLOWS;
+SELECT * FROM T_TRACE_LIKES;
+SELECT * FROM T_TRACE_COMMENTS;
+SELECT * FROM T_TRACE_MENTIONS;
+SELECT * FROM T_TRACE_TRENDS;
+SELECT * FROM T_TRACE_REPOSTS;
+SELECT * FROM T_TRACE_NOTIFICATIONS;
+
+
+
+
+
+
+-- posts (AuthorID를 T_USER의 ID 컬럼 값으로 변경)
+INSERT INTO T_TRACE_POSTS (PostID, AuthorID, Content, ImageURL, CreatedAt, UpdatedAt, LikesCount, RepostsCount, ReplyToPostID, Category)
+VALUES (T_TRACE_POSTS_SEQ.NEXTVAL, 'gwegwe', '안녕하세요! TRACE 시작합니다.', NULL, SYSDATE, NULL, 5, 2, NULL, NULL);
+INSERT INTO T_TRACE_POSTS (PostID, AuthorID, Content, ImageURL, CreatedAt, UpdatedAt, LikesCount, RepostsCount, ReplyToPostID, Category)
+VALUES (T_TRACE_POSTS_SEQ.NEXTVAL, 'test1', '오늘 날씨 너무 좋아요 ☀️', 'weather.jpg', SYSDATE, NULL, 3, 1, NULL, NULL);
+INSERT INTO T_TRACE_POSTS (PostID, AuthorID, Content, ImageURL, CreatedAt, UpdatedAt, LikesCount, RepostsCount, ReplyToPostID, Category)
+VALUES (T_TRACE_POSTS_SEQ.NEXTVAL, 'asdasd', '🍜 점심은 라멘!', 'ramen.png', SYSDATE, NULL, 8, 4, NULL, NULL);
+INSERT INTO T_TRACE_POSTS (PostID, AuthorID, Content, ImageURL, CreatedAt, UpdatedAt, LikesCount, RepostsCount, ReplyToPostID, Category)
+VALUES (T_TRACE_POSTS_SEQ.NEXTVAL, 'jidang2024', '여행와서도 하루종일 코딩 중...', NULL, SYSDATE, NULL, 6, 2, NULL, NULL);
+INSERT INTO T_TRACE_POSTS (PostID, AuthorID, Content, ImageURL, CreatedAt, UpdatedAt, LikesCount, RepostsCount, ReplyToPostID, Category)
+VALUES (T_TRACE_POSTS_SEQ.NEXTVAL, 'ingyun8668', '비행기 타러 갑니다 ✈️', 'flight.jpg', SYSDATE, NULL, 10, 5, NULL, NULL);
+
+-- 카테고리 업데이트 (PostID는 T_TRACE_POSTS_SEQ.NEXTVAL로 지정된 실제 값으로 대체해야 함)
+UPDATE T_TRACE_POSTS SET Category = '테크놀로지' WHERE PostID = 1;
+UPDATE T_TRACE_POSTS SET Category = '여행' WHERE PostID = 2;
+UPDATE T_TRACE_POSTS SET Category = '엔터테인먼트' WHERE PostID = 3;
+
+-- Follows
+INSERT INTO T_TRACE_FOLLOWS (FollowID, FollowerID, FollowingID, FollowedAt)
+VALUES (T_TRACE_FOLLOWS_SEQ.NEXTVAL, 'gwegwe', 'test1', SYSDATE);
+INSERT INTO T_TRACE_FOLLOWS (FollowID, FollowerID, FollowingID, FollowedAt)
+VALUES (T_TRACE_FOLLOWS_SEQ.NEXTVAL, 'gwegwe', 'asdasd', SYSDATE);
+INSERT INTO T_TRACE_FOLLOWS (FollowID, FollowerID, FollowingID, FollowedAt)
+VALUES (T_TRACE_FOLLOWS_SEQ.NEXTVAL, 'test1', 'jidang2024', SYSDATE);
+INSERT INTO T_TRACE_FOLLOWS (FollowID, FollowerID, FollowingID, FollowedAt)
+VALUES (T_TRACE_FOLLOWS_SEQ.NEXTVAL, 'jidang2024', 'gwegwe', SYSDATE);
+INSERT INTO T_TRACE_FOLLOWS (FollowID, FollowerID, FollowingID, FollowedAt)
+VALUES (T_TRACE_FOLLOWS_SEQ.NEXTVAL, 'ingyun8668', 'test1', SYSDATE);
+
+-- Likes
+INSERT INTO T_TRACE_LIKES (LikeID, UserID, postID, LikedAt)
+VALUES (T_TRACE_LIKES_SEQ.NEXTVAL, 'gwegwe', 1, SYSDATE);
+INSERT INTO T_TRACE_LIKES (LikeID, UserID, postID, LikedAt)
+VALUES (T_TRACE_LIKES_SEQ.NEXTVAL, 'gwegwe', 3, SYSDATE);
+INSERT INTO T_TRACE_LIKES (LikeID, UserID, postID, LikedAt)
+VALUES (T_TRACE_LIKES_SEQ.NEXTVAL, 'test1', 1, SYSDATE);
+INSERT INTO T_TRACE_LIKES (LikeID, UserID, postID, LikedAt)
+VALUES (T_TRACE_LIKES_SEQ.NEXTVAL, 'asdasd', 2, SYSDATE);
+INSERT INTO T_TRACE_LIKES (LikeID, UserID, postID, LikedAt)
+VALUES (T_TRACE_LIKES_SEQ.NEXTVAL, 'jidang2024', 3, SYSDATE);
+
+-- Mentions
+INSERT INTO T_TRACE_MENTIONS (MentionID, PostID, CommentID, MentionedUserID, MentionedAt)
+VALUES (T_TRACE_MENTIONS_SEQ.NEXTVAL, 1, 1, 'gwegwe', SYSDATE);
+INSERT INTO T_TRACE_MENTIONS (MentionID, PostID, CommentID, MentionedUserID, MentionedAt)
+VALUES (T_TRACE_MENTIONS_SEQ.NEXTVAL, 3, 2, 'sunny', SYSDATE);
+INSERT INTO T_TRACE_MENTIONS (MentionID, PostID, CommentID, MentionedUserID, MentionedAt)
+VALUES (T_TRACE_MENTIONS_SEQ.NEXTVAL, 1, 3, 'jidang2024', SYSDATE);
+INSERT INTO T_TRACE_MENTIONS (MentionID, PostID, CommentID, MentionedUserID, MentionedAt)
+VALUES (T_TRACE_MENTIONS_SEQ.NEXTVAL, 1, 3, 'ingyun8668', SYSDATE);
+INSERT INTO T_TRACE_MENTIONS (MentionID, PostID, CommentID, MentionedUserID, MentionedAt)
+VALUES (T_TRACE_MENTIONS_SEQ.NEXTVAL, 3, 4, 'test1', SYSDATE);
+
+-- Comments
+INSERT INTO T_TRACE_COMMENTS (CommentID, PostID, WriterID, Content, CreatedAt)
+VALUES (T_TRACE_COMMENTS_SEQ.NEXTVAL, 1, 'gwegwe', '오늘 날씨 너무 좋다 ☀️', SYSDATE);
+INSERT INTO T_TRACE_COMMENTS (CommentID, PostID, WriterID, Content, CreatedAt)
+VALUES (T_TRACE_COMMENTS_SEQ.NEXTVAL, 2, 'test1', '@sunny랑 제주도 가고 싶다!', SYSDATE);
+INSERT INTO T_TRACE_COMMENTS (CommentID, PostID, WriterID, Content, CreatedAt)
+VALUES (T_TRACE_COMMENTS_SEQ.NEXTVAL, 1, 'asdasd', '정말 재밌는 여행이었어요!', SYSDATE);
+INSERT INTO T_TRACE_COMMENTS (CommentID, PostID, WriterID, Content, CreatedAt)
+VALUES (T_TRACE_COMMENTS_SEQ.NEXTVAL, 3, 'jidang2024', '@mira 그때 기억나? ㅎㅎ', SYSDATE);
+INSERT INTO T_TRACE_COMMENTS (CommentID, PostID, WriterID, Content, CreatedAt)
+VALUES (T_TRACE_COMMENTS_SEQ.NEXTVAL, 2, 'ingyun8668', '사진도 올려줘~', SYSDATE);
+
+-- Trends
+INSERT INTO T_TRACE_TRENDS (TrendID, Hashtag, Region, CollectedAt)
+VALUES (T_TRACE_TRENDS_SEQ.NEXTVAL, '#제주도', '대한민국', SYSDATE);
+INSERT INTO T_TRACE_TRENDS (TrendID, Hashtag, Region, CollectedAt)
+VALUES (T_TRACE_TRENDS_SEQ.NEXTVAL, '#비행기', '대한민국', SYSDATE);
+INSERT INTO T_TRACE_TRENDS (TrendID, Hashtag, Region, CollectedAt)
+VALUES (T_TRACE_TRENDS_SEQ.NEXTVAL, '#애월읍', '대한민국', SYSDATE);
+INSERT INTO T_TRACE_TRENDS (TrendID, Hashtag, Region, CollectedAt)
+VALUES (T_TRACE_TRENDS_SEQ.NEXTVAL, '#에코랜드', '대한민국', SYSDATE);
+INSERT INTO T_TRACE_TRENDS (TrendID, Hashtag, Region, CollectedAt)
+VALUES (T_TRACE_TRENDS_SEQ.NEXTVAL, '#맛집추천', '대한민국', SYSDATE);
+
+-- Reposts
+INSERT INTO T_TRACE_REPOSTS (RepostID, UserID, postID, RepostedAt)
+VALUES (T_TRACE_REPOSTS_SEQ.NEXTVAL, 'test1', 1, SYSDATE);
+INSERT INTO T_TRACE_REPOSTS (RepostID, UserID, postID, RepostedAt)
+VALUES (T_TRACE_REPOSTS_SEQ.NEXTVAL, 'asdasd', 2, SYSDATE);
+INSERT INTO T_TRACE_REPOSTS (RepostID, UserID, postID, RepostedAt)
+VALUES (T_TRACE_REPOSTS_SEQ.NEXTVAL, 'gwegwe', 3, SYSDATE);
+INSERT INTO T_TRACE_REPOSTS (RepostID, UserID, postID, RepostedAt)
+VALUES (T_TRACE_REPOSTS_SEQ.NEXTVAL, 'ingyun8668', 2, SYSDATE);
+INSERT INTO T_TRACE_REPOSTS (RepostID, UserID, postID, RepostedAt)
+VALUES (T_TRACE_REPOSTS_SEQ.NEXTVAL, 'jidang2024', 3, SYSDATE);
 
 -- Notifications
-INSERT INTO T_TRACE_Notifications (NotificationID, UserID, Type, ReferenceID, IsRead, CreatedAt)
-VALUES (T_TRACE_Notifications_SEQ.NEXTVAL, 1, 'mention', 2, 'N', SYSDATE);
-INSERT INTO T_TRACE_Notifications (NotificationID, UserID, Type, ReferenceID, IsRead, CreatedAt)
-VALUES (T_TRACE_Notifications_SEQ.NEXTVAL, 23, 'like', 3, 'Y', SYSDATE);
-INSERT INTO T_TRACE_Notifications (NotificationID, UserID, Type, ReferenceID, IsRead, CreatedAt)
-VALUES (T_TRACE_Notifications_SEQ.NEXTVAL, 24, 'retweet', 1, 'N', SYSDATE);
-INSERT INTO T_TRACE_Notifications (NotificationID, UserID, Type, ReferenceID, IsRead, CreatedAt)
-VALUES (T_TRACE_Notifications_SEQ.NEXTVAL, 25, 'follow', 5, 'Y', SYSDATE);
-INSERT INTO T_TRACE_Notifications (NotificationID, UserID, Type, ReferenceID, IsRead, CreatedAt)
-VALUES (T_TRACE_Notifications_SEQ.NEXTVAL, 26, 'bookmark', 4, 'N', SYSDATE);
+INSERT INTO T_TRACE_NOTIFICATIONS (NotificationID, UserID, Type, ReferenceID, IsRead, CreatedAt)
+VALUES (T_TRACE_NOTIFICATIONS_SEQ.NEXTVAL, 'gwegwe', 'mention', 1, 'N', SYSDATE);
+INSERT INTO T_TRACE_NOTIFICATIONS (NotificationID, UserID, Type, ReferenceID, IsRead, CreatedAt)
+VALUES (T_TRACE_NOTIFICATIONS_SEQ.NEXTVAL, 'test1', 'like', 2, 'Y', SYSDATE);
+INSERT INTO T_TRACE_NOTIFICATIONS (NotificationID, UserID, Type, ReferenceID, IsRead, CreatedAt)
+VALUES (T_TRACE_NOTIFICATIONS_SEQ.NEXTVAL, 'asdasd', 'retweet', 3, 'N', SYSDATE);
+INSERT INTO T_TRACE_NOTIFICATIONS (NotificationID, UserID, Type, ReferenceID, IsRead, CreatedAt)
+VALUES (T_TRACE_NOTIFICATIONS_SEQ.NEXTVAL, 'jidang2024', 'follow', 4, 'Y', SYSDATE);
+INSERT INTO T_TRACE_NOTIFICATIONS (NotificationID, UserID, Type, ReferenceID, IsRead, CreatedAt)
+VALUES (T_TRACE_NOTIFICATIONS_SEQ.NEXTVAL, 'ingyun8668', 'bookmark', 5, 'N', SYSDATE);
 
 
+
+SELECT COUNT(*) FROM T_TRACE_POSTS;
+SELECT COUNT(*) FROM T_TRACE_TRENDS;
+SELECT COUNT(*) FROM T_TRACE_FOLLOWS;

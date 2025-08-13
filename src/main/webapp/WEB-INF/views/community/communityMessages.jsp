@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>채팅</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-s cale=1.0">
 <style>
 :root {
 	--color-light: #ff9752;
@@ -49,7 +49,7 @@ html, body {
 }
 
 .inbox {
-	border-right: 1px solid var(--color-border);
+	border-right: 1-px solid var(--color-border);
 	background: var(--color-white);
 }
 
@@ -205,7 +205,7 @@ html, body {
 .sidebar a {
 	display: block;
 	padding: 10px 14px;
-	border-radius: 999px;
+	border-radius: 9999px;
 	text-decoration: none;
 	color: var(--color-font);
 	font-weight: 700;
@@ -263,119 +263,119 @@ html, body {
 
 /* ===== 모달 스타일 ===== */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.4);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
 }
 
 .modal-content {
-    background-color: var(--color-white);
-    width: 450px;
-    height: 600px;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+	background-color: var(--color-white);
+	width: 450px;
+	height: 600px;
+	border-radius: 12px;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
 }
 
 .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 20px;
-    border-bottom: 1px solid var(--color-border);
-    font-weight: bold;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 12px 20px;
+	border-bottom: 1px solid var(--color-border);
+	font-weight: bold;
 }
 
 .modal-header h3 {
-    margin: 0;
-    font-size: 18px;
+	margin: 0;
+	font-size: 18px;
 }
 
 .modal-header button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    color: #888;
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: bold;
+	color: #888;
 }
 
 .modal-header .btn.primary {
-    background-color: var(--color-base);
-    color: var(--color-white);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: bold;
+	background-color: var(--color-base);
+	color: var(--color-white);
+	padding: 8px 16px;
+	border-radius: 20px;
+	font-weight: bold;
 }
 
 .modal-body {
-    padding: 15px 20px;
+	padding: 15px 20px;
 }
 
 .modal-body .search-input {
-    width: 100%;
-    padding: 10px 20px;
-    border-radius: 9999px;
-    border: 1px solid var(--color-border);
-    background-color: var(--color-bg);
-    outline: none;
+	width: 100%;
+	padding: 10px 20px;
+	border-radius: 9999px;
+	border: 1px solid var(--color-border);
+	background-color: var(--color-bg);
+	outline: none;
 }
 
 .modal-body .group-button {
-    margin-top: 15px;
-    text-align: center;
+	margin-top: 15px;
+	text-align: center;
 }
 
 .modal-body .group-button button {
-    background: none;
-    border: none;
-    font-size: 16px;
-    color: var(--color-base);
-    cursor: pointer;
-    font-weight: bold;
+	background: none;
+	border: none;
+	font-size: 16px;
+	color: var(--color-base);
+	cursor: pointer;
+	font-weight: bold;
 }
 
 .modal-user-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    flex: 1;
-    overflow-y: auto;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	flex: 1;
+	overflow-y: auto;
 }
 
 .modal-user-list li {
-    padding: 15px 20px;
-    border-bottom: 1px solid var(--color-border);
-    cursor: pointer;
+	padding: 15px 20px;
+	border-bottom: 1px solid var(--color-border);
+	cursor: pointer;
 }
 
 .modal-user-list li:hover {
-    background-color: var(--color-bg);
+	background-color: var(--color-bg);
 }
 
 .user-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
 }
 .user-item .avatar-initial {
-    background-color: #eee;
-    color: #444;
+	background-color: #eee;
+	color: #444;
 }
 .user-info {
-    flex: 1;
+	flex: 1;
 }
 
 .hidden {
-    display: none;
+	display: none;
 }
 
 @media screen and (max-width:1024px) {
@@ -407,29 +407,6 @@ html, body {
 					<li><a href="${pageContext.request.contextPath}/community/profile">🧑‍ 프로필</a></li>
 					<li><a href="${pageContext.request.contextPath}/community/settings/account">⚙️ 설정</a></li>
 				</ul>
-			</div>
-
-			<div class="sidebar-bottom">
-				<div class="sidebar-profile">
-					<c:choose>
-						<c:when
-							test="${not empty loginUser and not empty loginUser.nickname}">
-							<div class="avatar-initial" title="${loginUser.nickname}">
-								${fn:substring(loginUser.nickname,0,1)}</div>
-							<div>
-								<strong>${loginUser.nickname}</strong><br> <span
-									style="font-size: 12px; color: gray;">${loginUser.handle}</span>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="avatar-initial" title="Guest">G</div>
-							<div>
-								<strong>비회원</strong><br> <span
-									style="font-size: 12px; color: gray;">@guest</span>
-							</div>
-						</c:otherwise>
-					</c:choose>
-				</div>
 			</div>
 		</div>
 
@@ -556,7 +533,7 @@ html, body {
 
         function addMessageToChat(content, senderId, sentAt) {
             const messageDiv = document.createElement('div');
-            const isSent = senderId === loginUserId;
+            const isSent = senderId == loginUserId;
             messageDiv.className = `message ${isSent ? 'sent' : 'received'}`;
             
             messageDiv.innerHTML = `
@@ -650,3 +627,4 @@ html, body {
     </script>
 </body>
 </html>
+근데 자바스크립트에서 loginUser.userId에서 빨간 줄 떠

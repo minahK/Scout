@@ -279,10 +279,10 @@ html, body {
 						<c:when test="${not empty loginUser}">
 							<div class="avatar-initial"
 								style="width: 38px; height: 38px; background: #ee853f;">
-								${fn:substring(loginUser.nickname,0,1)}</div>
+								${fn:substring(loginUser.name,0,1)}</div>
 							<div>
-								<strong>${loginUser.nickname}</strong><br> <span
-									style="font-size: 12px; color: gray;">${loginUser.handle}</span>
+								<strong>${loginUser.name}</strong><br> <span
+									style="font-size: 12px; color: gray;">@${loginUser.id}</span>
 							</div>
 						</c:when>
 						<c:otherwise>
@@ -306,7 +306,6 @@ html, body {
 			<c:forEach var="notification" items="${notifications}">
 				<div class="notification-item"
 					data-id="${notification.notificationId}">
-					<!-- 알림 이니셜 아바타 (메시지 첫 글자/없으면 N) -->
 					<div class="avatar-initial"
 						style="width: 40px; height: 40px; background: #eb5e00;">
 						<c:choose>
@@ -363,18 +362,17 @@ html, body {
 					<c:forEach var="user" items="${recommendedUsers}">
 						<div class="follow-item">
 							<div class="follow-left">
-								<!-- 추천 유저 이니셜 아바타 -->
 								<div class="avatar-initial"
 									style="width: 36px; height: 36px; background: #ff9752;">
-									${fn:substring(user.nickname,0,1)}</div>
+									${fn:substring(user.name,0,1)}</div>
 								<div>
-									<div class="follow-name">${user.nickname}</div>
-									<div class="follow-handle">@${user.handle}</div>
+									<div class="follow-name">${user.name}</div>
+									<div class="follow-handle">@${user.id}</div>
 								</div>
 							</div>
 							<form method="post"
 								action="${pageContext.request.contextPath}/community/follow">
-								<input type="hidden" name="targetUserId" value="${user.userId}" />
+								<input type="hidden" name="targetUserId" value="${user.id}" />
 								<button type="submit" class="follow-btn">팔로우</button>
 							</form>
 						</div>

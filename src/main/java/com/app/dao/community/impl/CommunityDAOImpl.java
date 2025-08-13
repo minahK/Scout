@@ -17,7 +17,6 @@ import com.app.dto.community.CommunityPostDTO;
 import com.app.dto.community.MentionDTO;
 import com.app.dto.community.NotificationDTO;
 import com.app.dto.community.TrendDTO;
-import com.app.dto.community.UserDTO;
 import com.app.dto.user.User;
 
 @Repository
@@ -50,9 +49,9 @@ public class CommunityDAOImpl implements CommunityDAO {
     }
 
     @Override
-    public List<CommunityPostDTO> findPostsByAuthor(int userId, int offset, int limit) {
+    public List<CommunityPostDTO> findPostsByAuthor(String id, int offset, int limit) {
         Map<String, Object> p = new HashMap<>();
-        p.put("userId", userId);
+        p.put("id", id);
         p.put("offset", offset);
         p.put("limit", limit);
         return sql.selectList(NS + "findPostsByAuthor", p);
@@ -87,14 +86,14 @@ public class CommunityDAOImpl implements CommunityDAO {
     }
 
     @Override
-    public List<UserDTO> findRecommendedUsers(int userId) {
-        return sql.selectList(NS + "findRecommendedUsers", userId);
+    public List<User> findRecommendedUsers(String id) {
+        return sql.selectList(NS + "findRecommendedUsers", id);
     }
 
     // ===== Chat =====
     @Override
-    public List<ChatRoomDTO> findChatRoomsByUserId(int userId) {
-        return sql.selectList(NS + "findChatRoomsByUserId", userId);
+    public List<ChatRoomDTO> findChatRoomsByUserId(String id) {
+        return sql.selectList(NS + "findChatRoomsByUserId", id);
     }
 
     @Override
@@ -120,17 +119,17 @@ public class CommunityDAOImpl implements CommunityDAO {
 
     // ===== Notifications =====
     @Override
-    public List<NotificationDTO> findNotificationsByUserId(int userId, int offset, int limit) {
+    public List<NotificationDTO> findNotificationsByUserId(String id, int offset, int limit) {
         Map<String, Object> p = new HashMap<>();
-        p.put("userId", userId);
+        p.put("id", id);
         p.put("offset", offset);
         p.put("limit", limit);
         return sql.selectList(NS + "findNotificationsByUserId", p);
     }
 
     @Override
-    public int countUnread(int userId) {
-        Integer n = sql.selectOne(NS + "countUnread", userId);
+    public int countUnread(String id) {
+        Integer n = sql.selectOne(NS + "countUnread", id);
         return n == null ? 0 : n;
     }
 
@@ -140,58 +139,57 @@ public class CommunityDAOImpl implements CommunityDAO {
     }
 
     @Override
-    public int markAllAsRead(int userId) {
-        return sql.update(NS + "markAllAsRead", userId);
+    public int markAllAsRead(String id) {
+        return sql.update(NS + "markAllAsRead", id);
     }
 
     @Override
     public int insertNotification(NotificationDTO dto) {
-        // mapper id는 'insert' (네임스페이스로 구분되니 충돌 없음)
         return sql.insert(NS + "insert", dto);
     }
 
     // ===== Users/Profile =====
     @Override
-    public UserDTO findUserById(int userId) {
-        return sql.selectOne(NS + "findUserById", userId);
+    public User findUserById(String id) {
+        return sql.selectOne(NS + "findUserById", id);
     }
 
     @Override
-    public UserDTO findUserByHandle(String handle) {
+    public User findUserByHandle(String handle) {
         return sql.selectOne(NS + "findUserByHandle", handle);
     }
 
     @Override
-    public int updateAccountCore(UserDTO dto) {
+    public int updateAccountCore(User dto) {
         return sql.update(NS + "updateAccountCore", dto);
     }
 
     @Override
-    public int updateUserProfile(int userId, String nickname) {
+    public int updateUserProfile(String id, String name) {
         Map<String, Object> p = new HashMap<>();
-        p.put("userId", userId);
-        p.put("nickname", nickname);
+        p.put("id", id);
+        p.put("name", name);
         return sql.update(NS + "updateUserProfile", p);
     }
 
     @Override
-    public int updateUserPassword(int userId, String password) {
+    public int updateUserPassword(String id, String password) {
         Map<String, Object> p = new HashMap<>();
-        p.put("userId", userId);
+        p.put("id", id);
         p.put("password", password);
         return sql.update(NS + "updateUserPassword", p);
     }
 
     // ===== Follow counts =====
     @Override
-    public int countFollowers(int userId) {
-        Integer n = sql.selectOne(NS + "countFollowers", userId);
+    public int countFollowers(String id) {
+        Integer n = sql.selectOne(NS + "countFollowers", id);
         return n == null ? 0 : n;
     }
 
     @Override
-    public int countFollowing(int userId) {
-        Integer n = sql.selectOne(NS + "countFollowing", userId);
+    public int countFollowing(String id) {
+        Integer n = sql.selectOne(NS + "countFollowing", id);
         return n == null ? 0 : n;
     }
     
@@ -202,12 +200,12 @@ public class CommunityDAOImpl implements CommunityDAO {
     }
     
     @Override
-    public User selectUserById(Integer userId) {
-        return sql.selectOne(NS + "selectUserById", userId);
+    public User selectUserById(String id) {
+        return sql.selectOne(NS + "selectUserById", id);
     }
 
     @Override
     public void updateUserAccount(User user) {
-    	sql.update(NS + "updateUserAccount", user);
+        sql.update(NS + "updateUserAccount", user);
     }
 }

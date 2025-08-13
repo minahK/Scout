@@ -416,23 +416,12 @@ html, body {
 			</div>
 			<div class="sidebar-bottom">
 				<div class="sidebar-profile">
-					<c:choose>
-						<c:when test="${not empty loginUser}">
-							<div class="avatar-initial">
-								${fn:substring(loginUser.nickname,0,1)}</div>
-							<div>
-								<strong>${loginUser.nickname}</strong><br> <span
-									style="font-size: 12px; color: gray;">${loginUser.handle}</span>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="avatar-initial">G</div>
-							<div>
-								<strong>비회원</strong><br> <span
-									style="font-size: 12px; color: gray;">@guest</span>
-							</div>
-						</c:otherwise>
-					</c:choose>
+					<div class="avatar-initial">
+						${fn:substring(loginUser.name,0,1)}</div>
+					<div>
+						<strong>${loginUser.name}</strong><br> <span
+							style="font-size: 12px; color: gray;">@${loginUser.id}</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -445,10 +434,10 @@ html, body {
 			<form class="post-form" action="/community/post" method="post"
 				enctype="multipart/form-data">
 				<div class="avatar-initial profile" style="margin-right: 10px;">
-					${fn:substring(loginUser.nickname,0,1)}</div>
+					${fn:substring(loginUser.name,0,1)}</div>
 				<div style="flex: 1;">
 					<textarea name="content" rows="2" placeholder="게시물 작성하기"></textarea>
-					<input type="hidden" name="authorId" value="${loginUser.userId}" />
+					<input type="hidden" name="authorId" value="${loginUser.id}" />
 					<div class="post-options">
 						<button type="button" class="option-btn" data-type="image"
 							title="이미지 첨부">📷</button>
@@ -468,9 +457,9 @@ html, body {
 				<div class="post-box">
 					<div style="display: flex; align-items: center; gap: 10px;">
 						<div class="avatar-initial">
-							${fn:substring(post.authorNickname,0,1)}</div>
+							${fn:substring(post.authorName,0,1)}</div>
 						<div>
-							<strong>${post.authorNickname}</strong> <small>${post.handle}</small>
+							<strong>${post.authorName}</strong> <small>${post.authorId}</small>
 						</div>
 					</div>
 					<p style="margin-top: 10px;">${post.content}</p>
@@ -510,14 +499,14 @@ html, body {
 						<div class="follow-item">
 							<div class="follow-left">
 								<div class="avatar-initial">
-									${fn:substring(user.nickname,0,1)}</div>
+									${fn:substring(user.name,0,1)}</div>
 								<div>
-									<div class="follow-name">${user.nickname}</div>
-									<div class="follow-handle">@${user.handle}</div>
+									<div class="follow-name">${user.name}</div>
+									<div class="follow-handle">@${user.id}</div>
 								</div>
 							</div>
 							<form method="post" action="/community/follow">
-								<input type="hidden" name="targetUserId" value="${user.userId}" />
+								<input type="hidden" name="targetUserId" value="${user.id}" />
 								<button type="submit" class="follow-btn">팔로우</button>
 							</form>
 						</div>
