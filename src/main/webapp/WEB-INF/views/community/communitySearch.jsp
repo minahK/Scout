@@ -232,10 +232,8 @@
                                         <small>@${user.id}</small>
                                     </div>
                                 </div>
-                                <form method="post" action="/community/follow">
                                     <input type="hidden" name="targetUserId" value="${user.id}"/>
                                     <button type="submit" class="follow-btn">팔로우</button>
-                                </form>
                             </li>
                         </c:forEach>
                     </c:when>

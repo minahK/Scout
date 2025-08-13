@@ -15,14 +15,14 @@
       P.PostID,
       P.AuthorID,
       P.Content,
-      P.ImageURL,
+      P.ImageURL AS imageUrl,
       P.CreatedAt,
       P.UpdatedAt,
       P.LikesCount,
       P.RepostsCount,
       P.ReplyToPostID,
       U.NAME AS authorName,
-      U.ID   AS authorId,
+      U.ID   AS handle,
       NULL   AS profileImage
     FROM T_TRACE_POSTS P
     JOIN T_USER U ON P.AuthorID = U.ID
@@ -43,10 +43,18 @@
 
   <select id="findPostsByKeyword" resultType="CommunityPost">
     SELECT
-      P.*,
+      P.PostID,
+      P.AuthorID,
+      P.Content,
+      P.ImageURL AS imageUrl,
+      P.CreatedAt,
+      P.UpdatedAt,
+      P.LikesCount,
+      P.RepostsCount,
+      P.ReplyToPostID,
       U.NAME AS authorName,
       NULL   AS profileImage,
-      U.ID   AS authorId
+      U.ID   AS handle
     FROM T_TRACE_POSTS P
     JOIN T_USER U ON P.AuthorID = U.ID
     WHERE P.Content LIKE '%' || #{keyword} || '%'
@@ -55,9 +63,17 @@
 
   <select id="findPostsByCategory" resultType="CommunityPost" parameterType="string">
     SELECT
-      P.*,
+      P.PostID,
+      P.AuthorID,
+      P.Content,
+      P.ImageURL AS imageUrl,
+      P.CreatedAt,
+      P.UpdatedAt,
+      P.LikesCount,
+      P.RepostsCount,
+      P.ReplyToPostID,
       U.NAME AS authorName,
-      U.ID   AS authorId,
+      U.ID   AS handle,
       NULL   AS ProfileImage
     FROM T_TRACE_POSTS P
     JOIN T_USER U ON P.AuthorID = U.ID
@@ -110,9 +126,8 @@
 
   <select id="findRecommendedUsers" parameterType="String" resultType="com.app.dto.user.User">
     SELECT
-      USERID,
-      NAME AS name,       
       ID AS id,
+      NAME AS name,
       EMAIL
     FROM T_USER
     WHERE ID NOT IN (
@@ -258,25 +273,25 @@
        #{id}, #{type}, #{referenceId}, NVL(#{isRead}, 'N'), SYSDATE)
   </insert>
 
-<resultMap id="UserMap" type="com.app.dto.user.User">
-    <id property="id" column="ID"/>
-    <result property="pw" column="PW"/>
-    <result property="name" column="NAME"/>
-    <result property="email" column="EMAIL"/>
-</resultMap>
+  <resultMap id="UserMap" type="com.app.dto.user.User">
+    <id     property="id"       column="ID"/>
+    <result property="pw"       column="PW"/>
+    <result property="name"     column="NAME"/>
+    <result property="email"    column="EMAIL"/>
+  </resultMap>
 
-<select id="findUserById" resultMap="UserMap">
+ <select id="findUserById" resultMap="UserMap">
     SELECT
-        USERID,  ID,      PW,
-        NAME,
-        EMAIL
+      ID,
+      PW,
+      NAME,
+      EMAIL
     FROM T_USER
     WHERE ID = #{id}
-</select>
+  </select>
 
   <select id="findUserByHandle" resultMap="UserMap">
     SELECT
-      USERID,
       ID,
       PW,
       NAME,
@@ -287,8 +302,14 @@
 
   <update id="updateAccountCore" parameterType="com.app.dto.user.User">
     UPDATE T_USER
-    SET ID    = #{id},
-        EMAIL = #{email}
+    <set>
+        <if test="id != null and id != ''">
+            ID = #{id},
+        </if>
+        <if test="email != null and email != ''">
+            EMAIL = #{email},
+        </if>
+    </set>
     WHERE ID = #{id}
   </update>
 
@@ -320,7 +341,7 @@
     <id     property="postId"        column="POSTID"/>
     <result property="authorId"      column="AUTHORID"/>
     <result property="content"       column="CONTENT"/>
-    <result property="imageURL"      column="IMAGEURL"/>
+    <result property="imageUrl"      column="ImageURL"/>
     <result property="createdAt"     column="CREATEDAT"/>
     <result property="updatedAt"     column="UPDATEDAT"/>
     <result property="likesCount"    column="LIKESCOUNT"/>
@@ -352,17 +373,24 @@
   </select>
   
   <select id="selectUserById" parameterType="String" resultType="com.app.dto.user.User">
-        SELECT USERID, ID, PW, NAME, EMAIL
+        SELECT ID, PW, NAME, EMAIL
         FROM T_USER
         WHERE ID = #{id}
   </select>
 
   <update id="updateUserAccount" parameterType="com.app.dto.user.User">
     UPDATE T_USER
-    SET
-        PW = #{pw},
-        NAME = #{name},
-        EMAIL = #{email}
+    <set>
+        <if test="pw != null and pw != ''">
+            PW = #{pw},
+        </if>
+        <if test="name != null and name != ''">
+            NAME = #{name},
+        </if>
+        <if test="email != null and email != ''">
+            EMAIL = #{email},
+        </if>
+    </set>
     WHERE ID = #{id}
   </update>
 

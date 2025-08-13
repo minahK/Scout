@@ -383,11 +383,8 @@ body {
 									<div class="follow-handle">@${u.id}</div>
 								</div>
 							</div>
-							<form method="post"
-								action="${pageContext.request.contextPath}/community/follow">
 								<input type="hidden" name="targetUserId" value="${u.id}" />
 								<button type="submit" class="follow-btn">팔로우</button>
-							</form>
 						</div>
 					</c:forEach>
 				</div>

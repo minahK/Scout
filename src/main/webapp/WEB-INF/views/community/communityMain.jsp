@@ -448,7 +448,7 @@ html, body {
 					</div>
 					<div class="option-fields"></div>
 					<div style="text-align: right;">
-						<button class="btn primary" type="submit">게시하기</button>
+						<button class="btn primary" type="button">게시하기</button>
 					</div>
 				</div>
 			</form>
@@ -505,10 +505,8 @@ html, body {
 									<div class="follow-handle">@${user.id}</div>
 								</div>
 							</div>
-							<form method="post" action="/community/follow">
 								<input type="hidden" name="targetUserId" value="${user.id}" />
 								<button type="submit" class="follow-btn">팔로우</button>
-							</form>
 						</div>
 					</c:forEach>
 				</div>

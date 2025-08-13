@@ -268,42 +268,6 @@ h2 {
 					<li><a href="${ctx}/community/settings/account">⚙️ 설정</a></li>
 				</ul>
 			</div>
-
-			<div class="sidebar-bottom">
-				<div class="sidebar-profile">
-					<c:choose>
-						<c:when test="${not empty loginUser}">
-							<c:set var="sbName"
-								value="${not empty loginUser.nickname ? loginUser.nickname : (not empty loginUser.userId ? loginUser.userId : 'Guest')}" />
-							<div class="avatar-initial" title="${sbName}">
-								${fn:substring(sbName,0,1)}</div>
-							<div>
-								<strong><c:out value="${sbName}" /></strong><br> <span
-									style="font-size: 12px; color: gray;">@<c:out
-										value="${not empty loginUser.handle ? loginUser.handle : loginUser.userId}" /></span>
-							</div>
-						</c:when>
-						<c:when test="${not empty user}">
-							<c:set var="sbName"
-								value="${not empty user.nickname ? user.nickname : (not empty user.userId ? user.userId : 'Guest')}" />
-							<div class="avatar-initial" title="${sbName}">
-								${fn:substring(sbName,0,1)}</div>
-							<div>
-								<strong><c:out value="${sbName}" /></strong><br> <span
-									style="font-size: 12px; color: gray;">@<c:out
-										value="${not empty user.handle ? user.handle : user.userId}" /></span>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="avatar-initial" title="Guest">G</div>
-							<div>
-								<strong>비회원</strong><br> <span
-									style="font-size: 12px; color: gray;">@guest</span>
-							</div>
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</div>
 		</aside>
 
 		<main class="main">
@@ -323,27 +287,9 @@ h2 {
 				</c:if>
 
 				<div class="row">
-					<label>현재 프로필 이미지</label>
-					<div class="preview">
-						<div class="preview-left">
-							<img id="avatarPreview"
-								src="${ctx}/image/community/${empty user.profileImage ? 'default-profile.png' : user.profileImage}"
-								alt="avatar" />
-							<div class="muted">${empty user.profileImage ? '기본 이미지' : user.profileImage}</div>
-						</div>
-						<label class="btn btn-outline"
-							<c:if test="${preview}">style="opacity:.5;pointer-events:none"</c:if>>
-							이미지 선택 <input type="file" name="profileImageFile"
-							accept="image/*" style="display: none"
-							<c:if test="${preview}">disabled</c:if>>
-						</label>
-					</div>
-				</div>
-
-				<div class="row">
 					<label for="nickname">닉네임</label> <input id="nickname"
-						name="nickname" class="input" maxlength="50"
-						value="<c:out value='${user.nickname}' default=''/>"
+						name="name" class="input" maxlength="50"
+						value="<c:out value='${user.name}' default=''/>"
 						<c:if test='${preview}'>readonly</c:if> />
 				</div>
 
@@ -356,7 +302,7 @@ h2 {
 								class="btn btn-primary">로그인하고 편집</a>
 						</c:when>
 						<c:otherwise>
-							<button type="submit" class="btn btn-primary">저장</button>
+							<button type="button" class="btn btn-primary">저장</button>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -365,24 +311,5 @@ h2 {
 
 		<aside class="rightbar"></aside>
 	</div>
-
-
-	<script>
-		(function() {
-			var form = document.querySelector('form.card');
-			if (!form || form.hasAttribute('data-preview'))
-				return;
-			var input = form.querySelector('input[name="profileImageFile"]');
-			var img = document.getElementById('avatarPreview');
-			if (!input || !img)
-				return;
-			input.addEventListener('change', function(e) {
-				var f = e.target.files && e.target.files[0];
-				if (!f)
-					return;
-				img.src = URL.createObjectURL(f);
-			});
-		})();
-	</script>
 </body>
 </html>

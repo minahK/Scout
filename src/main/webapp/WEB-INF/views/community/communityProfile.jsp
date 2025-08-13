@@ -419,6 +419,7 @@ html, body {
 	border: none;
 	border-radius: 6px;
 	cursor: pointer;
+	text-decoration: none;
 }
 
 .btn.primary {
@@ -470,11 +471,10 @@ html, body {
 				    <c:choose>
 				        <c:when test="${isOwner}">
 				            <a href="${ctx}/community/profile/edit" class="btn btn-ghost">프로필 수정</a>
-				            <a href="${ctx}/community/post/new" class="btn btn-primary">게시하기</a>
+				            <a href="" class="btn btn-primary">게시하기</a>
 				        </c:when>
 				        <c:otherwise>
-				            <%-- 다른 사람의 프로필을 볼 때 팔로우/팔로잉 버튼이 표시될 위치 --%>
-				            <button type="submit" class="btn btn-primary">팔로우</button>
+				            <button type="button" class="btn btn-primary">팔로우</button>
 				        </c:otherwise>
 				    </c:choose>
 				</div>
@@ -617,7 +617,7 @@ html, body {
 							</div>
 							<form method="post" action="/community/follow">
 								<input type="hidden" name="targetUserId" value="${user.id}" />
-								<button type="submit" class="follow-btn">팔로우</button>
+								<button type="button" class="follow-btn">팔로우</button>
 							</form>
 						</div>
 					</c:forEach>

@@ -65,21 +65,21 @@ public class CommunityController {
         return "community/communityMain";
     }
 
-//    @PostMapping("/community/post")
-//    public String createPost(@RequestParam("content") String content,
-//                             HttpSession session,
-//                             RedirectAttributes ra) {
-//        String loginId = getLoginUserId(session);
-//        if (loginId == null) return "redirect:/signin";
-//
-//        CommunityPostDTO dto = new CommunityPostDTO();
-//        dto.setAuthorId(loginId);
-//        dto.setContent(content);
-//
-//        int r = communityDAO.insertPost(dto);
-//        ra.addFlashAttribute("msg", r > 0 ? "게시물이 등록되었어요." : "등록 실패");
-//        return "redirect:/community/main";
-//    }
+    @PostMapping("/community/post")
+    public String createPost(@RequestParam("content") String content,
+                             HttpSession session,
+                             RedirectAttributes ra) {
+        String loginId = getLoginUserId(session);
+        if (loginId == null) return "redirect:/signin";
+
+        CommunityPostDTO dto = new CommunityPostDTO();
+        dto.setAuthorId(loginId);
+        dto.setContent(content);
+
+        int r = communityDAO.insertPost(dto);
+        ra.addFlashAttribute("msg", r > 0 ? "게시물이 등록되었어요." : "등록 실패");
+        return "redirect:/community/main";
+    }
 
 //    @PostMapping("/community/mention/add")
 //    @ResponseBody
@@ -224,7 +224,8 @@ public class CommunityController {
             HttpSession session,
             Model model) {
 
-        String targetId = (idParam != null) ? idParam : getLoginUserId(session);
+        String loginId = getLoginUserId(session);
+        String targetId = (idParam != null) ? idParam : loginId;
 
         if (targetId == null) {
             model.addAttribute("error", "조회할 사용자 정보를 찾을 수 없습니다.");
@@ -234,6 +235,13 @@ public class CommunityController {
         User profile = communityService.getProfile(targetId);
         model.addAttribute("user", profile);
         model.addAttribute("recommendedUsers", communityService.findRecommendedUsers(targetId));
+
+        boolean isOwner = (loginId != null && loginId.equals(targetId));
+        model.addAttribute("isOwner", isOwner);
+
+        model.addAttribute("followerCount", communityService.getFollowerCount(targetId));
+        model.addAttribute("followingCount", communityService.getFollowingCount(targetId));
+        model.addAttribute("posts", communityService.getUserPosts(targetId, 1, 20));
 
         return "community/communityProfile";
     }

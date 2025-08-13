@@ -263,119 +263,119 @@ html, body {
 
 /* ===== 모달 스타일 ===== */
 .modal-overlay {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.4);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .modal-content {
-	background-color: var(--color-white);
-	width: 450px;
-	height: 600px;
-	border-radius: 12px;
-	overflow: hidden;
-	display: flex;
-	flex-direction: column;
+    background-color: var(--color-white);
+    width: 450px;
+    height: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 12px 20px;
-	border-bottom: 1px solid var(--color-border);
-	font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--color-border);
+    font-weight: bold;
 }
 
 .modal-header h3 {
-	margin: 0;
-	font-size: 18px;
+    margin: 0;
+    font-size: 18px;
 }
 
 .modal-header button {
-	background: none;
-	border: none;
-	cursor: pointer;
-	font-size: 16px;
-	font-weight: bold;
-	color: #888;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    color: #888;
 }
 
 .modal-header .btn.primary {
-	background-color: var(--color-base);
-	color: var(--color-white);
-	padding: 8px 16px;
-	border-radius: 20px;
-	font-weight: bold;
+    background-color: var(--color-base);
+    color: var(--color-white);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
 }
 
 .modal-body {
-	padding: 15px 20px;
+    padding: 15px 20px;
 }
 
 .modal-body .search-input {
-	width: 100%;
-	padding: 10px 20px;
-	border-radius: 9999px;
-	border: 1px solid var(--color-border);
-	background-color: var(--color-bg);
-	outline: none;
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 9999px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+    outline: none;
 }
 
 .modal-body .group-button {
-	margin-top: 15px;
-	text-align: center;
+    margin-top: 15px;
+    text-align: center;
 }
 
 .modal-body .group-button button {
-	background: none;
-	border: none;
-	font-size: 16px;
-	color: var(--color-base);
-	cursor: pointer;
-	font-weight: bold;
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: var(--color-base);
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .modal-user-list {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	flex: 1;
-	overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    overflow-y: auto;
 }
 
 .modal-user-list li {
-	padding: 15px 20px;
-	border-bottom: 1px solid var(--color-border);
-	cursor: pointer;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--color-border);
+    cursor: pointer;
 }
 
 .modal-user-list li:hover {
-	background-color: var(--color-bg);
+    background-color: var(--color-bg);
 }
 
 .user-item {
-	display: flex;
-	align-items: center;
-	gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .user-item .avatar-initial {
-	background-color: #eee;
-	color: #444;
+    background-color: #eee;
+    color: #444;
 }
 .user-info {
-	flex: 1;
+    flex: 1;
 }
 
 .hidden {
-	display: none;
+    display: none;
 }
 
 @media screen and (max-width:1024px) {
@@ -408,19 +408,42 @@ html, body {
 					<li><a href="${pageContext.request.contextPath}/community/settings/account">⚙️ 설정</a></li>
 				</ul>
 			</div>
+
+			<div class="sidebar-bottom">
+				<div class="sidebar-profile">
+					<c:choose>
+						<c:when
+							test="${not empty loginUser and not empty loginUser.name}">
+							<div class="avatar-initial" title="${loginUser.name}">
+								${fn:substring(loginUser.name,0,1)}</div>
+							<div>
+								<strong>${loginUser.name}</strong><br> <span
+									style="font-size: 12px; color: gray;">@${loginUser.id}</span>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="avatar-initial" title="Guest">G</div>
+							<div>
+								<strong>비회원</strong><br> <span
+									style="font-size: 12px; color: gray;">@guest</span>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
 		</div>
 
 		<div class="inbox">
 			<div class="inbox-header" style="display:flex; align-items:center;">
-			  <h3 style="margin:0;">쪽지</h3>
+			  <h3 style="margin:0;">채팅</h3>
 			  <button id="start-chat-btn" class="btn"
 			          style="margin-left:auto; padding:8px 14px; border:0; border-radius:999px;
 			                 background:var(--color-base, #ee853f); color:#fff; font-weight:700; cursor:pointer;">
-			    새 쪽지
+			    새 채팅
 			  </button>
 			</div>
 			<div class="inbox-search">
-			    <input type="text" placeholder="쪽지 검색하기" />
+			    <input type="text" placeholder="채팅 검색하기" />
 			</div>
 			<ul class="inbox-list">
 				<c:forEach var="room" items="${chatRooms}">
@@ -446,7 +469,7 @@ html, body {
 			<div class="message-list">
 				<c:forEach var="msg" items="${messages}">
 					<div
-						class="message ${msg.senderId == loginUser.userId ? 'sent' : 'received'}">
+						class="message ${msg.senderId == loginUser.id ? 'sent' : 'received'}">
 						<div>${msg.content}</div>
 						<div class="meta">${msg.sentAt}</div>
 					</div>
@@ -456,7 +479,7 @@ html, body {
 			<div class="input-area">
 			    <form id="message-form">
 			        <input type="hidden" name="roomId" value="${currentRoomId}" />
-			        <input type="text" id="message-content" name="content" placeholder="새 쪽지 작성하기" required />
+			        <input type="text" id="message-content" name="content" placeholder="새 채팅 작성하기" required />
 			        <button type="submit" class="btn">전송</button>
 			    </form>
 			</div>
@@ -467,7 +490,7 @@ html, body {
         <div class="modal-content">
             <div class="modal-header">
                 <button class="modal-close-btn">❌</button>
-                <h3>새 쪽지</h3>
+                <h3>새 채팅</h3>
                 <button class="btn primary" id="next-step-btn">다음</button>
             </div>
             <div class="modal-body">
@@ -478,12 +501,12 @@ html, body {
             </div>
             <ul id="modal-user-list-ul" class="modal-user-list">
                 <c:forEach var="user" items="${recommendedUsers}">
-                    <li class="user-item-li" data-user-id="${user.userId}" data-nickname="${user.nickname}" data-handle="${user.handle}">
+                    <li class="user-item-li" data-user-id="${user.id}" data-nickname="${user.name}" data-handle="${user.id}">
                         <div class="user-item">
-                            <div class="avatar-initial">${fn:substring(user.nickname,0,1)}</div>
+                            <div class="avatar-initial">${fn:substring(user.name,0,1)}</div>
                             <div class="user-info">
-                                <strong>${user.nickname}</strong><br>
-                                <span style="font-size: 12px; color: gray;">@${user.handle}</span>
+                                <strong>${user.name}</strong><br>
+                                <span style="font-size: 12px; color: gray;">@${user.id}</span>
                             </div>
                         </div>
                     </li>
@@ -498,7 +521,7 @@ html, body {
         const messageContentInput = document.getElementById('message-content');
         const messageList = document.querySelector('.message-list');
         const currentRoomIdInput = document.querySelector('input[name="roomId"]');
-        const loginUserId = ${loginUser.userId};
+        const loginUserId = '${loginUser.id}';
 
         messageForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -549,45 +572,40 @@ html, body {
         const userSearchInput = document.getElementById('user-search-input');
         const modalUserListUl = document.getElementById('modal-user-list-ul');
 
-        // 서버에서 전달받은 recommendedUsers 데이터를 JavaScript 배열로 저장
         const allUsers = [
             <c:forEach var="user" items="${recommendedUsers}" varStatus="loop">
                 {
-                    userId: ${user.userId},
-                    nickname: "${user.nickname}",
-                    handle: "${user.handle}"
+                    id: "${user.id}",
+                    name: "${user.name}"
                 }${!loop.last ? ',' : ''}
             </c:forEach>
         ];
 
-        // 초기 화면 렌더링
         renderUserList(allUsers);
 
-        // 검색어 입력 시 사용자 목록 필터링
         userSearchInput.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
             const filteredUsers = allUsers.filter(user => 
-                user.nickname.toLowerCase().includes(searchTerm) || 
-                user.handle.toLowerCase().includes(searchTerm)
+                user.name.toLowerCase().includes(searchTerm) || 
+                user.id.toLowerCase().includes(searchTerm)
             );
             renderUserList(filteredUsers);
         });
 
-        // 사용자 목록 렌더링 함수
         function renderUserList(users) {
             modalUserListUl.innerHTML = '';
             users.forEach(user => {
                 const li = document.createElement('li');
                 li.className = 'user-item-li';
-                li.setAttribute('data-user-id', user.userId);
-                li.setAttribute('data-nickname', user.nickname);
-                li.setAttribute('data-handle', user.handle);
+                li.setAttribute('data-user-id', user.id);
+                li.setAttribute('data-name', user.name);
+                li.setAttribute('data-handle', user.id);
                 li.innerHTML = `
                     <div class="user-item">
-                        <div class="avatar-initial">${user.nickname.substring(0, 1)}</div>
+                        <div class="avatar-initial">${user.name.substring(0, 1)}</div>
                         <div class="user-info">
-                            <strong>${user.nickname}</strong><br>
-                            <span style="font-size: 12px; color: gray;">@${user.handle}</span>
+                            <strong>${user.name}</strong><br>
+                            <span style="font-size: 12px; color: gray;">@${user.id}</span>
                         </div>
                     </div>
                 `;
@@ -595,11 +613,10 @@ html, body {
             });
         }
 
-        // 모달 열기/닫기 이벤트 리스너
         newMessageBtn.addEventListener('click', function() {
             modal.classList.remove('hidden');
             userSearchInput.value = '';
-            renderUserList(allUsers); // 모달 열 때 전체 목록 다시 렌더링
+            renderUserList(allUsers);
         });
 
         modalCloseBtn.addEventListener('click', function() {
@@ -612,14 +629,11 @@ html, body {
             }
         });
 
-        // 사용자 목록 클릭 이벤트 (채팅방 생성)
         modalUserListUl.addEventListener('click', function(e) {
             const li = e.target.closest('.user-item-li');
             if (li) {
                 const targetUserId = li.dataset.userId;
-                // 채팅방 생성 로직 (컨트롤러에 POST 요청)
-                // 예시: fetch('/community/messages/create', { method: 'POST', body: JSON.stringify({ targetUserId }) })
-                alert(`${li.dataset.nickname}님과 채팅방을 생성합니다! (ID: ${targetUserId})`);
+                alert(`${li.dataset.name}님과 채팅방을 생성합니다! (ID: ${targetUserId})`);
                 modal.classList.add('hidden');
             }
         });
@@ -627,4 +641,3 @@ html, body {
     </script>
 </body>
 </html>
-근데 자바스크립트에서 loginUser.userId에서 빨간 줄 떠

@@ -4,16 +4,16 @@ import lombok.Data;
 
 @Data
 public class NotificationDTO {
-	 	int notificationId;
-	    int userId;
-	    String type;    
-	    int referenceId;  
-	    String isRead;     
-	    String createdAt;
+	int notificationId;
+    String userId; // int에서 String으로 변경
+    String type;    
+    int referenceId;  
+    String isRead;     
+    String createdAt;
 
-	    int actorUserId;
-	    String actorNickname;   
-	    int postId;          
-	    String message;  
-	    String linkUrl;  
+    String actorUserId; // int에서 String으로 변경
+    String actorNickname;   
+    int postId;          
+    String message;  
+    String linkUrl;  
 }
