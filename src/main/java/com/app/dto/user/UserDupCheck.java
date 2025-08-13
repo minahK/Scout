@@ -6,5 +6,6 @@ import lombok.Data;
 public class UserDupCheck {
 
 	String id;
+	String email;
 	String type;
 }

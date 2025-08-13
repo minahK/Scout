@@ -57,6 +57,17 @@
 		)
 	</insert>
 
+	<!-- 회원 저장 (MERGE 방식 - 중복 시 UPDATE) -->
+	<insert id="saveUserMerge" parameterType="com.app.dto.user.User">
+		MERGE INTO T_USER t
+		USING (SELECT #{id} as id, #{pw} as pw, #{name} as name, #{email} as email FROM DUAL) s
+		ON (t.id = s.id)
+		WHEN MATCHED THEN
+			UPDATE SET t.pw = s.pw, t.name = s.name, t.email = s.email
+		WHEN NOT MATCHED THEN
+			INSERT (id, pw, name, email) VALUES (s.id, s.pw, s.name, s.email)
+	</insert>
+
 	<!-- 전체 조회 -->
 	<select id="findUserList" resultType="com.app.dto.user.User">
 		SELECT id, pw, name, email

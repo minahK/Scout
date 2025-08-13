@@ -6,7 +6,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//import com.app.common.CommonCode;
 import com.app.dao.user.UserDAO;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
@@ -40,10 +39,18 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int saveCustomerUser(User user) {
+		// 이메일 중복 체크
+		if (existsByEmail(user.getEmail())) {
+			throw new RuntimeException("이미 사용 중인 이메일입니다.");
+		}
 
-		int result = userDAO.saveUser(user);
-
-		return result;
+		try {
+			int result = userDAO.saveUser(user);
+			return result;
+		} catch (Exception e) {
+			log.error("회원 저장 중 오류 발생: ", e);
+			throw new RuntimeException("회원 저장 중 오류가 발생했습니다.", e);
+		}
 	}
 
 	@Override
@@ -104,8 +111,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean existsByEmail(String email) {
-		// 예: Mapper에 countByEmail 쿼리 추가 → 0보다 크면 true
-		return userMapper.countByEmail(email) > 0;
+		try {
+			return userMapper.countByEmail(email) > 0;
+		} catch (Exception e) {
+			log.error("이메일 중복 체크 중 오류 발생: ", e);
+			return false;
+		}
 	}
 
 	@Override

@@ -146,7 +146,7 @@ button:hover {
 
 		<h1>회원가입</h1>
 
-		<form action="/Scout/signup" method="post">
+		<form action="/Scout/signup" method="post" id="signupForm">
 			<label for="inputId">아이디</label>
 			<div class="input-group">
 				<i class="fas fa-user input-icon"></i> <input type="text" name="id"
@@ -177,6 +177,7 @@ button:hover {
 				<i class="fas fa-envelope input-icon"></i> <input type="email"
 					name="email" id="email" placeholder="example@domain.com" required>
 			</div>
+			<button type="button" id="btn_checkDupEmail" class="check-btn">이메일 중복체크</button>
 			<p id="emailFormatMsg"></p>
 
 			<label for="name">닉네임</label>
@@ -268,26 +269,94 @@ button:hover {
   
   //이메일 확인
   const emailInput = $('#email');
-const emailMsg = $('#emailFormatMsg');
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailMsg = $('#emailFormatMsg');
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-emailInput.on('input', () => {
-  if (!emailPattern.test(emailInput.val())) {
-    emailMsg.text('올바른 이메일 형식이 아닙니다').css('color', 'red');
-  } else {
-    emailMsg.text('');
-  }
-});
+  emailInput.on('input', () => {
+    if (!emailPattern.test(emailInput.val())) {
+      emailMsg.text('올바른 이메일 형식이 아닙니다').css('color', 'red');
+    } else {
+      emailMsg.text('');
+    }
+  });
 
-$('#btn_checkEmail').on('click', () => {
-  $.post('/Scout/checkEmailJson',
-    JSON.stringify({ email: emailInput.val() }),
-    (res) => {
-      if (res.body === 'Y') emailMsg.text('이미 사용 중인 이메일입니다').css('color', 'red');
-      else emailMsg.text('사용 가능한 이메일입니다').css('color', 'green');
-    }, 'json');
-});
+  // 이메일 중복 체크
+  const btn_checkDupEmail = document.getElementById('btn_checkDupEmail');
+  
+  btn_checkDupEmail.addEventListener('click', () => {
+    let inputEmail = document.getElementById('email').value;
+    
+    if (!emailPattern.test(inputEmail)) {
+      emailMsg.text('올바른 이메일 형식이 아닙니다').css('color', 'red');
+      return;
+    }
+    
+    let obj = {
+      "email": inputEmail,
+      "type": "CUS"
+    };
+    let jsonText = JSON.stringify(obj);
 
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/Scout/checkDupEmailJson",
+      headers: {
+        "Content-type": "application/json"
+      },
+      data: jsonText,
+      dataType: 'json',
+      success: function (result) {
+        let jsObj = result;
+        if (jsObj.body === 'Y') {
+          emailMsg.text('이미 사용 중인 이메일입니다').css('color', 'red');
+        } else {
+          emailMsg.text('사용 가능한 이메일입니다').css('color', 'green');
+        }
+      },
+      error: function (error) {
+        console.log(error);
+        emailMsg.text('중복 체크 중 오류가 발생했습니다').css('color', 'red');
+      }
+    });
+    });
+
+  // 폼 제출 시 유효성 검사
+  document.getElementById('signupForm').addEventListener('submit', function(e) {
+    const id = document.getElementById('inputId').value;
+    const pw = document.getElementById('pw').value;
+    const pwConfirm = document.getElementById('pwConfirm').value;
+    const email = document.getElementById('email').value;
+    const name = document.getElementById('name').value;
+    
+    // 필수 필드 검사
+    if (!id || !pw || !pwConfirm || !email || !name) {
+      e.preventDefault();
+      alert('모든 필드를 입력해주세요.');
+      return false;
+    }
+    
+    // 비밀번호 일치 검사
+    if (pw !== pwConfirm) {
+      e.preventDefault();
+      alert('비밀번호가 일치하지 않습니다.');
+      return false;
+    }
+    
+    // 이메일 형식 검사
+    if (!emailPattern.test(email)) {
+      e.preventDefault();
+      alert('올바른 이메일 형식을 입력해주세요.');
+      return false;
+    }
+    
+    // 아이디 중복 체크 여부 확인 (간단한 검사)
+    const idMsg = document.getElementById('checkDupIdMsg').textContent;
+    if (idMsg !== '사용 가능한 아이디입니다.') {
+      e.preventDefault();
+      alert('아이디 중복 체크를 완료해주세요.');
+      return false;
+    }
+  });
 
 </script>
 </body>
