@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: scout-application
+    env: java
+    buildCommand: mvn clean package
+    startCommand: java -jar target/Scout-0.0.1-SNAPSHOT.war
+    envVars:
+      - key: JAVA_VERSION
+        value: 11
