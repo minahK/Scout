@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scout Application - Java Spring MVC Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            margin: 2rem;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+        
+        .tech-tag {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .features {
+            text-align: left;
+            margin: 2rem 0;
+        }
+        
+        .features h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .features ul {
+            list-style: none;
+        }
+        
+        .features li {
+            padding: 0.5rem 0;
+            color: #555;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .features li::before {
+            content: "✓";
+            color: #27ae60;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .status {
+            background: #e8f5e8;
+            color: #27ae60;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border-left: 4px solid #27ae60;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🔍</div>
+        <h1>Scout Application</h1>
+        <p class="subtitle">A comprehensive Java-based web application built with Spring MVC, MyBatis, and Oracle Database</p>
+        
+        <div class="tech-stack">
+            <span class="tech-tag">Java 11</span>
+            <span class="tech-tag">Spring MVC</span>
+            <span class="tech-tag">MyBatis</span>
+            <span class="tech-tag">Oracle DB</span>
+            <span class="tech-tag">JSP</span>
+            <span class="tech-tag">Maven</span>
+        </div>
+        
+        <div class="features">
+            <h3>🚀 Key Features</h3>
+            <ul>
+                <li>User authentication and authorization</li>
+                <li>Database integration with Oracle</li>
+                <li>RESTful API endpoints</li>
+                <li>Email functionality</li>
+                <li>Form validation</li>
+                <li>Responsive web interface</li>
+            </ul>
+        </div>
+        
+        <div class="status">
+            <strong>📋 Project Status:</strong> This is a Java Spring MVC application that requires a servlet container to run. The full application includes database connectivity and server-side processing.
+        </div>
+        
+        <div class="buttons">
+            <a href="https://github.com/minahK/Scout" target="_blank" class="btn btn-primary">View Source Code</a>
+            <a href="https://github.com/minahK/Scout#readme" target="_blank" class="btn btn-secondary">Project Details</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "target/Scout-0.0.1-SNAPSHOT.war",
+      "use": "@vercel/java"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/target/Scout-0.0.1-SNAPSHOT.war"
+    }
+  ]
+}
